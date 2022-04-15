@@ -1,13 +1,13 @@
 import Mapa from "../components/Mapa"
 import {  View } from 'react-native';
 import React, { Component } from 'react';
-import  styles  from "../styles/stylesFalopa";
+import  styles  from "../styles/styles";
 
 
-const MainScreen = () =>{    
+const MainScreen = ({navigation}) =>{    
     return(
         <View style={styles.page}>
-            <View style={styles.container}>
+            <View style={styles.containerMap}>
             <Mapa />
             </View>
         </View>
