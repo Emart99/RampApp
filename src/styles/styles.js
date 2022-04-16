@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
       width: "100%",
       backgroundColor: 'white'
     },
-    logo:{
+    loguito:{
       fontWeight:"bold",
       fontSize:50,
       color:"#FFEC70",
@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
       height:50,
       color:"white"
     },
-    loginBtn:{
+    loginButton:{
       width:"80%",
       backgroundColor:"#FFEC70",
       borderRadius:25,
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     loginText:{
       color:"white"
     },
-    forgot:{
+    olvidoSuContrasenia:{
       color:"white",
       fontSize:11
     }

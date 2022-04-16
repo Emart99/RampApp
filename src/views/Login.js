@@ -5,7 +5,7 @@ import styles from '../styles/styles'
 const Login = ({ navigation }) => {
     return (
         <View style ={styles.containerLogin}>
-            <Text style={styles.logo} >RampApp</Text>
+            <Text style={styles.loguito} >RampApp</Text>
             <View style = {styles.inputView}>
                 <TextInput
                     style={styles.inputText}
@@ -19,10 +19,10 @@ const Login = ({ navigation }) => {
                 />
             </View>
             <TouchableOpacity>
-                <Text style={styles.forgot}>Olvido su contraseña?</Text>
+                <Text style={styles.olvidoSuContrasenia}>Olvido su contraseña?</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style = {styles.loginBtn}
+            <TouchableOpacity style = {styles.loginButton}
             onPress={() => navigation.navigate('MainScreen')}>
                 <Text >INGRESAR</Text>
             </TouchableOpacity>
