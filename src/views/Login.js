@@ -13,7 +13,7 @@ const Login = ({ navigation }) => {
                 />
             </View>
             <View style = {styles.inputView}>
-                <TextInput
+                <TextInput secureTextEntry
                     style={styles.inputText}
                     placeholder="Contraseña"
                 />

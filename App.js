@@ -7,7 +7,7 @@
  */
 
  import React, {useEffect, Component } from 'react';
- import { PERMISSIONS, request} from 'react-native-permissions';
+ import {  PERMISSIONS, requestMultiple} from 'react-native-permissions';
  import MainScreen from './src/views/MainScreen'
  import Registrarse from "./src/views/Registrarse"
  import Login from './src/views/Login'
@@ -19,25 +19,21 @@
 
 LogBox.ignoreLogs(["exported from 'deprecated-react-native-prop-types'.",]) // codigo hermoso, remplazar en un futuro
 
-
-const requestPermisos = () =>{
-  request(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION)
-  request(PERMISSIONS.ANDROID.ACCESS_MEDIA_LOCATION)
-  request(PERMISSIONS.ANDROID.ACCESS_COARSE_LOCATION)
-  request(PERMISSIONS.ANDROID.ACCESS_BACKGROUND_LOCATION)
-  request(PERMISSIONS.ANDROID.CAMERA)
-  // requestMultiple no esta andando por alguna razon.
-}
 const Stack = createNativeStackNavigator();
+const Permisos = [PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION,
+                  PERMISSIONS.ANDROID.ACCESS_MEDIA_LOCATION,
+                  PERMISSIONS.ANDROID.ACCESS_COARSE_LOCATION,
+                  PERMISSIONS.ANDROID.CAMERA]
 
-
- 
  export default function App() {
-   useEffect(() =>{
-    SplashScreen.hide()
-   })
+   useEffect( () =>{
+    const requestPermisos = async () =>{
+      const userResponse =  await requestMultiple(Permisos);
+      return userResponse
+    }
+    requestPermisos().then(SplashScreen.hide())
+   },[])
 
-   requestPermisos()
      return (
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Login">

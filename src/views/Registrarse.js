@@ -12,7 +12,7 @@ const Registrarse = ({ navigation }) =>{
                 />
             </View>
             <View style = {styles.inputView}>
-                <TextInput
+                <TextInput secureTextEntry
                     style={styles.inputText}
                     placeholder="Contraseña"
                 />
@@ -42,7 +42,7 @@ const Registrarse = ({ navigation }) =>{
                 />
             </View>
 
-            <TouchableOpacity style = {styles.loginBtn}
+            <TouchableOpacity style = {styles.loginButton}
             onPress={() => navigation.navigate('Login')}>
                 <Text >REGISTRAR</Text>
             </TouchableOpacity>
