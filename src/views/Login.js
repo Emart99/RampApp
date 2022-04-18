@@ -1,8 +1,11 @@
 import { View, Text, TextInput, TouchableOpacity } from 'react-native';
 import React from 'react';
 import styles from '../styles/styles'
+import OlvidoSuContrasenia from './../components/OlvidoSuContraseniaDialog';
 
 const Login = ({ navigation }) => {
+    const [visibleOlvidoSuContrasenia, setVisibleOlvidoSuContrasenia] = React.useState(false);
+    
     return (
         <View style ={styles.containerLogin}>
             <Text style={styles.loguito} >RampApp</Text>
@@ -18,9 +21,13 @@ const Login = ({ navigation }) => {
                     placeholder="Contraseña"
                 />
             </View>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={()=> {setVisibleOlvidoSuContrasenia(!visibleOlvidoSuContrasenia)}}>
                 <Text style={styles.olvidoSuContrasenia}>Olvido su contraseña?</Text>
             </TouchableOpacity>
+            {OlvidoSuContrasenia(visibleOlvidoSuContrasenia,setVisibleOlvidoSuContrasenia)} 
+            {/* Mejorar */}
+            
+            
 
             <TouchableOpacity style = {styles.loginButton}
             onPress={() => navigation.navigate('MainScreen')}>
