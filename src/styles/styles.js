@@ -16,6 +16,7 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       justifyContent: 'center',
     },
+
     containerMap: {
       height: "100%",
       width: "100%",

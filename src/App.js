@@ -15,9 +15,12 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import SplashScreen from 'react-native-splash-screen'
 import { LogBox } from "react-native";
+import { Provider as PaperProvider } from 'react-native-paper';
 
 
-LogBox.ignoreLogs(["exported from 'deprecated-react-native-prop-types'.",]) // codigo hermoso, remplazar en un futuro
+
+LogBox.ignoreLogs([""]) // codigo hermoso, remplazar en un futuro
+
 
 const Stack = createNativeStackNavigator();
 const Permisos = [PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION,
@@ -35,12 +38,14 @@ export default function App() {
   }, [])
 
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Login">
-        <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
-        <Stack.Screen name="Registrarse" component={Registrarse} options={{ headerShown: false }} />
-        <Stack.Screen name="MainScreen" component={MainScreen} options={{ headerShown: false }} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <PaperProvider>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Login">
+          <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
+          <Stack.Screen name="Registrarse" component={Registrarse} options={{ headerShown: false }} />
+          <Stack.Screen name="MainScreen" component={MainScreen} options={{ headerShown: false }} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </PaperProvider>
   );
 }
