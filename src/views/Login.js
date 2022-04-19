@@ -5,7 +5,7 @@ import OlvidoSuContrasenia from './../components/OlvidoSuContraseniaDialog';
 
 const Login = ({ navigation }) => {
     const [visibleOlvidoSuContrasenia, setVisibleOlvidoSuContrasenia] = React.useState(false);
-    
+
     return (
         <View style ={styles.containerLogin}>
             <Text style={styles.loguito} >RampApp</Text>

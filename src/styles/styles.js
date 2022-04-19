@@ -1,18 +1,22 @@
 import {StyleSheet} from 'react-native'
 
+const amarillo="#FFEC70"
+const backgroundOscuro='#333'
+const inputOscuro="#5C5C5C"
+const blanco='white'
+
 const styles = StyleSheet.create({
     page: {
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
-      backgroundColor: '#F5FCFF'
     },
     map: {
         flex: 1
     },
     containerLogin: {
       flex: 1,
-      backgroundColor: '#333',
+      backgroundColor: backgroundOscuro,
       alignItems: 'center',
       justifyContent: 'center',
     },
@@ -20,17 +24,16 @@ const styles = StyleSheet.create({
     containerMap: {
       height: "100%",
       width: "100%",
-      backgroundColor: 'white'
     },
     loguito:{
       fontWeight:"bold",
       fontSize:50,
-      color:"#FFEC70",
+      color:amarillo,
       marginBottom:40
     },
     inputView:{
       width:"80%",
-      backgroundColor:"#5C5C5C",
+      backgroundColor:inputOscuro,
       borderRadius:25,
       height:50,
       marginBottom:20,
@@ -39,11 +42,11 @@ const styles = StyleSheet.create({
     },
     inputText:{
       height:50,
-      color:"white"
+      color:blanco
     },
     loginButton:{
       width:"80%",
-      backgroundColor:"#FFEC70",
+      backgroundColor:amarillo,
       borderRadius:25,
       height:50,
       alignItems:"center",
@@ -52,12 +55,20 @@ const styles = StyleSheet.create({
       marginBottom:10
     },
     loginText:{
-      color:"white"
+      color:blanco
     },
     olvidoSuContrasenia:{
-      color:"white",
+      color:blanco,
       fontSize:11
-    }
+    },
+    fab: {
+      position: 'absolute',
+      margin: 16,
+      right: 0,
+      bottom: 0,
+      backgroundColor:amarillo
+    },
+
   });
 
 export default styles;

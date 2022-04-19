@@ -1,7 +1,9 @@
-import { Text,Avatar,List  } from "react-native-paper"
-import {View} from "react-native"
+import { Text,Avatar  } from "react-native-paper"
+import {View,Button} from "react-native"
 import React from 'react';
 import styles from '../styles/styles'
+
+
 const MiPerfil = () =>{
     return(
        
