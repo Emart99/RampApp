@@ -1,21 +1,25 @@
 import React, { Component } from 'react';
-import { BottomNavigation, Text } from 'react-native-paper';
+import { BottomNavigation } from 'react-native-paper';
 import MiPerfil from './Mi Perfil';
-import Configuracion from './Configuracion';
+
 import MapScreen from './MapScreen'
 import styles from '../styles/styles'
+import AdministrarRampa from './AdministrarRampa';
+import AdministrarVehiculo from './AdministrarVehiculo';
 
 const MainScreen = ({ navigation }) => {
     const [index, setIndex] = React.useState(0);
     const [routes] = React.useState([
-        { key: 'RampasDisponibles', title: 'Rampas Disponibles', icon: 'map-marker' },
-        { key: 'MiPerfil', title: 'Mi Perfil', icon: 'account' },
-        { key: 'Configuracion', title: 'Configuracion', icon: 'account-settings-outline' },
+        { key: 'RampasDisponibles', title: 'Rampas Disp', icon: 'map-marker' },
+        { key: 'MiPerfil', title: 'Perfil', icon: 'account' },
+        { key: 'AdminRampa', title:'Admin Rampa', icon:'parking' },
+        { key: 'AdminVehiculo', title:'Admin Vehic', icon:'car'},
     ])
     const renderScene = BottomNavigation.SceneMap({
         RampasDisponibles: MapScreen,
         MiPerfil: MiPerfil,
-        Configuracion: Configuracion,
+        AdminRampa: AdministrarRampa,
+        AdminVehiculo:AdministrarVehiculo,
     });
 
     return (

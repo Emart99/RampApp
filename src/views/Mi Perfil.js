@@ -24,15 +24,13 @@ const MiPerfil = () =>{
 
                 <Text style={styles.perfilContentText}>Ajustes</Text>
                 <View style={styles.alinearSwitch}>
-                <Text style={styles.perfilMiniContentText}>Tema:Oscuro</Text>
+                    <Text style={styles.perfilMiniContentText}>Tema:Oscuro</Text>
                     <Switch value={isSwitchOn} onValueChange={onToggleSwitch}/>
                 </View>
                 <View style={styles.alinearSwitch}>
                     <Text style={styles.perfilMiniContentText}>Notificaciones</Text>
                     <Switch value={isSwitchOn} onValueChange={onToggleSwitch} />
                 </View>
-            
-                
                 <TouchableOpacity  style = {styles.perfilButton}>
                     <Text style={{color:'black'}}>CERRAR SESION</Text>
                 </TouchableOpacity>
