@@ -1,11 +1,33 @@
-import {StyleSheet} from 'react-native'
+import {StyleSheet, Appearance } from 'react-native'
 
-const amarillo="#FFEC70"
-const backgroundOscuro='#333'
-const inputOscuro="#5C5C5C"
-const blanco='white'
+let colorScheme = 'dark';
+
+function themeHelper(){
+  if(colorScheme === 'light'){
+    return light
+  }
+  else{
+    return dark
+  }
+}
+
+
+const dark = {
+  input:"#5C5C5C",
+  background:'#333',
+  secondary:"#FFEC70",
+  text:'white'
+}
+const light = {
+  input:"#FFF4C2",
+  background:'#FFFDDD',
+  secondary:'#CC9966',
+  text:'black'
+}
+
 
 const styles = StyleSheet.create({
+  
     page: {
       flex: 1,
       justifyContent: 'center',
@@ -16,10 +38,11 @@ const styles = StyleSheet.create({
     },
     containerLogin: {
       flex: 1,
-      backgroundColor: backgroundOscuro,
+      backgroundColor: themeHelper().background,
       alignItems: 'center',
       justifyContent: 'center',
     },
+
 
     containerMap: {
       height: "100%",
@@ -28,12 +51,12 @@ const styles = StyleSheet.create({
     loguito:{
       fontWeight:"bold",
       fontSize:50,
-      color:amarillo,
+      color:themeHelper().secondary,
       marginBottom:40
     },
     inputView:{
       width:"80%",
-      backgroundColor:inputOscuro,
+      backgroundColor:themeHelper().input,
       borderRadius:25,
       height:50,
       marginBottom:20,
@@ -42,11 +65,11 @@ const styles = StyleSheet.create({
     },
     inputText:{
       height:50,
-      color:blanco
+      color:themeHelper().text,
     },
     loginButton:{
       width:"80%",
-      backgroundColor:amarillo,
+      backgroundColor:themeHelper().secondary,
       borderRadius:25,
       height:50,
       alignItems:"center",
@@ -55,10 +78,10 @@ const styles = StyleSheet.create({
       marginBottom:10
     },
     loginText:{
-      color:blanco
+      color:themeHelper().text,
     },
     olvidoSuContrasenia:{
-      color:blanco,
+      color:themeHelper().text,
       fontSize:11
     },
     fab: {
@@ -66,9 +89,56 @@ const styles = StyleSheet.create({
       margin: 16,
       right: 0,
       bottom: 0,
-      backgroundColor:amarillo
+      backgroundColor:themeHelper().secondary,
     },
-
+    mainScreenFooter:{
+      backgroundColor:themeHelper().secondary,
+    },
+    
+    containerHeaderPerfil:{
+      alignItems: 'center',
+      backgroundColor: "grey",
+    },
+    perfilHeaderText:{
+      fontSize:30,
+      color:"black",
+    },
+    perfilText:{
+      fontSize:20,
+      color:"black",
+      marginBottom:10,
+    },
+    containerPerfil:{
+      flex:1,
+      backgroundColor:themeHelper().background,
+    },
+    perfilContentText:{
+      fontSize:20,
+      color:themeHelper().text,
+      marginBottom:20,
+    },
+    perfilMiniContentText:{
+      fontSize:16,
+      color:themeHelper().text,
+      marginBottom:20,
+      marginLeft:15,
+    }
+    ,
+    alinearSwitch:{
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+    },
+    perfilButton:{
+      width:"50%",
+      backgroundColor:themeHelper().secondary,
+      borderRadius:25,
+      height:50,
+      alignSelf:'center',
+      alignItems:"center",
+      justifyContent:"center",
+      marginTop:40,
+    }
   });
 
 export default styles;

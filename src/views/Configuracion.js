@@ -1,11 +1,11 @@
 import { Text } from "react-native-paper"
 import {View,Switch} from "react-native"
 import React from 'react';
-import styles from '../styles/styles'
+import styles,{colorSchemeChanger} from '../styles/styles'
 const Configuracion = () =>{
     const [isEnabled, setIsEnabled] = React.useState(false);
     const toggleSwitch = () => setIsEnabled(previousState => !previousState);
-
+    
     return(
         <View style={styles.containerLogin} >
             <View style={{display:'flex',flexDirection:'row'}}>

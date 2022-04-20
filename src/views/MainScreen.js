@@ -3,6 +3,7 @@ import { BottomNavigation, Text } from 'react-native-paper';
 import MiPerfil from './Mi Perfil';
 import Configuracion from './Configuracion';
 import MapScreen from './MapScreen'
+import styles from '../styles/styles'
 
 const MainScreen = ({ navigation }) => {
     const [index, setIndex] = React.useState(0);
@@ -19,7 +20,7 @@ const MainScreen = ({ navigation }) => {
 
     return (
         <BottomNavigation
-            barStyle={{ backgroundColor: '#FFEC70' }}
+            barStyle={ styles.mainScreenFooter }
             navigationState={{ index, routes }}
             onIndexChange={setIndex}
             renderScene={renderScene}
