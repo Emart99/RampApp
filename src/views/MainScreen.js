@@ -11,15 +11,15 @@ const MainScreen = ({ navigation }) => {
     const [index, setIndex] = React.useState(0);
     const [routes] = React.useState([
         { key: 'RampasDisponibles', title: 'Rampas Disp', icon: 'map-marker' },
-        { key: 'MiPerfil', title: 'Perfil', icon: 'account' },
         { key: 'AdminRampa', title:'Admin Rampa', icon:'parking' },
         { key: 'AdminVehiculo', title:'Admin Vehic', icon:'car'},
+        { key: 'MiPerfil', title: 'Perfil', icon: 'account' },
     ])
     const renderScene = BottomNavigation.SceneMap({
         RampasDisponibles: MapScreen,
-        MiPerfil: MiPerfil,
         AdminRampa: AdministrarRampa,
         AdminVehiculo:AdministrarVehiculo,
+        MiPerfil: MiPerfil,
     });
 
     return (

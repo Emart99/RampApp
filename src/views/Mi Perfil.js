@@ -1,5 +1,5 @@
 import { Text,Avatar,Switch,Divider   } from "react-native-paper"
-import {View,TouchableOpacity} from "react-native"
+import {View,TouchableOpacity,ScrollView } from "react-native"
 import React from 'react';
 import styles from '../styles/styles'
 
@@ -9,7 +9,7 @@ const MiPerfil = () =>{
     const onToggleSwitch = () => setIsSwitchOn(!isSwitchOn);
 
     return(
-        <View style={styles.containerPerfil}>
+        <ScrollView  style={styles.containerPerfil}>
             <View style={styles.containerHeaderPerfil}>
                 <Avatar.Icon size={150} style={{marginTop:15,backgroundColor:'#333'}} icon="account" />
                 <Text style={styles.perfilHeaderText}>Jorge Egger</Text>
@@ -35,7 +35,7 @@ const MiPerfil = () =>{
                     <Text style={{color:'black'}}>CERRAR SESION</Text>
                 </TouchableOpacity>
             </View>
-        </View>
+        </ScrollView >
        
         
     )

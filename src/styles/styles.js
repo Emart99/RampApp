@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
     
     containerHeaderPerfil:{
       alignItems: 'center',
-      backgroundColor: "grey",
+      backgroundColor: "#575757",
     },
     perfilHeaderText:{
       fontSize:30,
