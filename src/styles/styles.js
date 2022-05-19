@@ -42,39 +42,59 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       justifyContent: 'center',
     },
-
-
     containerMap: {
       height: "100%",
       width: "100%",
     },
     loguito:{
       fontWeight:"bold",
-      fontSize:50,
+      fontSize:60,
       color:themeHelper().secondary,
       marginBottom:40
     },
     inputView:{
-      width:"80%",
+      width:"85%",
       backgroundColor:themeHelper().input,
-      borderRadius:25,
-      height:50,
+      borderRadius:8,
+      height:45,
       marginBottom:20,
       justifyContent:"center",
       padding:20
     },
+    crearText:{
+      color:themeHelper().text,
+      fontSize:20,
+      marginBottom:20,
+    },
+    backIcon:{
+      marginLeft: 30,
+      marginTop:10,
+      borderColor:'black',
+      borderRadius:25,
+      borderStyle: 'solid',
+      borderWidth: 1,
+      alignSelf:'flex-start',
+      marginBottom: -20
+    },
     inputText:{
       height:50,
       color:themeHelper().text,
+      fontSize:16
+    },
+    dateText:{
+      textAlignVertical:'center',
+      height:50,
+      color:themeHelper().text,
+      fontSize:16
     },
     loginButton:{
-      width:"80%",
+      width:"85%",
       backgroundColor:themeHelper().secondary,
-      borderRadius:25,
-      height:50,
+      borderRadius:8,
+      height:45,
       alignItems:"center",
       justifyContent:"center",
-      marginTop:40,
+      marginTop:10,
       marginBottom:10
     },
     loginText:{
@@ -82,7 +102,7 @@ const styles = StyleSheet.create({
     },
     olvidoSuContrasenia:{
       color:themeHelper().text,
-      fontSize:11
+      fontSize:13
     },
     fab: {
       position: 'absolute',

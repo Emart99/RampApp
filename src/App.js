@@ -16,6 +16,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import SplashScreen from 'react-native-splash-screen'
 import { LogBox } from "react-native";
 import { Provider as PaperProvider } from 'react-native-paper';
+import MiPerfil from './views/Mi Perfil';
 
 
 
