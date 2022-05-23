@@ -1,0 +1,47 @@
+package App.Service
+
+import App.Domain.EstadoRampa
+import App.Domain.Locador
+import App.Domain.Rampa
+import App.Repository.RepositorioRampas
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.http.HttpStatus
+import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
+import org.springframework.web.server.ResponseStatusException
+
+@Service
+class RampaService {
+
+    @Autowired
+    lateinit var repositorioRampa: RepositorioRampas
+
+    @Autowired
+    lateinit var usuarioService:UsuarioService
+
+    @Transactional(readOnly = true)
+    fun traerRampasParaRamapasDisponibles(): List<Rampa> {
+        val estadoABuscar= EstadoRampa().apply{
+            nombreDeEstado = "Disponible"
+        }
+        return repositorioRampa.findAllByEstadoRampaEquals(estadoABuscar.nombreDeEstado)
+    }
+
+    @Transactional(readOnly = true)
+    fun traerRampaPorID(id: Long): Rampa =
+        repositorioRampa.findById(id).orElseThrow {
+        ResponseStatusException(HttpStatus.NOT_FOUND, "La rampa con identificador $id no existe")
+    }
+
+    @Transactional(readOnly = false)
+    fun registrarNuevaRampa(idUsuario: Long, rampaNueva: Rampa){
+        var rampaARegistrar: Rampa? = this.repositorioRampa.findByNroPartidaInmobiliaria(rampaNueva.nroPartidaInmobiliaria)
+      if (rampaARegistrar  === null) {
+            repositorioRampa.save(rampaNueva)
+            val locador = usuarioService.buscarUsuaiorId(idUsuario) as Locador
+            locador.rampasPropias.add(rampaNueva)
+            } else {
+               ResponseStatusException(HttpStatus.NOT_FOUND, "El usuario con dni ${rampaNueva.nroPartidaInmobiliaria} ya se encuentra registrado")
+            }
+    }
+}

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Usuario.kt</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">nuevo</a> &gt; <a href="index.source.html" class="el_package">app.domain</a> &gt; <span class="el_source">Usuario.kt</span></div><h1>Usuario.kt</h1><pre class="source lang-java linenums">package app.domain
+
+import app.exceptions.BusinessException
+import app.serializers.View
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonView
+import javax.persistence.*
+
+<span class="fc" id="L9">@Entity</span>
+<span class="fc" id="L10">class Usuario{</span>
+
+    @Id
+    @JsonView(View.Usuario.DatosBasicos::class)
+    @GeneratedValue(strategy = GenerationType.TABLE)
+<span class="pc" id="L15">    var id: Long = 0</span>
+
+    @Column(length=150)
+    @JsonView(View.Usuario.DatosBasicos::class)
+<span class="pc" id="L19">    var nombre: String = &quot;&quot;</span>
+
+    @Column(length=150)
+    @JsonView(View.Usuario.DatosBasicos::class)
+<span class="pc" id="L23">    var apellido: String = &quot;&quot;</span>
+
+    @Column(length=3)
+    @JsonView(View.Usuario.DatosBasicos::class)
+<span class="pc" id="L27">    var edad: Int = 0</span>
+
+    @Column(length=50)
+    @JsonView(View.Usuario.DatosBasicos::class)
+<span class="pc" id="L31">    var saldo: Double = 0.00</span>
+
+    @Column(length=150)
+    @JsonView(View.Usuario.DatosBasicos::class)
+<span class="pc" id="L35">    var userName: String = &quot;&quot;</span>
+
+
+    @Column(length=150)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+<span class="pc" id="L40">    var password: String = &quot;&quot;</span>
+
+    @Column(length=150)
+<span class="pc" id="L43">    var nombreImagen = &quot;&quot;</span>
+
+
+    //Trabaja con cascada porque no pueden existir orden de compra que no esten relacionadas a un usuario
+    @OneToMany(fetch=FetchType.LAZY, cascade= [CascadeType.ALL])
+    @OrderColumn
+<span class="pc" id="L49">    var comprasRealizadas= mutableListOf&lt;OrdenCompra&gt;()</span>
+
+
+    fun agregarOrdenDeCompra(orden: OrdenCompra) {
+<span class="fc" id="L53">        comprasRealizadas.add(orden)</span>
+<span class="fc" id="L54">    }</span>
+
+    fun comprar(orden: OrdenCompra) {
+<span class="nc bnc" id="L57" title="All 2 branches missed.">        if(this.saldo&lt; orden.calcularImporte()){</span>
+<span class="nc" id="L58">            throw BusinessException(&quot;El saldo es insuficiente para realizar la compra&quot;)</span>
+        }
+<span class="nc" id="L60">        comprasRealizadas.add(orden)</span>
+<span class="nc" id="L61">    }</span>
+
+}
+
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
