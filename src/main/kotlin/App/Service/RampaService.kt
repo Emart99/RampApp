@@ -1,9 +1,9 @@
 package App.Service
 
-import App.Domain.EstadoRampa
-import App.Domain.Locador
-import App.Domain.Rampa
+import App.Domain.*
+import App.Repository.RepositorioHorarios
 import App.Repository.RepositorioRampas
+import App.Repository.RepositorioRampasPendienteAprobacion
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
@@ -15,6 +15,11 @@ class RampaService {
 
     @Autowired
     lateinit var repositorioRampa: RepositorioRampas
+    @Autowired
+    lateinit var repositorioRampaPendienteAprobacion: RepositorioRampasPendienteAprobacion
+    @Autowired
+    lateinit var repositorioHorarios: RepositorioHorarios
+
 
     @Autowired
     lateinit var usuarioService:UsuarioService
@@ -36,12 +41,27 @@ class RampaService {
     @Transactional(readOnly = false)
     fun registrarNuevaRampa(idUsuario: Long, rampaNueva: Rampa){
         var rampaARegistrar: Rampa? = this.repositorioRampa.findByNroPartidaInmobiliaria(rampaNueva.nroPartidaInmobiliaria)
-      if (rampaARegistrar  === null) {
-            repositorioRampa.save(rampaNueva)
+        if (rampaARegistrar  === null) {
             val locador = usuarioService.buscarUsuaiorId(idUsuario) as Locador
-            locador.rampasPropias.add(rampaNueva)
-            } else {
+            val rampaPendiente= RampaPendienteAprobacion(rampaNueva.calle,
+                rampaNueva.altura, rampaNueva.nroPartidaInmobiliaria, locador)
+            repositorioRampaPendienteAprobacion.save(rampaPendiente)
+            }else {
                ResponseStatusException(HttpStatus.NOT_FOUND, "El usuario con dni ${rampaNueva.nroPartidaInmobiliaria} ya se encuentra registrado")
             }
+    }
+
+    fun modificarHorariosRampa(idRampa: Long, horario: Horarios): Rampa {
+        var rampaAModificar = this.traerRampaPorID(idRampa)
+        var horarioAModificar = repositorioHorarios.findByHorario(horario.horario)
+
+        if (rampaAModificar.horariosDisponibles.contains(horarioAModificar)) {
+            rampaAModificar.horariosDisponibles.remove(horarioAModificar)
+            return repositorioRampa.save(rampaAModificar)
+        } else {
+            rampaAModificar.horariosDisponibles.add(horarioAModificar)
+            return repositorioRampa.save(rampaAModificar)
+        }
+
     }
 }

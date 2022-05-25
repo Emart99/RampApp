@@ -1,16 +1,30 @@
 package App.Domain
 
-import javax.persistence.FetchType
-import javax.persistence.OneToMany
-import javax.persistence.OrderColumn
+import javax.persistence.*
 
-
+@Entity
 class Administrador {
 
-    @OneToMany(fetch= FetchType.EAGER)
-    @OrderColumn
-    var denunciasRealizadas= mutableListOf<Denuncia>()
+    companion object {
+        @JvmStatic var instance:Administrador = Administrador()
+    }
+    init {
+        instance = this
+    }
 
-    fun aprobarRampa(){
+    @Id
+    var id: Long = 0
+
+    @Column(length=150)
+    var nombre: String = ""
+
+    @Column(length=150)
+    var apellido: String = ""
+
+    @Column(length=20)
+    var cuil: Long = 0
+
+    fun aprobarRampa(rampa: Rampa){
+
     }
 }

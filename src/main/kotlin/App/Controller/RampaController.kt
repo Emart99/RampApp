@@ -1,6 +1,8 @@
 package App.Controller
 
+import App.Domain.Horarios
 import App.Domain.Rampa
+
 import App.Domain.Usuario
 import App.Service.RampaService
 import com.fasterxml.jackson.annotation.JsonView
@@ -26,5 +28,10 @@ class RampaController {
     @PutMapping("/agregarRampa/{idUsuario}")
     @Operation(summary ="crea una rampa y se la agrega al usuario")
     fun registrarRampa(@PathVariable idUsuario: Long, @RequestBody rampaNueva : Rampa) = rampaService.registrarNuevaRampa(idUsuario,rampaNueva)
+
+    @PutMapping("/modificarHorarioRampa/{idRampa}")
+    @Operation(summary ="permite agregar o quitar un horario de disponibilidad de la rampa")
+    fun modifiarHorarioRampa(@PathVariable idRampa: Long, @RequestBody horario: Horarios): Rampa = rampaService.modificarHorariosRampa(idRampa,horario)
+
 
 }
