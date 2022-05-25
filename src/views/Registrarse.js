@@ -32,8 +32,9 @@ const Registrarse = ({navigation}) => {
     <View style={styles.containerLogin}>
       <IconButton
         style={styles.backIcon}
-        icon="keyboard-backspace"
+        icon="arrow-left-bold-box-outline"
         inline={true}
+        size={48}
         onPress={() => navigation.navigate('Login')}
       />
       <Text style={styles.crearText}> Crear cuenta </Text>

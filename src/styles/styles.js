@@ -2,7 +2,7 @@ import {StyleSheet, Appearance } from 'react-native'
 
 let colorScheme = 'dark';
 
-function themeHelper(){
+export function themeHelper(){
   if(colorScheme === 'light'){
     return light
   }
@@ -68,11 +68,6 @@ const styles = StyleSheet.create({
     },
     backIcon:{
       marginLeft: 30,
-      marginTop:10,
-      borderColor:'black',
-      borderRadius:25,
-      borderStyle: 'solid',
-      borderWidth: 1,
       alignSelf:'flex-start',
       marginBottom: -20
     },
