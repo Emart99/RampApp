@@ -4,7 +4,7 @@ import React from 'react';
 import styles from '../styles/styles'
 
 
-const MiPerfil = () =>{
+const MiPerfil = ({navigation}) =>{
     const [isSwitchOn, setIsSwitchOn] = React.useState(false);
     const onToggleSwitch = () => setIsSwitchOn(!isSwitchOn);
 
@@ -31,7 +31,7 @@ const MiPerfil = () =>{
                     <Text style={styles.perfilMiniContentText}>Notificaciones</Text>
                     <Switch value={isSwitchOn} onValueChange={onToggleSwitch} />
                 </View>
-                <TouchableOpacity  style = {styles.perfilButton}>
+                <TouchableOpacity onPress={() => navigation.navigate('Login')} style = {styles.perfilButton}>
                     <Text style={{color:'black'}}>CERRAR SESION</Text>
                 </TouchableOpacity>
             </View>

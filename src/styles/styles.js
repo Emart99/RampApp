@@ -99,6 +99,23 @@ const styles = StyleSheet.create({
       color:themeHelper().text,
       fontSize:13
     },
+    olvidoSuContraseniaModal:{
+      backgroundColor:'#333',
+    },
+    olvidoSuContraseniaModalInput:{
+      height:50,
+      color:themeHelper().text,
+      fontSize:16
+    },
+    olvidoSuContraseniaModalView:{
+      width:"85%",
+      backgroundColor:themeHelper().input,
+      borderRadius:8,
+      height:45,
+      alignSelf:'center',
+      justifyContent:"center",
+      padding:20
+    },
     fab: {
       position: 'absolute',
       margin: 16,
@@ -145,10 +162,10 @@ const styles = StyleSheet.create({
       justifyContent: 'space-between',
     },
     perfilButton:{
-      width:"50%",
+      width:"85%",
       backgroundColor:themeHelper().secondary,
-      borderRadius:25,
-      height:50,
+      borderRadius:8,
+      height:45,
       alignSelf:'center',
       alignItems:"center",
       justifyContent:"center",
