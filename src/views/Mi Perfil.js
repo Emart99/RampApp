@@ -31,6 +31,13 @@ const MiPerfil = ({navigation}) =>{
                     <Text style={styles.perfilMiniContentText}>Notificaciones</Text>
                     <Switch value={isSwitchOn} onValueChange={onToggleSwitch} />
                 </View>
+
+                <TouchableOpacity onPress={() => navigation.navigate('AdministrarRampa')} style = {styles.perfilButton}>
+                    <Text style={{color:'black'}}>Administrar Rampas</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => navigation.navigate('AdministrarVehiculo')} style = {styles.perfilButton}>
+                    <Text style={{color:'black'}}>Administrar Vehiculo</Text>
+                </TouchableOpacity>
                 <TouchableOpacity onPress={() => navigation.navigate('Login')} style = {styles.perfilButton}>
                     <Text style={{color:'black'}}>CERRAR SESION</Text>
                 </TouchableOpacity>

@@ -32,7 +32,6 @@ const OlvidoSuContrasenia = (props, setProps) => {
         </Portal>
     );
 
-
 }
 
 export default OlvidoSuContrasenia;

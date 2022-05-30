@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
       marginBottom:10
     },
     loginText:{
-      color:themeHelper().text,
+      color:themeHelper().text,backgroundColor:'#333',
     },
     olvidoSuContrasenia:{
       color:themeHelper().text,

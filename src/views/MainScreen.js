@@ -16,11 +16,9 @@ const MainScreen = ({ navigation }) => {
     return (
         
     <Tab.Navigator barStyle={ styles.mainScreenFooter }>
-        <Tab.Screen options={{tabBarIcon:'map-marker'}} name="RampasDisp" component={MapScreen} />
-        <Tab.Screen options={{tabBarIcon:'parking'}} name="AdminRampa" component={AdministrarRampa} />
-        <Tab.Screen options={{tabBarIcon:'car'}} name="AdminVehiculo" component={AdministrarVehiculo} />
+        <Tab.Screen options={{tabBarIcon:'map-marker'}} name="Rampas Disponibles" component={MapScreen} />
         <Tab.Screen options={{tabBarIcon:'cart'}} name="Carrito" component={Carrito} />
-        <Tab.Screen options={{tabBarIcon:'account'}} name="MiPerfil" component={MiPerfil} />
+        <Tab.Screen options={{tabBarIcon:'account'}} name="Mi Perfil" component={MiPerfil} />
       </Tab.Navigator>
     )
 }
