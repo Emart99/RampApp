@@ -17,10 +17,11 @@ class VehiculoService {
     @Transactional(readOnly = true)
     fun buscarVehiculoPorId(id: Long): Vehiculo =
         this.repositorioVehiculo.findById(id).orElseThrow {
-            ResponseStatusException(HttpStatus.NOT_FOUND, "No existe el vehiculo con ese id")}
+            ResponseStatusException(HttpStatus.NOT_FOUND, "No existe el vehiculo con ese id")
+        }
 
     @Transactional
-    fun modificarVehiculos(id: Long, vehiculoModificado:Vehiculo) : Vehiculo{
+    fun modificarVehiculos(id: Long, vehiculoModificado: Vehiculo): Vehiculo {
         return repositorioVehiculo
             .findById(id)
             .map {
@@ -33,8 +34,6 @@ class VehiculoService {
             .orElseThrow {
                 ResponseStatusException(HttpStatus.NOT_FOUND, "El vehiculo con identificador $id no existe")
             }
-        }
-
-
+    }
 
 }

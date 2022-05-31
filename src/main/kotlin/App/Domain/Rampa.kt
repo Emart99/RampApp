@@ -10,6 +10,12 @@ class Rampa {
     var id: Long = 0
 
     @Column(length=150)
+    var posx: String = ""
+
+    @Column(length=150)
+    var posy: String = ""
+
+    @Column(length=150)
     var calle: String = ""
 
     @Column(length=5)
@@ -20,8 +26,12 @@ class Rampa {
 
     var estadoRampa: String = "Disponible"
 
-    @OneToMany(fetch= FetchType.EAGER)
+    @OneToMany(fetch=FetchType.EAGER, cascade= [CascadeType.ALL])
     var horariosDisponibles = mutableListOf<Horarios>()
+
+    fun agregarHorario(horario1: Horarios) {
+        horariosDisponibles.add(horario1)
+    }
 
 
    // @OneToMany(fetch= FetchType.EAGER)
@@ -31,6 +41,13 @@ class Rampa {
 
 @Entity
 class RampaPendienteAprobacion(
+
+    @Column(length=150)
+    var posx: String = "",
+
+    @Column(length=150)
+    var posy: String = "",
+
     @Column(length=150)
     var calle: String = "",
 
@@ -43,10 +60,8 @@ class RampaPendienteAprobacion(
     @OneToOne(fetch= FetchType.EAGER)
     var usuarioPropietario: Locador= Locador())
 {
-
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
     var id: Long = 0
-
 }
 

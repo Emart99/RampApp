@@ -24,4 +24,5 @@ class VehiculoController {
     @PutMapping("/modificarVehiculo/{id}")
     @Operation(summary ="permite modificar los datos de un vehiculo")
     fun modificarVehiculo (@PathVariable id: Long, @RequestBody vehiculoModificado : Vehiculo) = vehiculoService.modificarVehiculos(id, vehiculoModificado)
+
 }

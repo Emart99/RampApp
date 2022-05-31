@@ -1,7 +1,7 @@
 package App.Service
 
 import App.Domain.*
-import App.Repository.RepositorioHorarios
+import App.Repository.RepositorioAdministrador
 import App.Repository.RepositorioRampas
 import App.Repository.RepositorioRampasPendienteAprobacion
 import org.springframework.beans.factory.annotation.Autowired
@@ -18,7 +18,7 @@ class RampaService {
     @Autowired
     lateinit var repositorioRampaPendienteAprobacion: RepositorioRampasPendienteAprobacion
     @Autowired
-    lateinit var repositorioHorarios: RepositorioHorarios
+    lateinit var repositorioHorarios: RepositorioAdministrador
 
 
     @Autowired
@@ -43,25 +43,24 @@ class RampaService {
         var rampaARegistrar: Rampa? = this.repositorioRampa.findByNroPartidaInmobiliaria(rampaNueva.nroPartidaInmobiliaria)
         if (rampaARegistrar  === null) {
             val locador = usuarioService.buscarUsuaiorId(idUsuario) as Locador
-            val rampaPendiente= RampaPendienteAprobacion(rampaNueva.calle,
-                rampaNueva.altura, rampaNueva.nroPartidaInmobiliaria, locador)
+            val rampaPendiente= RampaPendienteAprobacion(rampaNueva.calle,rampaNueva.posx
+                ,rampaNueva.posy,rampaNueva.altura, rampaNueva.nroPartidaInmobiliaria, locador)
             repositorioRampaPendienteAprobacion.save(rampaPendiente)
             }else {
                ResponseStatusException(HttpStatus.NOT_FOUND, "El usuario con dni ${rampaNueva.nroPartidaInmobiliaria} ya se encuentra registrado")
             }
     }
 
-    fun modificarHorariosRampa(idRampa: Long, horario: Horarios): Rampa {
-        var rampaAModificar = this.traerRampaPorID(idRampa)
-        var horarioAModificar = repositorioHorarios.findByHorario(horario.horario)
-
-        if (rampaAModificar.horariosDisponibles.contains(horarioAModificar)) {
-            rampaAModificar.horariosDisponibles.remove(horarioAModificar)
-            return repositorioRampa.save(rampaAModificar)
-        } else {
-            rampaAModificar.horariosDisponibles.add(horarioAModificar)
-            return repositorioRampa.save(rampaAModificar)
-        }
-
+    fun modificarHorariosRampa(idRampa: Long, rampaModificadora:Rampa): Rampa {
+        return repositorioRampa
+            .findById(idRampa)
+            .map {
+                it.horariosDisponibles= rampaModificadora.horariosDisponibles
+                repositorioRampa.save(it)
+                it
+            }
+            .orElseThrow {
+                ResponseStatusException(HttpStatus.NOT_FOUND, "La Rampa con identificador $idRampa no existe")
+            }
     }
 }

@@ -1,5 +1,6 @@
 package App.Service
 
+import App.Domain.Locador
 import App.Domain.Locatario
 import App.Domain.Usuario
 import App.Domain.Vehiculo
@@ -33,14 +34,15 @@ class UsuarioService {
             ResponseStatusException(HttpStatus.NOT_FOUND, "El usuario no existe")
         }
 
-    @Transactional(readOnly = false)
-    fun registrarNuevoUsuario(usuario: Usuario){
-        val usuarioARegistrar = repositorioUsuarios.findByDni(usuario.id)
+    @Transactional(readOnly = true)
+    fun registrarNuevoUsuario(usuario: Usuario): Usuario {
+       val usuarioARegistrar = repositorioUsuarios.findByDni(usuario.dni)
         if (usuarioARegistrar === null) {
             repositorioUsuarios.save(usuario)
-        } else {
+       } else {
             ResponseStatusException(HttpStatus.NOT_FOUND, "El usuario con dni ${usuario.dni} ya se encuentra registrado")
-        }
+       }
+        return usuario
     }
 
    fun agregarVehiculo(idUsuario: Long, vehiculoNuevo: Vehiculo){
@@ -53,5 +55,14 @@ class UsuarioService {
           ResponseStatusException(HttpStatus.NOT_FOUND, "El vehiculo con dominio ${vehiculoNuevo.dominio} ya se encuentra registrado")
        }
     }
+
+    fun eliminarVehiculoPorId(idUsuario: Long, vehiculoAEliminar: Vehiculo){
+        val usuario = this.buscarUsuaiorId(idUsuario) as Locatario
+        val vehiculo: Vehiculo= repositorioVehiculo.findById(vehiculoAEliminar.id).orElseThrow {
+            ResponseStatusException(HttpStatus.NOT_FOUND, "El usuario no existe")
+        }
+        usuario.vehiculos.remove(vehiculo)
+        repositorioVehiculo.delete(vehiculo)
+}
 
 }

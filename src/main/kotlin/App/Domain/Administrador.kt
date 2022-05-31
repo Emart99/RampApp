@@ -24,6 +24,12 @@ class Administrador {
     @Column(length=20)
     var cuil: Long = 0
 
+    @Column(length=150)
+    var userName: String = ""
+
+    @Column(length=150)
+    var contrasenia: String = ""
+
     fun aprobarRampa(rampa: Rampa){
 
     }
