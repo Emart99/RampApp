@@ -3,6 +3,7 @@ package App.Controller
 import App.Domain.Usuario
 import App.Domain.Vehiculo
 import App.Service.UsuarioService
+import com.fasterxml.jackson.annotation.JsonView
 import io.swagger.v3.oas.annotations.Operation
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
@@ -17,6 +18,10 @@ class UsuarioController {
     @PostMapping("/usuario/login")
     @Operation(summary ="Devuelve el usuario cuyo username y contraseña coincide con lo que pasamos como parámetro")
     fun buscarLoguearse(@RequestBody usuario: Usuario): Usuario = usuarioService.buscar(usuario)
+
+    @GetMapping("/usuario/{id}")
+    @Operation(summary = "Devuelve usuario por id")
+    fun traerUsuario(@PathVariable id: Long) = usuarioService.getUsuario(id)
 
     @PutMapping("/usuario/registrar")
     @Operation(summary ="crea un usuario que no esta registrado con Dni")

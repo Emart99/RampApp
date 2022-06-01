@@ -5,14 +5,15 @@ import javax.persistence.*
 @Entity
 class Administrador {
 
-    companion object {
-        @JvmStatic var instance:Administrador = Administrador()
-    }
-    init {
-        instance = this
-    }
+//    companion object {
+ //       @JvmStatic var instance:Administrador = Administrador()
+ //   }
+ //   init {
+ //       instance = this
+ //   }
 
     @Id
+    @GeneratedValue
     var id: Long = 0
 
     @Column(length=150)
@@ -30,7 +31,4 @@ class Administrador {
     @Column(length=150)
     var contrasenia: String = ""
 
-    fun aprobarRampa(rampa: Rampa){
-
-    }
 }

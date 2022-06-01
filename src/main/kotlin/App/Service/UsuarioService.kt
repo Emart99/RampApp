@@ -29,6 +29,11 @@ class UsuarioService {
         }
 
     @Transactional(readOnly = true)
+    fun getUsuario(id: Long): Usuario =
+        this.repositorioUsuarios.findById(id).orElseThrow {
+            ResponseStatusException(HttpStatus.NOT_FOUND, "No existe usuario con ese id")}
+
+    @Transactional(readOnly = true)
     fun buscarUsuaiorId(id: Long): Usuario =
         this.repositorioUsuarios.findById(id).orElseThrow {
             ResponseStatusException(HttpStatus.NOT_FOUND, "El usuario no existe")

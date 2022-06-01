@@ -33,10 +33,9 @@ class Rampa {
         horariosDisponibles.add(horario1)
     }
 
-
-   // @OneToMany(fetch= FetchType.EAGER)
-   // @OrderColumn
-   // var reservasRealizadas: MutableCollection<Reserva> =mutableListOf()
+   //@OneToMany(fetch= FetchType.EAGER, cascade= [CascadeType.ALL])
+   //@OrderColumn
+   //var reservasRealizadas: MutableCollection<Reserva> =mutableListOf()
 }
 
 @Entity

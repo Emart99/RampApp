@@ -23,7 +23,7 @@ class Bootstrap : InitializingBean {
     lateinit var repositorioVehiculo: RepositorioVehiculos
 
     @Autowired
-    lateinit var repositorioHorarios: RepositorioAdministrador
+    lateinit var repositorioAdministrador: RepositorioAdministrador
 
     fun crearUsuario() {
         var usuario1 = Locador().apply {
@@ -132,10 +132,12 @@ class Bootstrap : InitializingBean {
         val admin1 = Administrador().apply {
             nombre = "Edgardo"
             apellido = "Ramirez "
-            cuil = 30-29211124-1
+            cuil = 30292111241
             userName = "admin"
             contrasenia = "admin"
         }
+
+        repositorioAdministrador.save(admin1)
 
     }
 }
