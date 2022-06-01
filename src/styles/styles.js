@@ -63,11 +63,11 @@ const styles = StyleSheet.create({
     },
     crearText:{
       color:themeHelper().text,
-      fontSize:20,
+      fontSize:26,
       marginBottom:20,
     },
     backIcon:{
-      marginLeft: 30,
+      marginLeft: '4.5%',
       alignSelf:'flex-start',
       marginBottom: -20
     },
@@ -79,7 +79,6 @@ const styles = StyleSheet.create({
     dateText:{
       textAlignVertical:'center',
       height:50,
-      color:themeHelper().text,
       fontSize:16
     },
     loginButton:{

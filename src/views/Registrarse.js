@@ -31,10 +31,11 @@ const Registrarse = ({navigation}) => {
   return (
     <View style={styles.containerLogin}>
       <IconButton
-        style={styles.backIcon}
-        icon="arrow-left-bold-box-outline"
+        style={[styles.backIcon,{transform: [{rotateY: '180deg'}]}]}
+        color='#FFEC70'
+        icon="exit-to-app"
         inline={true}
-        size={48}
+        size={37}
         onPress={() => navigation.navigate('Login')}
       />
       <Text style={styles.crearText}> Crear cuenta </Text>
