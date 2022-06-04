@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Text,
   StyleSheet,
@@ -8,6 +8,7 @@ import {
   Pressable,
   TouchableOpacity,
 } from 'react-native';
+import { traerRampas } from '../api/http';
 import {themeHelper} from '../styles/styles';
 
 export const rampaStyle = StyleSheet.create({
@@ -81,6 +82,12 @@ export const rampaStyle = StyleSheet.create({
 });
 
 const AdministrarRampa = () => {
+  const [rampas, setRampas] = React.useState([]);
+
+  useEffect(() => {
+    traerRampas().then(response => {setRampas(response)});
+  },[]);
+
   return (
     <>
       <Text style={rampaStyle.titulo}>Rampas</Text>
@@ -105,9 +112,9 @@ const CardRampa = (rampa, index) => {
   const rampaTxt = style => {
     return (
       <View style={style}>
-        <Text style={rampaStyle.text}>{rampa.direccion}</Text>
-        <Text style={rampaStyle.textCursiva}>{rampa.estado}</Text>
-        <Text style={rampaStyle.textCursiva}>{rampa.patente}</Text>
+        <Text style={rampaStyle.text}>{rampa.calle} {rampa.altura}</Text>
+        <Text style={rampaStyle.textCursiva}>{rampa.estadoRampa}</Text>
+        {/* <Text style={rampaStyle.textCursiva}>{rampa.patente}</Text> */}
       </View>
     );
   };
@@ -142,38 +149,38 @@ const CardRampa = (rampa, index) => {
   );
 };
 
-const rampas = [
-  {
-    id: 0,
-    direccion: '012345678901234567890123456789012345678',
-    estado: 'Disponible',
-  },
-  {
-    id: 1,
-    direccion: '012345678901234567890123456789012345678',
-    estado: 'Alquilada',
-    patente: 'AB123CD',
-  },
-  {
-    id: 2,
-    direccion: 'San Jorge 4234',
-    estado: 'No disponible',
-  },
-  {
-    id: 3,
-    direccion: 'San Jorge 4334',
-    estado: 'Alquilada',
-    patente: 'AB123CD',
-  },
-  {
-    id: 4,
-    direccion: 'San Jorge 4234',
-    estado: 'Disponible',
-  },
-  {
-    id: 5,
-    direccion: 'San Jorge 4334',
-    estado: 'Alquilada',
-    patente: 'AB123CD',
-  },
-];
+// const rampas = [
+//   {
+//     id: 0,
+//     direccion: '012345678901234567890123456789012345678',
+//     estado: 'Disponible',
+//   },
+//   {
+//     id: 1,
+//     direccion: '012345678901234567890123456789012345678',
+//     estado: 'Alquilada',
+//     patente: 'AB123CD',
+//   },
+//   {
+//     id: 2,
+//     direccion: 'San Jorge 4234',
+//     estado: 'No disponible',
+//   },
+//   {
+//     id: 3,
+//     direccion: 'San Jorge 4334',
+//     estado: 'Alquilada',
+//     patente: 'AB123CD',
+//   },
+//   {
+//     id: 4,
+//     direccion: 'San Jorge 4234',
+//     estado: 'Disponible',
+//   },
+//   {
+//     id: 5,
+//     direccion: 'San Jorge 4334',
+//     estado: 'Alquilada',
+//     patente: 'AB123CD',
+//   },
+// ];

@@ -1,25 +1,31 @@
 import { Text,Avatar,Switch,Divider   } from "react-native-paper"
 import {View,TouchableOpacity,ScrollView } from "react-native"
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import styles from '../styles/styles'
+import { traerUsuario } from "../api/http";
 
 
 const MiPerfil = ({navigation}) =>{
-    const [isSwitchOn, setIsSwitchOn] = React.useState(false);
+    const [isSwitchOn, setIsSwitchOn] = useState(false);
     const onToggleSwitch = () => setIsSwitchOn(!isSwitchOn);
+    const [usuario,setUsuario] = useState('')
+    useEffect(() => {
+        traerUsuario(6).then(response => {setUsuario(response)});
+      },[]);
 
     return(
         <ScrollView  style={styles.containerPerfil}>
             <View style={styles.containerHeaderPerfil}>
                 <Avatar.Icon size={150} style={{marginTop:15,backgroundColor:'#333'}} icon="account" />
-                <Text style={styles.perfilHeaderText}>Jorge Egger</Text>
-                <Text style={styles.perfilText}>JorgeEgger@yahoo.com.ar</Text>
+                <Text style={styles.perfilHeaderText}>{usuario.userName}</Text>
+                <Text style={styles.perfilText}>{usuario.email}</Text>
             </View>
             <View style={{flex:1, marginTop:20, padding:15}}>
                 <Text style={styles.perfilContentText}>Informacion Personal</Text>
-                <Text style={styles.perfilMiniContentText}>Fecha De Nacimiento : 10-06-2000</Text>
-                <Text style={styles.perfilMiniContentText}>Direccion : CalleFalsa123</Text>
-                <Text style={styles.perfilMiniContentText}>Tel : 11-3771-0208</Text>
+                <Text style={styles.perfilMiniContentText}>Nombre: {usuario.nombre}</Text>
+                <Text style={styles.perfilMiniContentText}>Apellido: {usuario.apellido}</Text>
+                <Text style={styles.perfilMiniContentText}>Fecha De Nacimiento: {usuario.fechaDeNacimiento}</Text>
+                <Text style={styles.perfilMiniContentText}>DNI: {usuario.dni}</Text>
                 <Text style={styles.perfilMiniContentText}>Cambiar Contrasenia</Text>
 
                 <Text style={styles.perfilContentText}>Ajustes</Text>

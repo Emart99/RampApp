@@ -1,8 +1,9 @@
-import React from "react";
+import React, {useState,useEffect} from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Pressable } from 'react-native';
 import { themeHelper } from '../styles/styles';
 import { ScrollView } from 'react-native';
 import { IconButton } from "react-native-paper";
+import { traerVehiculos } from '../api/http';
 
 export const vehiculoStyle = StyleSheet.create({
   titulo: {
@@ -64,6 +65,12 @@ export const vehiculoStyle = StyleSheet.create({
 });
 
 const AdministrarVehiculo = () => {
+  // const [vehiculos, setVehiculos] = useState([])
+
+  // useEffect(() => {
+  //   traerVehiculos().then(response => {setVehiculos(response)});
+  // },[]);
+
   return (
     <>
       <Text style={vehiculoStyle.titulo}>Vehiculo</Text>

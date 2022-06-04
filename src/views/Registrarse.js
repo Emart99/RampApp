@@ -3,6 +3,9 @@ import styles from '../styles/styles';
 import {View, Text, TextInput, TouchableOpacity} from 'react-native';
 import {IconButton} from 'react-native-paper';
 import RNDateTimePicker from '@react-native-community/datetimepicker';
+import { registrar } from '../api/http';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+
 
 const Registrarse = ({navigation}) => {
   const [showDatePicker, setShowDatePicker] = useState(false);
@@ -15,20 +18,25 @@ const Registrarse = ({navigation}) => {
   const [fechaNacimiento, setFechaNacimiento] = useState(new Date());
   const [dni, setDni] = useState("");
 
-  const handleSubmit = event => {
-    console.log(
-      'usuario: ' + usuario,
-      '\ncontraseña: ' + contraseña,
-      '\nemail: ' + email,
-      '\nnombre: ' + nombre,
-      '\napellido: ' + apellido,
-      '\nfechaNacimiento: ' + fechaNacimiento,
-      '\ndni: ' + dni,
-    );
-    //mandar al service
+  const handleSubmit = () => {
+    const registro = {
+      nombre: nombre, apellido: apellido, dni: dni, fechaDeNacimiento: fechaNacimiento, userName: usuario,
+      contrasenia: contraseña, email: email
+    }
+    registrar(registro).then(resp => console.log(resp))
+    // console.log(
+    //   'usuario: ' + usuario,
+    //   '\ncontraseña: ' + contraseña,
+    //   '\nemail: ' + email,
+    //   '\nnombre: ' + nombre,
+    //   '\napellido: ' + apellido,
+    //   '\nfechaNacimiento: ' + fechaNacimiento,
+    //   '\ndni: ' + dni,
+    // );
   };
 
   return (
+    <KeyboardAwareScrollView enableOnAndroid enableAutomaticScroll  > 
     <View style={styles.containerLogin}>
       <IconButton
         style={[styles.backIcon,{transform: [{rotateY: '180deg'}]}]}
@@ -138,6 +146,7 @@ const Registrarse = ({navigation}) => {
         <Text>REGISTRAR</Text>
       </TouchableOpacity>
     </View>
+    </KeyboardAwareScrollView>
   );
 };
 
