@@ -1,9 +1,7 @@
 package App.Service
 
-import App.Domain.Locador
-import App.Domain.Locatario
-import App.Domain.Usuario
-import App.Domain.Vehiculo
+import App.Domain.*
+import App.Repository.RepositorioDenuncias
 import App.Repository.RepositorioUsuario
 import App.Repository.RepositorioVehiculos
 import org.apache.el.parser.AstFalse
@@ -21,6 +19,9 @@ class UsuarioService {
 
     @Autowired
     lateinit var repositorioVehiculo: RepositorioVehiculos
+
+    @Autowired
+    lateinit var repositorioDenuncia: RepositorioDenuncias
 
     @Transactional(readOnly = true)
     fun buscar(usuario: Usuario): Usuario =
@@ -70,4 +71,15 @@ class UsuarioService {
         repositorioVehiculo.delete(vehiculo)
 }
 
+    fun realizarDenuncia(idUsuario: Long, denuncia: Denuncia):Denuncia {
+        val usuario = this.getUsuario(idUsuario)
+        val nuevaDenuncia = Denuncia().apply {
+            tipoDenuncia = denuncia.tipoDenuncia
+            dominio = denuncia.dominio
+            direccionRampa = denuncia.direccionRampa
+            realizadaPor = usuario
+            imagen = denuncia.imagen
+        }
+        return repositorioDenuncia.save(nuevaDenuncia)
+    }
 }

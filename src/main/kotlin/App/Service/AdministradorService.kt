@@ -1,9 +1,8 @@
 package App.Service
 
-import App.Domain.Administrador
-import App.Domain.Rampa
-import App.Domain.RampaPendienteAprobacion
+import App.Domain.*
 import App.Repository.RepositorioAdministrador
+import App.Repository.RepositorioDenuncias
 import App.Repository.RepositorioRampas
 import App.Repository.RepositorioRampasPendienteAprobacion
 import org.springframework.beans.factory.annotation.Autowired
@@ -24,6 +23,9 @@ class AdministradorService {
 
     @Autowired
     lateinit var repositorioRampa: RepositorioRampas
+
+    @Autowired
+    lateinit var repositorioDenuncias: RepositorioDenuncias
 
     @Transactional(readOnly = true)
     fun buscar(admin: Administrador): Administrador =
@@ -51,5 +53,33 @@ class AdministradorService {
 
     fun traerRampasPendientesAprobacion(): MutableIterable<RampaPendienteAprobacion> {
         return this.repositorioRampaPendienteAprobacion.findAll()
+    }
+
+    fun traerDenunciasPendientesAprobacion(): MutableIterable<Denuncia> {
+        val estadoABuscar= EstadoRampa().apply{
+            nombreDeEstado = "Pendiente"
+        }
+        return this.repositorioDenuncias.findAllByEstadoDenuncia(estadoABuscar.nombreDeEstado)
+
+    }
+
+    fun aprobarDenuncia(idDenuncia: Long): Denuncia {
+     return repositorioDenuncias.findById(idDenuncia).map {
+            it.estadoDenuncia = "Aprobada"
+            repositorioDenuncias.save(it)
+            it
+        }.orElseThrow{
+        ResponseStatusException(HttpStatus.NOT_FOUND, "No se pudo aprobar la denuncia")
+        }
+    }
+
+    fun rechazarDenuncia(idDenuncia: Long): Denuncia {
+        return repositorioDenuncias.findById(idDenuncia).map {
+            it.estadoDenuncia = "Rechazada"
+            repositorioDenuncias.save(it)
+            it
+        }.orElseThrow{
+            ResponseStatusException(HttpStatus.NOT_FOUND, "No se pudo rechazar la denuncia")
+        }
     }
 }

@@ -1,5 +1,7 @@
 package App.Controller
 
+import App.Domain.Denuncia
+import App.Domain.Rampa
 import App.Domain.Usuario
 import App.Domain.Vehiculo
 import App.Service.UsuarioService
@@ -33,7 +35,10 @@ class UsuarioController {
 
     @DeleteMapping("/eliminarVehiculo/{id}")
     @Operation(summary = "Elimina un vehiculo por id")
-    fun eliinarVehiculoID(@PathVariable idUsuario: Long,@RequestBody vehiculoAEliminar: Vehiculo) = usuarioService.eliminarVehiculoPorId(idUsuario,vehiculoAEliminar)
+    fun eliminarVehiculoID(@PathVariable idUsuario: Long,@RequestBody vehiculoAEliminar: Vehiculo) = usuarioService.eliminarVehiculoPorId(idUsuario,vehiculoAEliminar)
 
+    @PutMapping("/realizarDenuncia/{idUsuario}")
+    @Operation(summary = "registra una denuncia")
+    fun crearDenuncia(@PathVariable idUsuario: Long,@RequestBody denuncia: Denuncia ) = usuarioService.realizarDenuncia(idUsuario,denuncia)
 
 }

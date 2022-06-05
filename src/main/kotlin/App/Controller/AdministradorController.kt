@@ -26,4 +26,16 @@ class AdministradorController {
     @Operation(summary ="Devuelve todas las rampas que se encuentran pendientes de aprobacion<")
     fun traerTodaLasRampasPendientesDeAprobacion():MutableIterable<RampaPendienteAprobacion> = administradorService.traerRampasPendientesAprobacion()
 
+    @GetMapping("/administrador/denunciasPendientesAprobacion")
+    @Operation(summary ="Devuelve todas las denuncias que se encuentran pendientes de aprobacion<")
+    fun traerTodaLasDenunciasPendientesDeAprobacion():MutableIterable<Denuncia> = administradorService.traerDenunciasPendientesAprobacion()
+
+    @GetMapping("/administrador/aprobarDenuncia/{idDenuncia}")
+    @Operation(summary ="El admin aprueba una denuncia pendiente")
+    fun aprobarUnaDenuncia(@PathVariable idDenuncia: Long): Denuncia = administradorService.aprobarDenuncia(idDenuncia)
+
+    @GetMapping("/administrador/rechazarDenuncia/{idDenuncia}")
+    @Operation(summary ="El admin rechaza una denuncia pendiente")
+    fun rechazarUnaDenuncia(@PathVariable idDenuncia: Long): Denuncia = administradorService.rechazarDenuncia(idDenuncia)
+
 }

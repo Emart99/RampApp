@@ -1,5 +1,6 @@
 package App.Domain
 
+import java.time.LocalDateTime
 import javax.persistence.*
 
 @Entity
@@ -9,13 +10,14 @@ class Denuncia {
     @GeneratedValue(strategy = GenerationType.TABLE)
     var id: Long = 0
 
-    @OneToOne(fetch= FetchType.EAGER)
-    @OrderColumn
-    var tipoDenuncia: TipoDenuncia = TipoDenuncia()
+    var fecha: LocalDateTime = LocalDateTime.now()
+    var tipoDenuncia: String = ""
 
-    @OneToOne(fetch= FetchType.EAGER)
-    @OrderColumn
-    var estadoDenuncia: EstadoDenuncia = EstadoDenuncia()
+    var direccionRampa: String = ""
+
+    var estadoDenuncia: String = "Pendiente"
+
+    var dominio: String= ""
 
     @OneToOne(fetch= FetchType.EAGER)
     @OrderColumn
@@ -23,4 +25,11 @@ class Denuncia {
 
     var imagen: String = ""
 
+    fun aprobarDenuncia(){
+        estadoDenuncia = "Aprobada"
+    }
+
+    fun rechazarDenuncia(){
+        estadoDenuncia = "Rechazada"
+    }
 }

@@ -126,6 +126,7 @@ class Bootstrap : InitializingBean {
     override fun afterPropertiesSet() {
         crearUsuario()
         crearAdministrador()
+        crearEstadoDenuncia()
     }
 
     fun crearAdministrador() {
@@ -138,6 +139,24 @@ class Bootstrap : InitializingBean {
         }
 
         repositorioAdministrador.save(admin1)
+
+    }
+
+    fun crearEstadoDenuncia() {
+        val denunciaPendienteAprobacion = EstadoDenuncia().apply {
+            id = 1
+            nombreDeEstado = "Denuncia Pendiente Aprobacion"
+        }
+
+        val denunciaAprobada = EstadoDenuncia().apply {
+            id = 2
+            nombreDeEstado = "Denuncia Aprobada"
+        }
+
+        val denunciaRechazada = EstadoDenuncia().apply {
+            id = 3
+            nombreDeEstado = "Denuncia Rechazada"
+        }
 
     }
 }

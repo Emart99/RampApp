@@ -33,5 +33,4 @@ class RampaController {
     @Operation(summary ="permite agregar o quitar un horario de disponibilidad de la rampa")
     fun modifiarHorarioRampa(@PathVariable idRampa: Long, @RequestBody rampaModificadora: Rampa): Rampa = rampaService.modificarHorariosRampa(idRampa,rampaModificadora)
 
-
 }
