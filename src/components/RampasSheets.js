@@ -1,11 +1,12 @@
 import React, { useRef } from 'react';
 import ActionSheet, {SheetManager} from "react-native-actions-sheet";
 import RampasDisponibles from './RampasDisponibles';
+import { useTheme } from 'react-native-paper';
 
 const RampasSheets = () =>{
 
     const actionSheetRef = useRef(null);
-
+    const theme = useTheme()
     return( 
         <>
 
@@ -19,8 +20,8 @@ const RampasSheets = () =>{
             bounciness={8}
             gestureEnabled={true}
             defaultOverlayOpacity={0.3}
-            containerStyle ={{backgroundColor:'#333'}} 
-            indicatorColor="#FFEC70">
+            containerStyle ={{backgroundColor:theme.colors.background}} 
+            indicatorColor={theme.colors.secondary}>
           
             <RampasDisponibles/>
           </ActionSheet>

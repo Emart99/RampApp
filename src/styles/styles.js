@@ -1,29 +1,46 @@
 import {StyleSheet, Appearance } from 'react-native'
+import MapboxGL from '@rnmapbox/maps';
+import { DefaultTheme,DarkTheme} from 'react-native-paper';
 
-let colorScheme = 'dark';
+let colorScheme = 'light';
 
 export function themeHelper(){
+
   if(colorScheme === 'light'){
-    return light
+    return LightTheme.colors
   }
   else{
-    return dark
+    return DarkTheme.colors
   }
 }
 
+export const LightTheme = {
+  ...DefaultTheme,
+  colors: {
+    headerPerfil:"#d9d9d9",
+    input:"black",
+    background:'#F0F2F5',
+    secondary:'#202124',
+    text:'black',
+    secondaryText:'white',
+    borderTextInput:'#CCD0D5',
+    mapHelper:MapboxGL.StyleURL.Light,
+  },
+};
 
-const dark = {
-  input:"#5C5C5C",
-  background:'#333',
-  secondary:"#FFEC70",
-  text:'white'
-}
-const light = {
-  input:"#FFF4C2",
-  background:'#FFFDDD',
-  secondary:'#CC9966',
-  text:'black'
-}
+export const _DarkTheme = {
+  ...DarkTheme,
+  colors: {
+
+    headerPerfil:"#575757",
+    input:"#5C5C5C",
+    background:'#333',
+    secondary:"#FFEC70",
+    text:'white',
+    secondaryText:'black',
+    borderTextInput:'#777',
+    mapHelper:MapboxGL.StyleURL.Dark,
+}};
 
 
 const styles = StyleSheet.create({
@@ -38,7 +55,6 @@ const styles = StyleSheet.create({
     },
     containerLogin: {
       flex: 1,
-      backgroundColor: themeHelper().background,
       alignItems: 'center',
       justifyContent: 'center',
     },
@@ -49,32 +65,22 @@ const styles = StyleSheet.create({
     loguito:{
       fontWeight:"bold",
       fontSize:60,
-      color:themeHelper().secondary,
       marginBottom:40
     },
     inputView:{
       width:"85%",
-      backgroundColor:themeHelper().input,
-      borderRadius:8,
       height:45,
-      marginBottom:20,
+      marginBottom:27,
       justifyContent:"center",
-      padding:20
     },
     crearText:{
-      color:themeHelper().text,
       fontSize:26,
       marginBottom:20,
     },
     backIcon:{
       marginLeft: '4.5%',
       alignSelf:'flex-start',
-      marginBottom: -20
-    },
-    inputText:{
-      height:50,
-      color:themeHelper().text,
-      fontSize:16
+      marginBottom: -20,
     },
     dateText:{
       textAlignVertical:'center',
@@ -83,7 +89,6 @@ const styles = StyleSheet.create({
     },
     loginButton:{
       width:"85%",
-      backgroundColor:themeHelper().secondary,
       borderRadius:8,
       height:45,
       alignItems:"center",
@@ -92,10 +97,10 @@ const styles = StyleSheet.create({
       marginBottom:10
     },
     loginText:{
-      color:themeHelper().text,backgroundColor:'#333',
+    },
+    loginSecondaryText:{
     },
     olvidoSuContrasenia:{
-      color:themeHelper().text,
       fontSize:13
     },
     olvidoSuContraseniaModal:{
@@ -103,12 +108,10 @@ const styles = StyleSheet.create({
     },
     olvidoSuContraseniaModalInput:{
       height:50,
-      color:themeHelper().text,
       fontSize:16
     },
     olvidoSuContraseniaModalView:{
       width:"85%",
-      backgroundColor:themeHelper().input,
       borderRadius:8,
       height:45,
       alignSelf:'center',
@@ -120,15 +123,12 @@ const styles = StyleSheet.create({
       margin: 16,
       right: 0,
       bottom: 0,
-      backgroundColor:themeHelper().secondary,
     },
     mainScreenFooter:{
-      backgroundColor:themeHelper().secondary,
     },
     
     containerHeaderPerfil:{
       alignItems: 'center',
-      backgroundColor: "#575757",
     },
     perfilHeaderText:{
       fontSize:30,
@@ -141,16 +141,13 @@ const styles = StyleSheet.create({
     },
     containerPerfil:{
       flex:1,
-      backgroundColor:themeHelper().background,
     },
     perfilContentText:{
       fontSize:20,
-      color:themeHelper().text,
       marginBottom:20,
     },
     perfilMiniContentText:{
       fontSize:16,
-      color:themeHelper().text,
       marginBottom:20,
       marginLeft:15,
     }
@@ -162,14 +159,13 @@ const styles = StyleSheet.create({
     },
     perfilButton:{
       width:"85%",
-      backgroundColor:themeHelper().secondary,
       borderRadius:8,
       height:45,
       alignSelf:'center',
       alignItems:"center",
       justifyContent:"center",
-      marginTop:40,
     }
   });
+  
 
 export default styles;

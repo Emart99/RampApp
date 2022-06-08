@@ -1,6 +1,6 @@
 import axios from "axios";
 //axios.defaults.baseURL = "http://localhost:9000";
-const IP_DEV =""
+const IP_DEV ="192.168.56.1"
 const ENV_DEV_URL = 'http://'+IP_DEV+':9000'
 
 // export async function traerVehiculos(){

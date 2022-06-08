@@ -6,57 +6,27 @@ import {
   View,
   ScrollView,
   Pressable,
-  StyleSheet,
+  TouchableOpacity
 } from 'react-native';
-import {rampaStyle} from './AdministrarRampa';
-import {reservaStyle} from './ReservasActivas';
-import {themeHelper} from '../styles/styles';
+import carritoStyles from '../styles/carritoStyles'
+import cardStyles from '../styles/cardStyles';
+import reservaStyles from './../styles/reservaStyles';
+import { useTheme } from 'react-native-paper';
 
-export const carritoStyle = StyleSheet.create({
-  imgRampa: {
-    width: 100,
-    maxHeight: 90,
-    borderRadius: 8,
-  },
-  cardTextLeft: {
-    alignItems: 'flex-end',
-    marginLeft: 15,
-    maxWidth: '60%',
-  },
-  cardTextRight: {
-    alignItems: 'flex-start',
-    marginRight: 15,
-    maxWidth: '60%',
-  },
-  textCursiva: {
-    fontSize: 16,
-    color: themeHelper().text,
-    fontStyle: 'italic',
-  },
-  card: {
-    // para el bgcolor
-    padding: 10,
-    width: '90%',
-    maxHeight: 150,
-    borderRadius: 8,
-    alignSelf: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#292929',
-    marginBottom: 20,
-    // para el bgcolor
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-});
 
 const Carrito = () => {
+  const theme = useTheme();
   return (
     <>
-      <Text style={reservaStyle.titulo}>Carrito</Text>
-      <ScrollView style={rampaStyle.scrolleableContainer}>
+      <Text style={[{color:theme.colors.text},reservaStyles.titulo]}>Carrito</Text>
+      <ScrollView style={cardStyles.scrolleableContainer}>
         {reservas.map((reserva, index) => CardCarrito(reserva, index))}
       </ScrollView>
+      <TouchableOpacity
+         style={[{backgroundColor:theme.colors.secondary},cardStyles.agregarButton]}
+         onPress={() => console.log('Pressed')}>
+         <Text style={{textAlign: 'center',color:theme.colors.secondaryText,padding:5}}>ABONAR</Text>
+      </TouchableOpacity>
     </>
   );
 };
@@ -64,6 +34,7 @@ const Carrito = () => {
 export default Carrito;
 
 const CardCarrito = (reserva, index) => {
+  const theme = useTheme();
   const touchHandler = () => {
     console.log(reserva.id, reserva.direccion);
   };
@@ -71,9 +42,9 @@ const CardCarrito = (reserva, index) => {
   const textHandler = (styleText, styleDenuncia) => {
     return (
       <View style={styleText}>
-        <Text style={rampaStyle.text}>{reserva.direccion}</Text>
-        <Text style={carritoStyle.textCursiva}>Desde: {reserva.desde}  Hasta: {reserva.hasta}</Text>
-        <Text style={carritoStyle.textCursiva}>Precio ${reserva.precio}</Text>
+        <Text style={[{color:theme.colors.text},cardStyles.text]}>{reserva.direccion}</Text>
+        <Text style={[{color:theme.colors.text},carritoStyles.textCursiva]}>Desde: {reserva.desde}  Hasta: {reserva.hasta}</Text>
+        <Text style={[{color:theme.colors.text},carritoStyles.textCursiva]}>Precio ${reserva.precio}</Text>
         <IconButton
           style={styleDenuncia}
           icon="trash-can-outline"
@@ -81,6 +52,7 @@ const CardCarrito = (reserva, index) => {
           // size={20}
           // onPress={() => navigation.navigate('Login')}
         />
+        
       </View>
     );
   };
@@ -91,11 +63,11 @@ const CardCarrito = (reserva, index) => {
         <>
           <Image
             source={require('../utils/casaBrunillo.png')}
-            style={carritoStyle.imgRampa}
+            style={carritoStyles.imgRampa}
           />
           {textHandler(
-            carritoStyle.cardTextLeft,
-            reservaStyle.denunciasIconRight,
+            carritoStyles.cardTextLeft,
+            reservaStyles.denunciasIconRight,
           )}
         </>
       );
@@ -103,19 +75,19 @@ const CardCarrito = (reserva, index) => {
     return (
       <>
         {textHandler(
-          carritoStyle.cardTextRight,
-          reservaStyle.denunciasIconLeft,
+          carritoStyles.cardTextRight,
+          reservaStyles.denunciasIconLeft,
         )}
         <Image
           source={require('../utils/casaBrunillo.png')}
-          style={carritoStyle.imgRampa}
+          style={carritoStyles.imgRampa}
         />
       </>
     );
   };
 
   return (
-    <Pressable style={carritoStyle.card} onPress={touchHandler}>
+    <Pressable style={[{backgroundColor:theme.colors.headerPerfil},carritoStyles.card,cardStyles.elevation]} onPress={touchHandler}>
       {rampaHandler()}
     </Pressable>
   );

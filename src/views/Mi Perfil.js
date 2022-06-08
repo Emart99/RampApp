@@ -1,22 +1,41 @@
-import { Text,Avatar,Switch,Divider   } from "react-native-paper"
+import { Text,Avatar,Switch,Divider, useTheme   } from "react-native-paper"
 import {View,TouchableOpacity,ScrollView } from "react-native"
 import React, {useEffect, useState} from 'react';
 import styles from '../styles/styles'
 import { traerUsuario } from "../api/http";
+import { PreferencesContext } from "../themeContext";
+import GlobalButton from './../components/GlobalButton';
 
 
 const MiPerfil = ({navigation}) =>{
     const [isSwitchOn, setIsSwitchOn] = useState(false);
-    const onToggleSwitch = () => setIsSwitchOn(!isSwitchOn);
+    const theme = useTheme();
+    const { toggleTheme, isThemeDark } = React.useContext(PreferencesContext);
+    let temaString = isThemeDark ? "Oscuro" : "Claro"
+
+    const onToggleSwitch = () => {
+        setIsSwitchOn(!isSwitchOn)
+        toggleTheme()
+    };
     const [usuario,setUsuario] = useState('')
     useEffect(() => {
         traerUsuario(6).then(response => {setUsuario(response)});
       },[]);
 
+    const loginNavigation = () =>{
+        navigation.navigate("Login")
+    }
+    const administrarVehiculoNavigation= () =>{
+        navigation.navigate("AdministrarVehiculo")
+    }
+    const administrarRampaNavigation= () =>{
+        navigation.navigate("AdministrarRampa")
+    }
+
     return(
-        <ScrollView  style={styles.containerPerfil}>
-            <View style={styles.containerHeaderPerfil}>
-                <Avatar.Icon size={150} style={{marginTop:15,backgroundColor:'#333'}} icon="account" />
+        <ScrollView   style={styles.containerPerfil}>
+            <View  style={[{backgroundColor:theme.colors.headerPerfil},styles.containerHeaderPerfil]}>
+                <Avatar.Icon size={150} style={{marginTop:15}} icon="account" />
                 <Text style={styles.perfilHeaderText}>{usuario.userName}</Text>
                 <Text style={styles.perfilText}>{usuario.email}</Text>
             </View>
@@ -28,25 +47,19 @@ const MiPerfil = ({navigation}) =>{
                 <Text style={styles.perfilMiniContentText}>DNI: {usuario.dni}</Text>
                 <Text style={styles.perfilMiniContentText}>Cambiar Contrasenia</Text>
 
-                <Text style={styles.perfilContentText}>Ajustes</Text>
+                <Text style={[{marginTop:20},styles.perfilContentText]}>Ajustes</Text>
                 <View style={styles.alinearSwitch}>
-                    <Text style={styles.perfilMiniContentText}>Tema:Oscuro</Text>
-                    <Switch value={isSwitchOn} onValueChange={onToggleSwitch}/>
+                    <Text style={styles.perfilMiniContentText}>Tema: {temaString}</Text>
+                    <Switch value={isThemeDark} onValueChange={onToggleSwitch}/>
                 </View>
-                <View style={styles.alinearSwitch}>
-                    <Text style={styles.perfilMiniContentText}>Notificaciones</Text>
-                    <Switch value={isSwitchOn} onValueChange={onToggleSwitch} />
-                </View>
+              
 
-                <TouchableOpacity onPress={() => navigation.navigate('AdministrarRampa')} style = {styles.perfilButton}>
-                    <Text style={{color:'black'}}>Administrar Rampas</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => navigation.navigate('AdministrarVehiculo')} style = {styles.perfilButton}>
-                    <Text style={{color:'black'}}>Administrar Vehiculo</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => navigation.navigate('Login')} style = {styles.perfilButton}>
-                    <Text style={{color:'black'}}>CERRAR SESION</Text>
-                </TouchableOpacity>
+
+                {GlobalButton([styles.perfilButton,{ backgroundColor: theme.colors.secondary,marginTop:20}],{color: theme.colors.secondaryText},"Administrar Rampas",administrarRampaNavigation)}
+                {GlobalButton([styles.perfilButton,{ backgroundColor: theme.colors.secondary,marginTop:10}],{color: theme.colors.secondaryText},"Administrar Vehiculo",administrarVehiculoNavigation)}
+                {GlobalButton([{ backgroundColor: theme.colors.secondary, marginTop:20},styles.perfilButton],{color: theme.colors.secondaryText},"CERRAR SESION",loginNavigation)} 
+
+
             </View>
         </ScrollView >
        

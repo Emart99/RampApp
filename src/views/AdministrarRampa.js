@@ -9,102 +9,34 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { traerRampas } from '../api/http';
-import {themeHelper} from '../styles/styles';
-
-export const rampaStyle = StyleSheet.create({
-  titulo: {
-    paddingLeft: 45,
-    paddingTop: 15,
-    paddingBottom: 10,
-    fontSize: 45,
-    color: themeHelper().secondary,
-    backgroundColor: themeHelper().background,
-  },
-  scrolleableContainer: {
-    paddingTop: 10,
-    flex: 1,
-    backgroundColor: themeHelper().background,
-  },
-  imgRampa: {
-    width: 135,
-    maxHeight: '80%',
-    borderRadius: 8,
-  },
-  card: {
-    // para el bgcolor
-    padding: 10,
-    width: '90%',
-    height: 135,
-    borderRadius: 8,
-    alignSelf: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#292929',
-    marginBottom: 20,
-    // para el bgcolor
-    // marginBottom: 40, //sin lo de arriba poner esto
-    flex: 1,
-    flexDirection: 'row',
-    alignItems:'center'
-  },
-  cardTextLeft: {
-    alignItems: 'flex-end',
-    marginLeft: 25,
-    width:'45%',
-  },
-  cardTextRight: {
-    alignItems: 'flex-start',
-    marginRight: 25,
-    width:'45%',
-  },
-  text: {
-    fontSize: 18,
-    color: themeHelper().text,
-    fontWeight: 'bold',
-    marginBottom: 5,
-  },
-  textCursiva: {
-    fontSize: 16,
-    color: themeHelper().text,
-    marginBottom: 3,
-    fontStyle: 'italic',
-  },
-  agregarButton: {
-    borderRadius: 8,
-    position: 'absolute',
-    width: 90,
-    padding: 5,
-    margin: 15,
-    right: 0,
-    bottom: 0,
-    color: 'black',
-    backgroundColor: themeHelper().secondary,
-  },
-});
+import cardStyles from './../styles/cardStyles';
+import { useTheme } from 'react-native-paper';
+import { themeHelper } from '../styles/styles';
 
 const AdministrarRampa = () => {
   const [rampas, setRampas] = React.useState([]);
-
+  const theme = useTheme();
   useEffect(() => {
     traerRampas().then(response => {setRampas(response)});
   },[]);
 
   return (
     <>
-      <Text style={rampaStyle.titulo}>Rampas</Text>
-      <ScrollView style={rampaStyle.scrolleableContainer}>
-        {rampas.map((rampa, index) => CardRampa(rampa, index))}
+      <Text style={[{color:theme.colors.text},cardStyles.titulo]}>Rampas</Text>
+      <ScrollView style={cardStyles.scrolleableContainer}>
+        {rampas.map((rampa, index) => CardRampa(theme,rampa, index))}
       </ScrollView>
       <TouchableOpacity
-        style={rampaStyle.agregarButton}
+        style={[{backgroundColor:theme.colors.secondary},cardStyles.agregarButton]}
         onPress={() => console.log('Pressed')}>
-        <Text style={{textAlign: 'center'}}>AGREGAR</Text>
+        <Text style={{textAlign: 'center',color:theme.colors.secondaryText,padding:5}}>AGREGAR</Text>
       </TouchableOpacity>
     </>
   );
 };
 export default AdministrarRampa;
 
-const CardRampa = (rampa, index) => {
+const CardRampa = (theme,rampa, index) => {
   const touchHandler = () => {
     console.log(rampa.id, rampa.direccion);
   };
@@ -112,9 +44,9 @@ const CardRampa = (rampa, index) => {
   const rampaTxt = style => {
     return (
       <View style={style}>
-        <Text style={rampaStyle.text}>{rampa.calle} {rampa.altura}</Text>
-        <Text style={rampaStyle.textCursiva}>{rampa.estadoRampa}</Text>
-        {/* <Text style={rampaStyle.textCursiva}>{rampa.patente}</Text> */}
+        <Text style={[{color:theme.colors.text},cardStyles.text]}>{rampa.calle} {rampa.altura}</Text>
+        <Text style={[{color:theme.colors.text},cardStyles.textCursiva]}>{rampa.estadoRampa}</Text>
+        {/* <Text style={cardStyles.textCursiva}>{rampa.patente}</Text> */}
       </View>
     );
   };
@@ -125,25 +57,25 @@ const CardRampa = (rampa, index) => {
         <>
           <Image
             source={require('../utils/casaBrunillo.png')}
-            style={rampaStyle.imgRampa}
+            style={cardStyles.imgRampa}
           />
-          {rampaTxt(rampaStyle.cardTextLeft)}
+          {rampaTxt(cardStyles.cardTextLeft)}
         </>
       );
     }
     return (
       <>
-        {rampaTxt(rampaStyle.cardTextRight)}
+        {rampaTxt(cardStyles.cardTextRight)}
         <Image
           source={require('../utils/casaBrunillo.png')}
-          style={rampaStyle.imgRampa}
+          style={cardStyles.imgRampa}
         />
       </>
     );
   };
 
   return (
-    <Pressable style={rampaStyle.card} onPress={touchHandler}>
+    <Pressable style={[{backgroundColor:theme.colors.headerPerfil},cardStyles.card,cardStyles.elevation]} onPress={touchHandler}>
       {rampaHandler()}
     </Pressable>
   );

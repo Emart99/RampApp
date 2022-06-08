@@ -1,6 +1,6 @@
 import React from 'react';
-import { Button, Dialog, Portal, Paragraph,Colors } from 'react-native-paper';
-import {TextInput,View} from 'react-native'
+import { Button, Dialog, Portal, Paragraph,Colors,TextInput } from 'react-native-paper';
+import {View} from 'react-native'
 import styles from '../styles/styles';
 
 
@@ -18,10 +18,8 @@ const OlvidoSuContrasenia = (props, setProps) => {
                 </Dialog.Content>
                 <View style = {styles.olvidoSuContraseniaModalView}>
                     <TextInput
-                        style={styles.inputText}
                         placeholder="Email"
                         onChangeText={text => setText(text)}
-                    
                     />
                 </View>
                 <Dialog.Actions >

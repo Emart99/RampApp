@@ -3,16 +3,17 @@ import React from 'react';
 import styles from '../styles/styles'
 import { SheetManager } from "react-native-actions-sheet";
 import RampasSheets from './RampasSheets';
-import { FAB } from 'react-native-paper';
+import { useTheme } from 'react-native-paper';
 
 MapboxGL.setAccessToken('pk.eyJ1IjoiZXplYWtlbCIsImEiOiJjbDFyZGkzeGkwdmFhM2psbTRiZjNzZ252In0.lzoXhYbHmRVbuWyT3hNqiw');
-const Mapa = () => {
 
+const Mapa = () => {
+    const theme = useTheme();
     return (
             <>
                 <MapboxGL.MapView style={styles.map}
                     compassEnabled={false}
-                    styleURL={MapboxGL.StyleURL.Dark}>
+                    styleURL={theme.colors.mapHelper}>
 
                     <MapboxGL.UserLocation androidRenderMode="gps" visible={true} showsUserHeadingIndicator />
                     <MapboxGL.Camera followUserLocation={true}
@@ -26,12 +27,6 @@ const Mapa = () => {
                     </MapboxGL.MapView>
                     
                     
-                    <FAB
-                        style={styles.fab}
-                        medium
-                        icon="map-search"
-                        onPress={() => console.log('Pressed')}
-                    />
                 <RampasSheets/>
             </>
     )

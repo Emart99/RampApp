@@ -8,53 +8,17 @@ import {
   Pressable,
   StyleSheet
 } from 'react-native';
-import { themeHelper } from '../styles/styles';
-import {rampaStyle} from './AdministrarRampa';
+import cardStyles from './../styles/cardStyles';
+import reservaStyles from '../styles/reservaStyles';
+import { useTheme } from 'react-native-paper';
 
-export const reservaStyle = StyleSheet.create({
-  titulo: {
-    paddingTop: 15,
-    paddingBottom: 10,
-    paddingLeft: 18,
-    fontSize: 45,
-    color: themeHelper().secondary,
-    backgroundColor: themeHelper().background,
-  },
-  cardTextLeft: {
-    alignItems: 'flex-end',
-    marginLeft: 0,
-    width:'60%',
-  },
-  cardTextRight: {
-    alignItems: 'flex-start',
-    marginRight: 0,
-    width:'60%',
-  },
-  timeCard:{
-    flex:1,
-    flexDirection:'row',
-  },
-  denunciasIconLeft:{
-    alignSelf:'flex-start',
-    width:30,
-    height:30,
-    marginLeft:0,
-    marginBottom:0
-  },
-  denunciasIconRight:{
-    alignSelf:'flex-end',
-    width:30,
-    height:30,
-    marginRight:0,
-    marginBottom:0
-  }
-})
 
-const AdministrarReservas = () => {
+const AdministrarReservas = ({navigation}) => {
+  const theme = useTheme();
     return (
         <>
-          <Text style={reservaStyle.titulo}>Reservas Activas</Text>
-          <ScrollView style={rampaStyle.scrolleableContainer}>
+          <Text style={[{color:theme.colors.text},reservaStyles.titulo]}>Reservas Activas</Text>
+          <ScrollView style={cardStyles.scrolleableContainer}>
               {reservas.map((reserva, index) => CardReserva(reserva, index))}
           </ScrollView>
         </>
@@ -65,6 +29,7 @@ export default AdministrarReservas;
 
 
 const CardReserva = (reserva, index) => {
+  const theme = useTheme();
   const touchHandler = () => {
     console.log(reserva.id, reserva.direccion);
   };
@@ -72,10 +37,10 @@ const CardReserva = (reserva, index) => {
   const textHandler = (styleText, styleDenuncia) => {
     return (
     <View style={styleText}>
-      <Text style={rampaStyle.text}>{reserva.direccion}</Text>
-      <View style={rampaStyle.timeCard}>
-          <Text style={rampaStyle.textCursiva}>Desde: {reserva.desde}</Text>
-          <Text style={rampaStyle.textCursiva}>Hasta: {reserva.hasta}</Text>
+      <Text style={[{color:theme.colors.text},cardStyles.text]}>{reserva.direccion}</Text>
+      <View style={[{color:theme.colors.text},cardStyles.timeCard]}>
+          <Text style={[{color:theme.colors.text},cardStyles.textCursiva]}>Desde: {reserva.desde}</Text>
+          <Text style={[{color:theme.colors.text},cardStyles.textCursiva]}>Hasta: {reserva.hasta}</Text>
         <IconButton
             style={styleDenuncia}
             icon='alert'
@@ -93,25 +58,25 @@ const CardReserva = (reserva, index) => {
         <>
           <Image
             source={require('../utils/casaBrunillo.png')}
-            style={rampaStyle.imgRampa}
+            style={cardStyles.imgRampa}
           />
-          {textHandler(reservaStyle.cardTextLeft, reservaStyle.denunciasIconRight)}
+          {textHandler(reservaStyles.cardTextLeft, reservaStyles.denunciasIconRight)}
         </>
       );
     }
     return (
       <>
-        {textHandler(reservaStyle.cardTextRight, reservaStyle.denunciasIconLeft)}
+        {textHandler(reservaStyles.cardTextRight, reservaStyles.denunciasIconLeft)}
         <Image
           source={require('../utils/casaBrunillo.png')}
-          style={rampaStyle.imgRampa}
+          style={cardStyles.imgRampa}
         />
       </>
     );
   };
 
   return (
-    <Pressable style={rampaStyle.card} onPress={touchHandler}>
+    <Pressable style={[{backgroundColor:theme.colors.headerPerfil},cardStyles.card,cardStyles.elevation]} onPress={touchHandler}>
       {rampaHandler()}
     </Pressable>
   );

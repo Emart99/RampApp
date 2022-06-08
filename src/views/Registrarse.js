@@ -1,10 +1,13 @@
 import React, {useState} from 'react';
 import styles from '../styles/styles';
-import {View, Text, TextInput, TouchableOpacity} from 'react-native';
-import {IconButton} from 'react-native-paper';
+import {View, Text, TouchableOpacity,TouchableWithoutFeedback,Keyboard} from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import {IconButton,TextInput} from 'react-native-paper';
 import RNDateTimePicker from '@react-native-community/datetimepicker';
 import { registrar } from '../api/http';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { themeHelper } from './../styles/styles';
+import GlobalButton from './../components/GlobalButton';
+import { useTheme } from 'react-native-paper';
 
 
 const Registrarse = ({navigation}) => {
@@ -17,7 +20,7 @@ const Registrarse = ({navigation}) => {
   const [apellido, setApellido] = useState("");
   const [fechaNacimiento, setFechaNacimiento] = useState(new Date());
   const [dni, setDni] = useState("");
-
+  const theme = useTheme();
   const handleSubmit = () => {
     const registro = {
       nombre: nombre, apellido: apellido, dni: dni, fechaDeNacimiento: fechaNacimiento, userName: usuario,
@@ -34,87 +37,107 @@ const Registrarse = ({navigation}) => {
     //   '\ndni: ' + dni,
     // );
   };
+  const registerHelper = () =>{
+    handleSubmit();
+    navigation.navigate('Login');
+  }
 
   return (
-    <KeyboardAwareScrollView enableOnAndroid enableAutomaticScroll  > 
+    <KeyboardAwareScrollView>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}  >
+      
     <View style={styles.containerLogin}>
       <IconButton
         style={[styles.backIcon,{transform: [{rotateY: '180deg'}]}]}
-        color='#FFEC70'
-        icon="exit-to-app"
+        color= {theme.colors.text}
+        icon="login"
         inline={true}
-        size={37}
+        size={35}
         onPress={() => navigation.navigate('Login')}
       />
-      <Text style={styles.crearText}> Crear cuenta </Text>
-
+      <Text style={[{color:theme.colors.text},styles.crearText]}> Crear cuenta </Text>
       <View style={styles.inputView}>
         <TextInput
-          style={styles.inputText}
-          placeholder="Usuario"
-          name="username"
+         outlineColor={theme.colors.input}
+         activeOutlineColor={theme.colors.input}
+          mode='outlined'
+          label="Usuario"
           value={usuario}
           onChangeText={value => setUsuario(value)}
         />
       </View>
       <View style={styles.inputView}>
         <TextInput
+         outlineColor={theme.colors.input}
+         activeOutlineColor={theme.colors.input}
+        mode='outlined'
           secureTextEntry
-          style={styles.inputText}
-          placeholder="Contraseña"
-          name="contraseña"
+          label="Contraseña"
           value={contraseña}
           onChangeText={value => setContraseña(value)}
         />
       </View>
       <View style={styles.inputView}>
         <TextInput
+         outlineColor={theme.colors.input}
+         activeOutlineColor={theme.colors.input}
+        mode='outlined'
           secureTextEntry
-          style={styles.inputText}
-          placeholder="Confirmar contraseña"
-          name="confirmarContraseña"
+          label="Confirmar contraseña"
           value={confirmarContraseña}
           onChangeText={value => setConfirmarContraseña(value)}
         />
       </View>
       <View style={styles.inputView}>
         <TextInput
-          style={styles.inputText}
-          placeholder="Email"
-          name="email"
+         outlineColor={theme.colors.input}
+         activeOutlineColor={theme.colors.input}
+        mode='outlined'
+        label="Email"
           value={email}
           onChangeText={value => setEmail(value)}
         />
       </View>
       <View style={styles.inputView}>
         <TextInput
-          style={styles.inputText}
-          placeholder="Nombre"
-          name="nombre"
+         outlineColor={theme.colors.input}
+         activeOutlineColor={theme.colors.input}
+        mode='outlined'
+        label="Nombre"
           value={nombre}
           onChangeText={value => setNombre(value)}
         />
       </View>
       <View style={styles.inputView}>
         <TextInput
-          style={styles.inputText}
-          placeholder="Apellido"
-          name="apellido"
+         outlineColor={theme.colors.input}
+         activeOutlineColor={theme.colors.input}
+        mode='outlined'
+        label="Apellido"
+          
           value={apellido}
           onChangeText={value => setApellido(value)}
         />
       </View>
       {/* Date Picker */}
+
       <TouchableOpacity
         style={styles.inputView}
         onPress={e => {
           setShowDatePicker(true);
         }}>
-        <Text
+          
+        <TextInput
+          outlineColor={theme.colors.input}
+          activeOutlineColor={theme.colors.input}
+          disabled
+          mode='outlined'
           style={
-            styles.dateText
-          }>{`${fechaNacimiento.getDate()}/${fechaNacimiento.getMonth()}/${fechaNacimiento.getFullYear()}`}</Text>
+            
+            [{color:theme.colors.text},styles.dateText]
+          }>{"Fecha de nacimiento: "+`${fechaNacimiento.getDate()}/${fechaNacimiento.getMonth()}/${fechaNacimiento.getFullYear()}`}</TextInput>
       </TouchableOpacity>
+      
       {showDatePicker && (
         <RNDateTimePicker
           mode="date"
@@ -129,24 +152,22 @@ const Registrarse = ({navigation}) => {
       {/* Date Picker */}
       <View style={styles.inputView}>
         <TextInput
-          style={styles.inputText}
-          placeholder="DNI"
-          name="dni"
+         outlineColor={theme.colors.input}
+         activeOutlineColor={theme.colors.input}
+        mode='outlined'
+        label="DNI"
           value={dni}
           onChangeText={value => setDni(value)}
         />
       </View>
 
-      <TouchableOpacity
-        style={styles.loginButton}
-        onPress={e => {
-          handleSubmit(e);
-          navigation.navigate('Login');
-        }}>
-        <Text>REGISTRAR</Text>
-      </TouchableOpacity>
+
+      {GlobalButton([styles.loginButton,{ backgroundColor: theme.colors.secondary}],{color: theme.colors.secondaryText},"REGISTRAR",registerHelper)} 
     </View>
+   
+    </TouchableWithoutFeedback>
     </KeyboardAwareScrollView>
+    
   );
 };
 
