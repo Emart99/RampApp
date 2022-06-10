@@ -10,6 +10,7 @@ const cardStyles = StyleSheet.create({
     scrolleableContainer: {
       paddingTop: 10,
       flex: 1,
+      paddingBottom: 100
     },
     imgRampa: {
       width: 135,

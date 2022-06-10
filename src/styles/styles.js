@@ -17,8 +17,9 @@ export function themeHelper(){
 export const LightTheme = {
   ...DefaultTheme,
   colors: {
+    modal:'#c2c2c2',
     headerPerfil:"#d9d9d9",
-    input:"black",
+    input:"#B2B2B2",
     background:'#F0F2F5',
     secondary:'#202124',
     text:'black',
@@ -31,7 +32,7 @@ export const LightTheme = {
 export const _DarkTheme = {
   ...DarkTheme,
   colors: {
-
+    modal:'#404040',
     headerPerfil:"#575757",
     input:"#5C5C5C",
     background:'#333',

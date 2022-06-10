@@ -36,8 +36,8 @@ const MiPerfil = ({navigation}) =>{
         <ScrollView   style={styles.containerPerfil}>
             <View  style={[{backgroundColor:theme.colors.headerPerfil},styles.containerHeaderPerfil]}>
                 <Avatar.Icon size={150} style={{marginTop:15}} icon="account" />
-                <Text style={styles.perfilHeaderText}>{usuario.userName}</Text>
-                <Text style={styles.perfilText}>{usuario.email}</Text>
+                <Text style={[{color:theme.colors.text},styles.perfilHeaderText]}>{usuario.userName}</Text>
+                <Text style={[{color:theme.colors.text},styles.perfilText]}>{usuario.email}</Text>
             </View>
             <View style={{flex:1, marginTop:20, padding:15}}>
                 <Text style={styles.perfilContentText}>Informacion Personal</Text>
@@ -52,13 +52,10 @@ const MiPerfil = ({navigation}) =>{
                     <Text style={styles.perfilMiniContentText}>Tema: {temaString}</Text>
                     <Switch value={isThemeDark} onValueChange={onToggleSwitch}/>
                 </View>
-              
-
 
                 {GlobalButton([styles.perfilButton,{ backgroundColor: theme.colors.secondary,marginTop:20}],{color: theme.colors.secondaryText},"Administrar Rampas",administrarRampaNavigation)}
                 {GlobalButton([styles.perfilButton,{ backgroundColor: theme.colors.secondary,marginTop:10}],{color: theme.colors.secondaryText},"Administrar Vehiculo",administrarVehiculoNavigation)}
                 {GlobalButton([{ backgroundColor: theme.colors.secondary, marginTop:20},styles.perfilButton],{color: theme.colors.secondaryText},"CERRAR SESION",loginNavigation)} 
-
 
             </View>
         </ScrollView >

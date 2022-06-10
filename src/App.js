@@ -25,6 +25,7 @@ import AdministrarRampa from './views/AdministrarRampa'
 import { PreferencesContext } from './themeContext';
 import { LightTheme } from './styles/styles';
 import { _DarkTheme } from './styles/styles';
+import MiPerfil from './views/Mi Perfil';
 LogBox.ignoreLogs([""]) // codigo hermoso, remplazar en un futuro
 
 
@@ -88,6 +89,7 @@ export default function App() {
           <Stack.Navigator initialRouteName="Login">
             <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
             <Stack.Screen name="Registrarse" component={Registrarse} options={{ headerShown: false }} />
+            <Stack.Screen name="Perfil" component={MiPerfil} options={{ headerShown: false }} />
             <Stack.Screen name="AdministrarRampa" component={AdministrarRampa} options={{ headerShown: false }} />
             <Stack.Screen name="AdministrarVehiculo" component={AdministrarVehiculo} options={{ headerShown: false }} />
             <Stack.Screen name="MainScreen" component={MainScreen} initialParams={{ id: 32 }} options={{ headerShown: false }} />

@@ -1,130 +1,77 @@
 import React from 'react';
-import {IconButton} from 'react-native-paper';
-import {
-  Text,
-  Image,
-  View,
-  ScrollView,
-  Pressable,
-  TouchableOpacity
-} from 'react-native';
-import carritoStyles from '../styles/carritoStyles'
+import {Text, ScrollView, TouchableOpacity} from 'react-native';
 import cardStyles from '../styles/cardStyles';
 import reservaStyles from './../styles/reservaStyles';
-import { useTheme } from 'react-native-paper';
-
+import {useTheme} from 'react-native-paper';
+import CardCarrito from '../components/CardCarrito';
 
 const Carrito = () => {
   const theme = useTheme();
   return (
     <>
-      <Text style={[{color:theme.colors.text},reservaStyles.titulo]}>Carrito</Text>
+      <Text style={[{color: theme.colors.text}, reservaStyles.titulo]}>
+        Carrito
+      </Text>
       <ScrollView style={cardStyles.scrolleableContainer}>
-        {reservas.map((reserva, index) => CardCarrito(reserva, index))}
+        {reservas.map(reserva => CardCarrito(reserva, theme))}
       </ScrollView>
       <TouchableOpacity
-         style={[{backgroundColor:theme.colors.secondary},cardStyles.agregarButton]}
-         onPress={() => console.log('Pressed')}>
-         <Text style={{textAlign: 'center',color:theme.colors.secondaryText,padding:5}}>ABONAR</Text>
+        style={[
+          {backgroundColor: theme.colors.secondary},
+          cardStyles.agregarButton,
+        ]}
+        onPress={() => console.log('Pressed')}>
+        <Text
+          style={{
+            textAlign: 'center',
+            color: theme.colors.secondaryText,
+            padding: 5,
+          }}>
+          ABONAR
+        </Text>
       </TouchableOpacity>
     </>
   );
 };
-
 export default Carrito;
-
-const CardCarrito = (reserva, index) => {
-  const theme = useTheme();
-  const touchHandler = () => {
-    console.log(reserva.id, reserva.direccion);
-  };
-
-  const textHandler = (styleText, styleDenuncia) => {
-    return (
-      <View style={styleText}>
-        <Text style={[{color:theme.colors.text},cardStyles.text]}>{reserva.direccion}</Text>
-        <Text style={[{color:theme.colors.text},carritoStyles.textCursiva]}>Desde: {reserva.desde}  Hasta: {reserva.hasta}</Text>
-        <Text style={[{color:theme.colors.text},carritoStyles.textCursiva]}>Precio ${reserva.precio}</Text>
-        <IconButton
-          style={styleDenuncia}
-          icon="trash-can-outline"
-          color="red"
-          // size={20}
-          // onPress={() => navigation.navigate('Login')}
-        />
-        
-      </View>
-    );
-  };
-
-  const rampaHandler = () => {
-    if (index % 2 == 0) {
-      return (
-        <>
-          <Image
-            source={require('../utils/casaBrunillo.png')}
-            style={carritoStyles.imgRampa}
-          />
-          {textHandler(
-            carritoStyles.cardTextLeft,
-            reservaStyles.denunciasIconRight,
-          )}
-        </>
-      );
-    }
-    return (
-      <>
-        {textHandler(
-          carritoStyles.cardTextRight,
-          reservaStyles.denunciasIconLeft,
-        )}
-        <Image
-          source={require('../utils/casaBrunillo.png')}
-          style={carritoStyles.imgRampa}
-        />
-      </>
-    );
-  };
-
-  return (
-    <Pressable style={[{backgroundColor:theme.colors.headerPerfil},carritoStyles.card,cardStyles.elevation]} onPress={touchHandler}>
-      {rampaHandler()}
-    </Pressable>
-  );
-};
 
 const reservas = [
   {
     id: 0,
-    direccion: 'Av Jorge Egger 123455555555552222222222',
+    calle: 'Av Jorge Egger',
+    altura: '1234555555555512',
     desde: '11:00',
     hasta: '12:00',
     precio: 200,
   },
   {
     id: 1,
-    direccion: 'Av Jorge Egger 4444',
+    calle: 'Av Jorge Egger ',
+    altura: '4444',
     desde: '12:00',
     hasta: '14:00',
     precio: 500,
   },
   {
     id: 2,
-    direccion: 'Av Jorge Egger 777',
+    calle: 'Av Jorge Egger',
+    altura: '777',
     desde: '11:00',
     hasta: '12:00',
     precio: 200,
   },
   {
     id: 3,
-    direccion: 'Av Pisos Egger 0',
+    calle: 'Av Pisos Egger',
+    altura: '000',
     desde: '11:00',
     hasta: '22:00',
     precio: 2000,
   },
   {
     id: 4,
-    direccion: 'Av Jorge Egger 2',
+    calle: 'Av Jorge Egger',
+    altura: '222',
     desde: '10:00',
     hasta: '19:00',
     precio: 20,

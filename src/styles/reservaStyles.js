@@ -1,10 +1,7 @@
 import {StyleSheet} from "react-native"
-import { themeHelper } from "./styles"
 const reservaStyles = StyleSheet.create({
     titulo: {
-      paddingTop: 15,
-      paddingBottom: 10,
-      paddingLeft: 18,
+      paddingLeft: 15,
       fontSize: 45,
     },
     cardTextLeft: {

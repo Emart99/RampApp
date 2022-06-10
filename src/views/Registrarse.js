@@ -5,9 +5,10 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import {IconButton,TextInput} from 'react-native-paper';
 import RNDateTimePicker from '@react-native-community/datetimepicker';
 import { registrar } from '../api/http';
-import { themeHelper } from './../styles/styles';
 import GlobalButton from './../components/GlobalButton';
 import { useTheme } from 'react-native-paper';
+import GlobalInput from '../components/GlobalInput';
+import Header from '../components/Header';
 
 
 const Registrarse = ({navigation}) => {
@@ -21,22 +22,16 @@ const Registrarse = ({navigation}) => {
   const [fechaNacimiento, setFechaNacimiento] = useState(new Date());
   const [dni, setDni] = useState("");
   const theme = useTheme();
+
   const handleSubmit = () => {
     const registro = {
       nombre: nombre, apellido: apellido, dni: dni, fechaDeNacimiento: fechaNacimiento, userName: usuario,
       contrasenia: contraseña, email: email
     }
     registrar(registro).then(resp => console.log(resp))
-    // console.log(
-    //   'usuario: ' + usuario,
-    //   '\ncontraseña: ' + contraseña,
-    //   '\nemail: ' + email,
-    //   '\nnombre: ' + nombre,
-    //   '\napellido: ' + apellido,
-    //   '\nfechaNacimiento: ' + fechaNacimiento,
-    //   '\ndni: ' + dni,
-    // );
+    .catch(error => console.log(error))
   };
+
   const registerHelper = () =>{
     handleSubmit();
     navigation.navigate('Login');
@@ -56,69 +51,13 @@ const Registrarse = ({navigation}) => {
         onPress={() => navigation.navigate('Login')}
       />
       <Text style={[{color:theme.colors.text},styles.crearText]}> Crear cuenta </Text>
-      <View style={styles.inputView}>
-        <TextInput
-         outlineColor={theme.colors.input}
-         activeOutlineColor={theme.colors.input}
-          mode='outlined'
-          label="Usuario"
-          value={usuario}
-          onChangeText={value => setUsuario(value)}
-        />
-      </View>
-      <View style={styles.inputView}>
-        <TextInput
-         outlineColor={theme.colors.input}
-         activeOutlineColor={theme.colors.input}
-        mode='outlined'
-          secureTextEntry
-          label="Contraseña"
-          value={contraseña}
-          onChangeText={value => setContraseña(value)}
-        />
-      </View>
-      <View style={styles.inputView}>
-        <TextInput
-         outlineColor={theme.colors.input}
-         activeOutlineColor={theme.colors.input}
-        mode='outlined'
-          secureTextEntry
-          label="Confirmar contraseña"
-          value={confirmarContraseña}
-          onChangeText={value => setConfirmarContraseña(value)}
-        />
-      </View>
-      <View style={styles.inputView}>
-        <TextInput
-         outlineColor={theme.colors.input}
-         activeOutlineColor={theme.colors.input}
-        mode='outlined'
-        label="Email"
-          value={email}
-          onChangeText={value => setEmail(value)}
-        />
-      </View>
-      <View style={styles.inputView}>
-        <TextInput
-         outlineColor={theme.colors.input}
-         activeOutlineColor={theme.colors.input}
-        mode='outlined'
-        label="Nombre"
-          value={nombre}
-          onChangeText={value => setNombre(value)}
-        />
-      </View>
-      <View style={styles.inputView}>
-        <TextInput
-         outlineColor={theme.colors.input}
-         activeOutlineColor={theme.colors.input}
-        mode='outlined'
-        label="Apellido"
-          
-          value={apellido}
-          onChangeText={value => setApellido(value)}
-        />
-      </View>
+      {GlobalInput('Usuario',usuario,setUsuario,styles.inputView,false,'default')}
+      {GlobalInput('Contraseña',contraseña,setContraseña,styles.inputView,true,'default')}
+      {GlobalInput('Confirmar contraseña',confirmarContraseña,setConfirmarContraseña,styles.inputView,true,'default')}
+      {GlobalInput('Email',email,setEmail,styles.inputView,false,'email-address')}
+      {GlobalInput('Nombre',nombre,setNombre,styles.inputView,false,'default')}
+      {GlobalInput('Apellido',apellido,setApellido,styles.inputView,false,'default')}
+      
       {/* Date Picker */}
 
       <TouchableOpacity
@@ -126,16 +65,15 @@ const Registrarse = ({navigation}) => {
         onPress={e => {
           setShowDatePicker(true);
         }}>
-          
         <TextInput
           outlineColor={theme.colors.input}
           activeOutlineColor={theme.colors.input}
-          disabled
           mode='outlined'
-          style={
-            
-            [{color:theme.colors.text},styles.dateText]
-          }>{"Fecha de nacimiento: "+`${fechaNacimiento.getDate()}/${fechaNacimiento.getMonth()}/${fechaNacimiento.getFullYear()}`}</TextInput>
+          disabled
+          label='Fecha de nacimiento'
+          style={{colors:{placeholder:theme.colors.text,background:theme.colors.input}}}>
+          {"Fecha de nacimiento: "+`${fechaNacimiento.getDate()}/${fechaNacimiento.getMonth()}/${fechaNacimiento.getFullYear()}`}
+        </TextInput>
       </TouchableOpacity>
       
       {showDatePicker && (
@@ -150,17 +88,8 @@ const Registrarse = ({navigation}) => {
         />
       )}
       {/* Date Picker */}
-      <View style={styles.inputView}>
-        <TextInput
-         outlineColor={theme.colors.input}
-         activeOutlineColor={theme.colors.input}
-        mode='outlined'
-        label="DNI"
-          value={dni}
-          onChangeText={value => setDni(value)}
-        />
-      </View>
 
+      {GlobalInput('DNI',dni,setDni,styles.inputView,false,'number-pad')}
 
       {GlobalButton([styles.loginButton,{ backgroundColor: theme.colors.secondary}],{color: theme.colors.secondaryText},"REGISTRAR",registerHelper)} 
     </View>
