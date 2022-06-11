@@ -11,7 +11,7 @@ import newCardStyles from '../styles/newCardStyles';
 const CardReserva = (reserva, theme) => {
   return (
     <Card
-      style={[newCardStyles.card, {backgroundColor: theme.colors.headerPerfil}]}
+      key={reserva.id} style={[newCardStyles.card, {backgroundColor: theme.colors.headerPerfil}]}
       elevation={10}>
       <Card.Title
         style={{marginTop: 10}}

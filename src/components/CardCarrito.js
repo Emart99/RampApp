@@ -11,6 +11,7 @@ import newCardStyles from '../styles/newCardStyles';
 const CardCarrito = (reserva, theme) => {
   return (
     <Card
+      key={reserva.id}
       style={[newCardStyles.card, {backgroundColor: theme.colors.headerPerfil}]}
       elevation={10}>
       <Card.Title

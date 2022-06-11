@@ -34,7 +34,7 @@ export default AdministrarVehiculo;
 
 const VehiculoCard = (theme,vehiculo) => {
   return (
-      <View style={[{backgroundColor:theme.colors.headerPerfil},vehiculoStyles.card,vehiculoStyles.elevation]}>
+      <View key={vehiculo.id} style={[{backgroundColor:theme.colors.headerPerfil},vehiculoStyles.card,vehiculoStyles.elevation]}>
         <IconButton
           icon="car"
           color="black"
