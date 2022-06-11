@@ -14,7 +14,7 @@ const CardRampa = (rampa, theme) => {
       };
 
   return (
-    <Pressable onPress={touchHandler}>
+    <Pressable key={rampa.id} onPress={touchHandler}>
     <Card
       style={[newCardStyles.card, {backgroundColor: theme.colors.headerPerfil}]}
       elevation={10}>
@@ -34,7 +34,7 @@ const CardRampa = (rampa, theme) => {
         <View style={newCardStyles.innerContainer}>
           <Avatar.Icon
             size={40}
-            icon="account-badge-horizontal-outline"
+            icon="access-point"
             color={theme.colors.text}
             style={{marginLeft: 5, marginRight: 5}}
           />

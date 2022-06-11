@@ -1,15 +1,18 @@
-import React, {useEffect} from 'react';
-import {
-  Text,
-  ScrollView,
-  TouchableOpacity,
-} from 'react-native';
-import {traerRampas} from '../api/http';
+import React from 'react';
+import {Text, ScrollView, TouchableOpacity, View} from 'react-native';
 import cardStyles from './../styles/cardStyles';
-import {Modal, Portal, Provider, useTheme} from 'react-native-paper';
-import CardRampa from '../components/CardRampa';
-import CrearRampa from '../components/modales/crearRampa';
-import GlobalButton from '../components/GlobalButton';
+import {
+  useTheme,
+  // IconButton,
+  // Modal,
+  // Portal,
+} from 'react-native-paper';
+import CardRampa from '../components/CardRampa'
+// import GlobalButton from '../components/GlobalButton';
+// import GlobalInput from '../components/GlobalInput';
+// import styles from '../styles/styles';
+import CrearRampa from '../components/modales/CrearRampa';
+// import CrearRampa from '../components/modales/CrearRampa';
 
 const AdministrarRampa = () => {
   // const [rampas, setRampas] = React.useState([]);
@@ -17,7 +20,6 @@ const AdministrarRampa = () => {
   const [visible, setVisible] = React.useState(false);
 
   const showModal = () => setVisible(true);
-  // const hideModal = () => setVisible(false);
 
   // useEffect(() => {
   //   traerRampas().then(response => {
@@ -38,7 +40,7 @@ const AdministrarRampa = () => {
           {backgroundColor: theme.colors.secondary},
           cardStyles.agregarButton,
         ]}
-        onPress={showModal}>
+        onPress={()=>{showModal();console.log(visible)}}>
         <Text
           style={{
             textAlign: 'center',
@@ -48,51 +50,43 @@ const AdministrarRampa = () => {
           AGREGAR
         </Text>
       </TouchableOpacity>
-      {/* <Provider>
-      <Portal>
-        <Modal visible={visible} onDismiss={hideModal} dismissable={false}
-        contentContainerStyle={{backgroundColor:theme.colors.modal}}>
-          <Text>Example Modal.  Click outside this area to dismiss.</Text>
-          {CrearRampa(theme)}
-          {GlobalButton("",{color: theme.colors.text},"Cancelar",hideModal)}
-          {GlobalButton("",{color: theme.colors.text},"Agregar",hideModal)}
-        </Modal>
-      </Portal>
-    </Provider> */}
+      
+     {CrearRampa(visible, setVisible)}
+     
     </>
   );
 };
 export default AdministrarRampa;
 
 const rampas = [
-    {
-      id: 0,
-      calle: 'Av zzz',
-      altura: '012345678901234567890123456789012345678',
-      estado: 'Disponible',
-    },
-    {
-      id: 0,
-      calle: 'Av zzz',
-      altura: '0345678',
-      estado: 'No disponible',
-    },
-    {
-      id: 1,
-      calle: 'Av zzz',
-      altura: '0123',
-      estado: 'Disponible',
-    },
-    {
-      id: 2,
-      calle: 'Av zzz',
-      altura: '01234567890128',
-      estado: 'Disponible',
-    },
-    {
-      id: 3,
-      calle: 'Av zzz',
-      altura: '012',
-      estado: 'No disponible',
-    },
-]
+  {
+    id: 0,
+    calle: 'Av zzz',
+    altura: '012345678901234567890123456789012345678',
+    estado: 'Disponible',
+  },
+  {
+    id: 0,
+    calle: 'Av zzz',
+    altura: '0345678',
+    estado: 'No disponible',
+  },
+  {
+    id: 1,
+    calle: 'Av zzz',
+    altura: '0123',
+    estado: 'Disponible',
+  },
+  {
+    id: 2,
+    calle: 'Av zzz',
+    altura: '01234567890128',
+    estado: 'Disponible',
+  },
+  {
+    id: 3,
+    calle: 'Av zzz',
+    altura: '012',
+    estado: 'No disponible',
+  },
+];

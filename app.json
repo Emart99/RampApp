@@ -1,4 +1,10 @@
 {
-  "name": "RampApp",
-  "displayName": "RampApp"
+  "expo": {
+    "name": "RampApp",
+    "slug": "RampApp",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
 }

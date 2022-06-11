@@ -8,7 +8,7 @@ const imgStyle = StyleSheet.create({
         margin:'auto',
         width:'85%',
         borderRadius:15,
-        objectFit: 'scale-down'
+        
     }
 })
 

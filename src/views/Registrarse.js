@@ -8,7 +8,6 @@ import { registrar } from '../api/http';
 import GlobalButton from './../components/GlobalButton';
 import { useTheme } from 'react-native-paper';
 import GlobalInput from '../components/GlobalInput';
-import Header from '../components/Header';
 
 
 const Registrarse = ({navigation}) => {
@@ -66,12 +65,10 @@ const Registrarse = ({navigation}) => {
           setShowDatePicker(true);
         }}>
         <TextInput
-          outlineColor={theme.colors.input}
-          activeOutlineColor={theme.colors.input}
           mode='outlined'
-          disabled
-          label='Fecha de nacimiento'
-          style={{colors:{placeholder:theme.colors.text,background:theme.colors.input}}}>
+          editable={false} 
+          outlineColor='transparent'
+          theme={{colors:{placeholder:theme.colors.text,background:theme.colors.input}}}>
           {"Fecha de nacimiento: "+`${fechaNacimiento.getDate()}/${fechaNacimiento.getMonth()}/${fechaNacimiento.getFullYear()}`}
         </TextInput>
       </TouchableOpacity>
@@ -90,7 +87,6 @@ const Registrarse = ({navigation}) => {
       {/* Date Picker */}
 
       {GlobalInput('DNI',dni,setDni,styles.inputView,false,'number-pad')}
-
       {GlobalButton([styles.loginButton,{ backgroundColor: theme.colors.secondary}],{color: theme.colors.secondaryText},"REGISTRAR",registerHelper)} 
     </View>
    

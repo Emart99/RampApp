@@ -1,6 +1,6 @@
 import {StyleSheet, Appearance } from 'react-native'
-import MapboxGL from '@rnmapbox/maps';
 import { DefaultTheme,DarkTheme} from 'react-native-paper';
+import { darkMapStyles,lightMapStyles } from './mapSyles';
 
 let colorScheme = 'light';
 
@@ -25,8 +25,9 @@ export const LightTheme = {
     text:'black',
     secondaryText:'white',
     borderTextInput:'#CCD0D5',
-    mapHelper:MapboxGL.StyleURL.Light,
+    mapTheme:"light"
   },
+  mapStyles:lightMapStyles
 };
 
 export const _DarkTheme = {
@@ -40,8 +41,10 @@ export const _DarkTheme = {
     text:'white',
     secondaryText:'black',
     borderTextInput:'#777',
-    mapHelper:MapboxGL.StyleURL.Dark,
-}};
+    mapTheme:"light",
+},
+mapStyles:darkMapStyles
+};
 
 
 const styles = StyleSheet.create({
