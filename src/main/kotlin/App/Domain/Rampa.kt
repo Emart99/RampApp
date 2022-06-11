@@ -1,5 +1,7 @@
 package App.Domain
 
+
+import java.time.LocalDateTime
 import javax.persistence.*
 
 @Entity
@@ -29,13 +31,32 @@ class Rampa {
     @OneToMany(fetch=FetchType.EAGER, cascade= [CascadeType.ALL])
     var horariosDisponibles = mutableListOf<Horarios>()
 
+
+    @OneToMany(fetch= FetchType.EAGER, cascade= [CascadeType.ALL])
+    @OrderColumn
+    var reservasRealizadas: MutableCollection<Reserva> =mutableListOf()
+
+
+   fun realizarReserva(unaReserva: Reserva){
+       reservasRealizadas.add(unaReserva)
+       val horario= horariosDisponibles.any {horarios -> (horarios.horarioDesde <= unaReserva.horaInicioReserva) && (horarios.horarioHasta >= unaReserva.horaInicioReserva)}
+       horariosDisponibles.removeIf { horario }
+   }
+
     fun agregarHorario(horario1: Horarios) {
         horariosDisponibles.add(horario1)
     }
 
-   //@OneToMany(fetch= FetchType.EAGER, cascade= [CascadeType.ALL])
-   //@OrderColumn
-   //var reservasRealizadas: MutableCollection<Reserva> =mutableListOf()
+
+    fun controlarEstadoRampa(hora: LocalDateTime){
+       if(horariosDisponibles.any {horarios -> (horarios.horarioDesde < hora) && (horarios.horarioHasta > hora)})
+            {this.estadoRampa =  "Disponible"}
+       else if(reservasRealizadas.any {reserva -> (reserva.horaInicioReserva < hora) && (reserva.horaFinReserva > hora)})
+               this.estadoRampa = "Alquilada"
+       else this.estadoRampa = "Ocupada"
+       }
+
+
 }
 
 @Entity
@@ -57,7 +78,7 @@ class RampaPendienteAprobacion(
     var nroPartidaInmobiliaria: Int = 0,
 
     @OneToOne(fetch= FetchType.EAGER)
-    var usuarioPropietario: Locador= Locador())
+    var usuarioPropietario: Usuario= Usuario())
 {
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)

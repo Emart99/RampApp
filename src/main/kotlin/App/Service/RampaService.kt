@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.server.ResponseStatusException
+import java.time.LocalDateTime
 
 @Service
 class RampaService {
@@ -24,8 +25,12 @@ class RampaService {
     @Autowired
     lateinit var usuarioService:UsuarioService
 
-    @Transactional(readOnly = true)
+    @Transactional
     fun traerRampasParaRamapasDisponibles(): List<Rampa> {
+        val horaActual = LocalDateTime.now()
+        val todasLasRampas = repositorioRampa.findAll()
+        todasLasRampas.forEach {rampa -> rampa.controlarEstadoRampa(horaActual)}
+       repositorioRampa.saveAll(todasLasRampas)
         val estadoABuscar= EstadoRampa().apply{
             nombreDeEstado = "Disponible"
         }
@@ -42,7 +47,7 @@ class RampaService {
     fun registrarNuevaRampa(idUsuario: Long, rampaNueva: Rampa){
         var rampaARegistrar: Rampa? = this.repositorioRampa.findByNroPartidaInmobiliaria(rampaNueva.nroPartidaInmobiliaria)
         if (rampaARegistrar  === null) {
-            val locador = usuarioService.buscarUsuaiorId(idUsuario) as Locador
+            val locador = usuarioService.buscarUsuaiorId(idUsuario)
             val rampaPendiente= RampaPendienteAprobacion(rampaNueva.calle,rampaNueva.posx
                 ,rampaNueva.posy,rampaNueva.altura, rampaNueva.nroPartidaInmobiliaria, locador)
             repositorioRampaPendienteAprobacion.save(rampaPendiente)
@@ -62,5 +67,20 @@ class RampaService {
             .orElseThrow {
                 ResponseStatusException(HttpStatus.NOT_FOUND, "La Rampa con identificador $idRampa no existe")
             }
+    }
+
+    @Transactional
+    fun reservarRampa(idRampa: Long, reserva: Reserva): Rampa {
+        return repositorioRampa
+            .findById(idRampa)
+            .map {
+                it.realizarReserva(reserva)
+                repositorioRampa.save(it)
+                it
+            }
+            .orElseThrow {
+                ResponseStatusException(HttpStatus.NOT_FOUND, "La Rampa con identificador $idRampa no existe")
+            }
+
     }
 }

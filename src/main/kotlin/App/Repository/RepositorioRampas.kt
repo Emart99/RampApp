@@ -1,6 +1,6 @@
 package App.Repository
 
-import App.Domain.Locador
+
 import App.Domain.Rampa
 import org.springframework.data.repository.CrudRepository
 

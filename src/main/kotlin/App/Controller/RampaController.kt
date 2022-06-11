@@ -2,6 +2,7 @@ package App.Controller
 
 import App.Domain.Horarios
 import App.Domain.Rampa
+import App.Domain.Reserva
 
 import App.Domain.Usuario
 import App.Service.RampaService
@@ -33,4 +34,7 @@ class RampaController {
     @Operation(summary ="permite agregar o quitar un horario de disponibilidad de la rampa")
     fun modifiarHorarioRampa(@PathVariable idRampa: Long, @RequestBody rampaModificadora: Rampa): Rampa = rampaService.modificarHorariosRampa(idRampa,rampaModificadora)
 
+    @PutMapping("/reservarRampa/idRampa}")
+    @Operation(summary ="permite agregar reservar una rampa")
+    fun reservarRampa(@PathVariable idRampa: Long, @RequestBody reserva: Reserva): Rampa = rampaService.reservarRampa(idRampa,reserva)
 }

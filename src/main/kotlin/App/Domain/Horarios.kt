@@ -2,6 +2,7 @@ package App.Domain
 
 import java.sql.Time
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.temporal.TemporalQueries.localDate
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
@@ -17,7 +18,7 @@ class Horarios {
 
     var fecha = LocalDate.now()
 
-    var horarioDesde = 2.00
-    var horarioHasta = 18.00
+    var horarioDesde = LocalDateTime.now()
+    var horarioHasta = LocalDateTime.now()
 
 }

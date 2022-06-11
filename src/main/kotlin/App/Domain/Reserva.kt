@@ -1,8 +1,8 @@
 package App.Domain
 
 import java.time.LocalDate
-import java.time.LocalTime
-import java.util.Date
+import java.time.LocalDateTime
+
 import javax.persistence.*
 
 @Entity
@@ -13,10 +13,10 @@ class Reserva {
     var id: Long = 0
 
     @Column(length=20)
-    var horaInicioReserva: LocalTime = LocalTime.now()
+    var horaInicioReserva: LocalDateTime = LocalDateTime.now()
 
     @Column(length=20)
-    var horaFinReserva: LocalTime = LocalTime.now()
+    var horaFinReserva: LocalDateTime = LocalDateTime.now()
 
     @Column(length=20)
     var fechaReserva: LocalDate = LocalDate.now()

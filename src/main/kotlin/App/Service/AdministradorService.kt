@@ -43,7 +43,6 @@ class AdministradorService {
             calle = rampaAHabilitar.calle
             altura = rampaAHabilitar.altura
             nroPartidaInmobiliaria= rampaAHabilitar.nroPartidaInmobiliaria
-            estadoRampa = "Disponible"
           }
         usuario.rampasPropias.add(rampa)
         repositorioRampa.save(rampa)

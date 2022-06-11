@@ -26,7 +26,7 @@ class Bootstrap : InitializingBean {
     lateinit var repositorioAdministrador: RepositorioAdministrador
 
     fun crearUsuario() {
-        var usuario1 = Locador().apply {
+        var usuario1 = Usuario().apply {
             nombre = "Tomas"
             apellido = "Gomez"
             dni = 34101124
@@ -36,7 +36,7 @@ class Bootstrap : InitializingBean {
             email= "tgomez@ramapp.com"
         }
 
-        val usuario2 = Locador().apply {
+        val usuario2 = Usuario().apply {
             nombre = "Jane"
             apellido = "Fernadez"
             dni = 33211124
@@ -47,7 +47,7 @@ class Bootstrap : InitializingBean {
 
         }
 
-        val usuario3 = Locatario().apply {
+        val usuario3 =Usuario().apply {
             nombre = "Ezequiel"
             apellido = "Gago"
             dni = 31211124
@@ -58,7 +58,7 @@ class Bootstrap : InitializingBean {
 
         }
 
-        val usuario4 = Locatario().apply {
+        val usuario4 = Usuario().apply {
             nombre = "Pablo"
             apellido = "Acme"
             dni = 29211124
@@ -82,15 +82,12 @@ class Bootstrap : InitializingBean {
         }
 
         val horario1 = Horarios().apply {
-            horarioDesde =12.00
-            horarioHasta = 20.00
         }
 
         val rampa3 = Rampa().apply{
             calle = "Santa Fe"
             altura = 4234
             nroPartidaInmobiliaria = 46032
-            estadoRampa = "Ocupada"
         }
 
         val vehiculo1 = Vehiculo().apply{

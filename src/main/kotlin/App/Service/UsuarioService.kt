@@ -40,21 +40,21 @@ class UsuarioService {
             ResponseStatusException(HttpStatus.NOT_FOUND, "El usuario no existe")
         }
 
-    @Transactional(readOnly = true)
+    @Transactional
     fun registrarNuevoUsuario(usuario: Usuario): Usuario {
        val usuarioARegistrar = repositorioUsuarios.findByDni(usuario.dni)
         if (usuarioARegistrar === null) {
             repositorioUsuarios.save(usuario)
-       } else {
-            ResponseStatusException(HttpStatus.NOT_FOUND, "El usuario con dni ${usuario.dni} ya se encuentra registrado")
-       }
+     } else {
+           ResponseStatusException(HttpStatus.NOT_FOUND, "El usuario con dni ${usuario.dni} ya se encuentra registrado")
+      }
         return usuario
     }
 
    fun agregarVehiculo(idUsuario: Long, vehiculoNuevo: Vehiculo){
        val vehiculoARegistrar = repositorioVehiculo.findByDominio(vehiculoNuevo.dominio)
        if (vehiculoARegistrar === null) {
-           val usuario = this.buscarUsuaiorId(idUsuario) as Locatario
+           val usuario = this.buscarUsuaiorId(idUsuario)
            repositorioVehiculo.save(vehiculoNuevo)
            usuario.vehiculos.add(vehiculoNuevo)
        } else {
@@ -63,7 +63,7 @@ class UsuarioService {
     }
 
     fun eliminarVehiculoPorId(idUsuario: Long, vehiculoAEliminar: Vehiculo){
-        val usuario = this.buscarUsuaiorId(idUsuario) as Locatario
+        val usuario = this.buscarUsuaiorId(idUsuario)
         val vehiculo: Vehiculo= repositorioVehiculo.findById(vehiculoAEliminar.id).orElseThrow {
             ResponseStatusException(HttpStatus.NOT_FOUND, "El usuario no existe")
         }

@@ -31,4 +31,13 @@ open class Usuario {
 
     @Column(length=150)
     var email: String = ""
+
+    @OneToMany(fetch=FetchType.EAGER, cascade= [CascadeType.ALL])
+    @OrderColumn
+    var rampasPropias= mutableListOf<Rampa>()
+
+
+    @OneToMany(fetch= FetchType.EAGER, cascade= [CascadeType.ALL])
+    @OrderColumn
+    var vehiculos= mutableListOf<Vehiculo>()
 }
