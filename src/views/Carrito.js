@@ -1,12 +1,18 @@
 import React from 'react';
 import {Text, ScrollView, TouchableOpacity} from 'react-native';
+import {useTheme} from 'react-native-paper';
+
 import cardStyles from '../styles/cardStyles';
 import reservaStyles from './../styles/reservaStyles';
-import {useTheme} from 'react-native-paper';
-import CardCarrito from '../components/CardCarrito';
+import CardCarrito from '../components/cards/CardCarrito';
+import PagoReserva from '../components/modales/PagoReserva';
 
 const Carrito = () => {
   const theme = useTheme();
+  const [visible, setVisible] = React.useState(false);
+
+  const showModal = () => setVisible(true);
+  
   return (
     <>
       <Text style={[{color: theme.colors.text}, reservaStyles.titulo]}>
@@ -20,7 +26,7 @@ const Carrito = () => {
           {backgroundColor: theme.colors.secondary},
           cardStyles.agregarButton,
         ]}
-        onPress={() => console.log('Pressed')}>
+        onPress={showModal}>
         <Text
           style={{
             textAlign: 'center',
@@ -30,6 +36,7 @@ const Carrito = () => {
           ABONAR
         </Text>
       </TouchableOpacity>
+      {PagoReserva(visible,setVisible)}
     </>
   );
 };

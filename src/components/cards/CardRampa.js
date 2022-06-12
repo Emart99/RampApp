@@ -5,7 +5,8 @@ import {
   Avatar
 } from 'react-native-paper';
 import {Pressable, View} from 'react-native';
-import newCardStyles from '../styles/newCardStyles';
+
+import newCardStyles from '../../styles/newCardStyles';
 
 const CardRampa = (rampa, theme) => {
 
@@ -28,7 +29,7 @@ const CardRampa = (rampa, theme) => {
       />
       <Card.Cover
         style={newCardStyles.img}
-        source={require('../utils/casaBrunillo.png')}
+        source={require('../../utils/casaBrunillo.png')}
       />
       <Card.Content style={newCardStyles.container}>
         <View style={newCardStyles.innerContainer}>

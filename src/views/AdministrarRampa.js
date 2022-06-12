@@ -1,18 +1,10 @@
-import React from 'react';
-import {Text, ScrollView, TouchableOpacity, View} from 'react-native';
-import cardStyles from './../styles/cardStyles';
-import {
-  useTheme,
-  // IconButton,
-  // Modal,
-  // Portal,
-} from 'react-native-paper';
-import CardRampa from '../components/CardRampa'
-// import GlobalButton from '../components/GlobalButton';
-// import GlobalInput from '../components/GlobalInput';
-// import styles from '../styles/styles';
-import CrearRampa from '../components/modales/CrearRampa';
-// import CrearRampa from '../components/modales/CrearRampa';
+import React from "react";
+import { Text, ScrollView, TouchableOpacity } from "react-native";
+import { useTheme } from "react-native-paper";
+
+import cardStyles from "./../styles/cardStyles";
+import CardRampa from "../components/cards/CardRampa";
+import CrearRampa from "../components/modales/CrearRampa";
 
 const AdministrarRampa = () => {
   // const [rampas, setRampas] = React.useState([]);
@@ -29,30 +21,31 @@ const AdministrarRampa = () => {
 
   return (
     <>
-      <Text style={[{color: theme.colors.text}, cardStyles.titulo]}>
+      <Text style={[{ color: theme.colors.text }, cardStyles.titulo]}>
         Rampas
       </Text>
       <ScrollView style={cardStyles.scrolleableContainer}>
-        {rampas.map(rampa => CardRampa(rampa, theme))}
+        {rampas.map((rampa) => CardRampa(rampa, theme))}
       </ScrollView>
       <TouchableOpacity
         style={[
-          {backgroundColor: theme.colors.secondary},
+          { backgroundColor: theme.colors.secondary },
           cardStyles.agregarButton,
         ]}
-        onPress={()=>{showModal();console.log(visible)}}>
+        onPress={showModal}
+      >
         <Text
           style={{
-            textAlign: 'center',
+            textAlign: "center",
             color: theme.colors.secondaryText,
             padding: 5,
-          }}>
+          }}
+        >
           AGREGAR
         </Text>
       </TouchableOpacity>
-      
-     {CrearRampa(visible, setVisible)}
-     
+
+      {CrearRampa(visible, setVisible)}
     </>
   );
 };
@@ -61,32 +54,32 @@ export default AdministrarRampa;
 const rampas = [
   {
     id: 0,
-    calle: 'Av zzz',
-    altura: '012345678901234567890123456789012345678',
-    estado: 'Disponible',
+    calle: "Av zzz",
+    altura: "012345678901234567890123456789012345678",
+    estado: "Disponible",
   },
   {
     id: 1,
-    calle: 'Av zzz',
-    altura: '0345678',
-    estado: 'No disponible',
+    calle: "Av zzz",
+    altura: "0345678",
+    estado: "No disponible",
   },
   {
     id: 2,
-    calle: 'Av zzz',
-    altura: '0123',
-    estado: 'Disponible',
+    calle: "Av zzz",
+    altura: "0123",
+    estado: "Disponible",
   },
   {
     id: 3,
-    calle: 'Av zzz',
-    altura: '01234567890128',
-    estado: 'Disponible',
+    calle: "Av zzz",
+    altura: "01234567890128",
+    estado: "Disponible",
   },
   {
     id: 4,
-    calle: 'Av zzz',
-    altura: '012',
-    estado: 'No disponible',
+    calle: "Av zzz",
+    altura: "012",
+    estado: "No disponible",
   },
 ];

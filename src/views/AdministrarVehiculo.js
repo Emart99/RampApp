@@ -1,8 +1,10 @@
 import React, {useState,useEffect} from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Pressable } from 'react-native';
+import { View, Text, TouchableOpacity, Pressable } from 'react-native';
 import { ScrollView } from 'react-native';
 import { IconButton,useTheme } from "react-native-paper";
+
 import { traerVehiculos } from '../api/http';
+import CrearVehiculo from "../components/modales/CrearVehiculo";
 import cardStyles from "../styles/cardStyles";
 import  vehiculoStyles  from "../styles/vehiculoStyles";
 
@@ -10,10 +12,13 @@ import  vehiculoStyles  from "../styles/vehiculoStyles";
 const AdministrarVehiculo = () => {
   const theme = useTheme();
   // const [vehiculos, setVehiculos] = useState([])
+  const [visible, setVisible] = React.useState(false);
 
   // useEffect(() => {
-  //   traerVehiculos().then(response => {setVehiculos(response)});
-  // },[]);
+    //   traerVehiculos().then(response => {setVehiculos(response)});
+    // },[]);
+    
+    const showModal = () => setVisible(true);
 
   return (
     <>
@@ -23,9 +28,10 @@ const AdministrarVehiculo = () => {
       </ScrollView>
       <TouchableOpacity
          style={[{backgroundColor:theme.colors.secondary},cardStyles.agregarButton]}
-         onPress={() => console.log('Pressed')}>
+         onPress={showModal}>
          <Text style={{textAlign: 'center',color:theme.colors.secondaryText,padding:5}}>AGREGAR</Text>
       </TouchableOpacity>
+      {CrearVehiculo(visible,setVisible)}
     </>
 
   )

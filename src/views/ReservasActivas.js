@@ -1,9 +1,10 @@
 import React from 'react';
 import {Text, ScrollView} from 'react-native';
+import {useTheme} from 'react-native-paper';
+
 import cardStyles from './../styles/cardStyles';
 import reservaStyles from '../styles/reservaStyles';
-import {useTheme} from 'react-native-paper';
-import CardReserva from '../components/CardReserva';
+import CardReserva from '../components/cards/CardReserva';
 
 const AdministrarReservas = ({navigation}) => {
   const theme = useTheme();

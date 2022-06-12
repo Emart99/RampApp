@@ -47,10 +47,8 @@ const CombinedDarkTheme = {
 
 const Stack = createNativeStackNavigator();
 
-
 export default function App() {
   let { status } =  Location.requestForegroundPermissionsAsync();
-
   const [isThemeDark, setIsThemeDark] = React.useState(false);
   let theme = isThemeDark ? CombinedDarkTheme : CombinedDefaultTheme;
 
@@ -66,9 +64,7 @@ export default function App() {
     [toggleTheme, isThemeDark]
   );
 
-
   return (
-    
     <PreferencesContext.Provider value={preferences}>
       <PaperProvider theme={theme}>
         <NavigationContainer theme={theme}>

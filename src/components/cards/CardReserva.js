@@ -6,13 +6,13 @@ import {
   IconButton,
 } from 'react-native-paper';
 import {View} from 'react-native';
-import newCardStyles from '../styles/newCardStyles';
 
-const CardCarrito = (reserva, theme) => {
+import newCardStyles from '../../styles/newCardStyles';
+
+const CardReserva = (reserva, theme) => {
   return (
     <Card
-      key={reserva.id}
-      style={[newCardStyles.card, {backgroundColor: theme.colors.headerPerfil}]}
+      key={reserva.id} style={[newCardStyles.card, {backgroundColor: theme.colors.headerPerfil}]}
       elevation={10}>
       <Card.Title
         style={{marginTop: 10}}
@@ -22,7 +22,7 @@ const CardCarrito = (reserva, theme) => {
         )}
         right={props => (
           <IconButton
-            icon="close"
+            icon="alert"
             color={theme.colors.text}
             onPress={() => console.log('zz')}
           />
@@ -31,7 +31,7 @@ const CardCarrito = (reserva, theme) => {
       />
       <Card.Cover
         style={newCardStyles.img}
-        source={require('../utils/casaBrunillo.png')}
+        source={require('../../utils/casaBrunillo.png')}
       />
       <Card.Content style={newCardStyles.container}>
         <View style={newCardStyles.innerContainer}>
@@ -42,14 +42,8 @@ const CardCarrito = (reserva, theme) => {
             style={{marginLeft: 5, marginRight: 5}}
           />
           <Paragraph style={newCardStyles.font}>Desde: {reserva.desde}</Paragraph>
-          <Paragraph style={[newCardStyles.font, {marginLeft: 10}]}>
+          <Paragraph style={[newCardStyles.font, {marginLeft: 15}]}>
             Hasta: {reserva.hasta}
-          </Paragraph>
-        </View>
-        <View style={newCardStyles.innerContainer}>
-          <Avatar.Icon size={50} icon="cash" color={theme.colors.text} />
-          <Paragraph style={newCardStyles.font}>
-            Precio: ${reserva.precio}
           </Paragraph>
         </View>
       </Card.Content>
@@ -57,4 +51,4 @@ const CardCarrito = (reserva, theme) => {
   );
 };
 
-export default CardCarrito;
+export default CardReserva;

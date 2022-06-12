@@ -107,9 +107,6 @@ const styles = StyleSheet.create({
     olvidoSuContrasenia:{
       fontSize:13
     },
-    olvidoSuContraseniaModal:{
-      backgroundColor:'#333',
-    },
     olvidoSuContraseniaModalInput:{
       height:50,
       fontSize:16

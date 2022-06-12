@@ -1,5 +1,6 @@
 import React from 'react';
 import {View,Text,Image,StyleSheet } from 'react-native';
+
 import styles from './../styles/styles';
 
 
@@ -8,7 +9,6 @@ const imgStyle = StyleSheet.create({
         margin:'auto',
         width:'85%',
         borderRadius:15,
-        
     }
 })
 

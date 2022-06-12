@@ -1,8 +1,9 @@
 import React from 'react';
 import MapView, { Marker } from 'react-native-maps';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Image, View } from 'react-native';
 import { useTheme } from 'react-native-paper';
 import { SheetManager } from 'react-native-actions-sheet';
+
 import RampasSheets from './RampasSheets';
 import {styles} from '../styles/mapSyles';
 

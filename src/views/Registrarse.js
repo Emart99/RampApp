@@ -1,12 +1,13 @@
 import React, {useState} from 'react';
-import styles from '../styles/styles';
+import RNDateTimePicker from '@react-native-community/datetimepicker';
 import {View, Text, TouchableOpacity,TouchableWithoutFeedback,Keyboard} from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import {IconButton,TextInput} from 'react-native-paper';
-import RNDateTimePicker from '@react-native-community/datetimepicker';
+import { useTheme } from 'react-native-paper';
+
+import styles from '../styles/styles';
 import { registrar } from '../api/http';
 import GlobalButton from './../components/GlobalButton';
-import { useTheme } from 'react-native-paper';
 import GlobalInput from '../components/GlobalInput';
 
 

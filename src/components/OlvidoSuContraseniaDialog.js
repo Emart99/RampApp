@@ -1,35 +1,52 @@
-import React from 'react';
-import { Button, Dialog, Portal, Paragraph,Colors,TextInput } from 'react-native-paper';
-import {View} from 'react-native'
-import styles from '../styles/styles';
+import React from "react";
+import {
+  Button,
+  Dialog,
+  Portal,
+  Paragraph,
+  TextInput,
+  useTheme,
+} from "react-native-paper";
+import { View } from "react-native";
 
+import styles from "../styles/styles";
 
 const OlvidoSuContrasenia = (props, setProps) => {
+  const theme = useTheme();
+  const hideDialog = () => setProps(false);
+  const [text, setText] = React.useState("");
 
-    const hideDialog = () => setProps(false);
-    const [text, setText] = React.useState("");
-
-
-    return (
-        <Portal>
-            <Dialog style={styles.olvidoSuContraseniaModal} visible={props} onDismiss={hideDialog}>
-                <Dialog.Content >
-                    <Paragraph style={styles.loginText}>Introducir el email correspondiente a la cuenta que quiere recuperar.</Paragraph>
-                </Dialog.Content>
-                <View style = {styles.olvidoSuContraseniaModalView}>
-                    <TextInput
-                        placeholder="Email"
-                        onChangeText={text => setText(text)}
-                    />
-                </View>
-                <Dialog.Actions >
-                    <Button color={Colors.white} onPress={() => hideDialog()}>Cancel</Button>
-                    <Button color={Colors.white} onPress={() => hideDialog()}>Ok</Button>
-                </Dialog.Actions>
-            </Dialog>
-        </Portal>
-    );
-
-}
+  return (
+    <Portal>
+      <Dialog
+        style={{ backgroundColor: theme.colors.modal,marginTop:15,marginBottom:10 }}
+        visible={props}
+        onDismiss={hideDialog}
+      >
+        <Dialog.Content>
+          <Paragraph style={styles.loginText}>
+            Introducir el email correspondiente a la cuenta que quiere
+            recuperar.
+          </Paragraph>
+        </Dialog.Content>
+        <View style={styles.olvidoSuContraseniaModalView}>
+          <TextInput
+            theme={{colors:{placeholder:theme.colors.text,background:theme.colors.input}}}
+            placeholder="Email"
+            onChangeText={(text) => setText(text)}
+          />
+        </View>
+        <Dialog.Actions>
+          <Button color={theme.colors.text} onPress={() => hideDialog()}>
+            Cancel
+          </Button>
+          <Button color={theme.colors.text} onPress={() => hideDialog()}>
+            Ok
+          </Button>
+        </Dialog.Actions>
+      </Dialog>
+    </Portal>
+  );
+};
 
 export default OlvidoSuContrasenia;

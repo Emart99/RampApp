@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
-import MapScreen from './MapScreen'
-import MiPerfil from './Mi Perfil'
-import styles from '../styles/styles'
-import Carrito from './Carrito';
-import AdministrarReservas from './ReservasActivas'
+import React from 'react';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { useTheme } from 'react-native-paper';
+
+import MapScreen from './MapScreen'
+import MiPerfil from './Mi Perfil'
+import Carrito from './Carrito';
+import AdministrarReservas from './ReservasActivas'
 
 
 
