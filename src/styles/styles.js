@@ -19,7 +19,7 @@ export const LightTheme = {
   colors: {
     modal:'#c2c2c2',
     headerPerfil:"#d9d9d9",
-    input:"#B2B2B2",
+    input:"#d9d9d9",
     background:'#F0F2F5',
     secondary:'#202124',
     text:'black',

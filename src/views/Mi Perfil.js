@@ -36,7 +36,7 @@ const MiPerfil = ({navigation}) =>{
 
     return(
         
-        <ScrollView  style={[{marginTop:insets.top},styles.containerPerfil]}>
+        <ScrollView   style={[{marginTop:insets.top},styles.containerPerfil]}>
             
             <View  style={[{backgroundColor:theme.colors.headerPerfil},styles.containerHeaderPerfil]}>
                 <Avatar.Icon size={150} style={{marginTop:15}} icon="account" />
