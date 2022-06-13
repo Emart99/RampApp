@@ -66,76 +66,87 @@ const CrearRampa = (visible, setVisible) => {
             false,
             "default"
           )}
-          </View>
-          <View style={modalStyles.imgInputsContainer}>
+        </View>
+        <View style={modalStyles.imgInputsContainer}>
           {/* <Text style={{fontSize:20, alignSelf:'center'}}>Fotos </Text> */}
-          <View style={[modalStyles.imgContainer,]}>
+          <View style={[modalStyles.imgContainer]}>
             <Text style={modalStyles.textStyle}>Foto Rampa</Text>
-            <Text style={modalStyles.textStyle}>Foto  DNI</Text>
+            <Text style={modalStyles.textStyle}>Foto DNI</Text>
             <Text style={modalStyles.textStyle}>Foto Escritura</Text>
           </View>
           <View style={modalStyles.imgContainer}>
             <View style={modalStyles.ctn}>
-            <IconButton
-              icon="image-plus"
-              color={theme.colors.text}
-              onPress={() => console.log("zz")}
-              style={{ margin: 0, padding: 0 }}
-              size={27}
-            />
-            <IconButton
-              icon="camera"
-              color={theme.colors.text}
-              onPress={() => console.log("zz")}
-              style={{ margin: 0, padding: 0 }}
-              size={28}
-            />
-            </View >
-            <View style={modalStyles.ctn}>
-            <IconButton
-              icon="image-plus"
-              color={theme.colors.text}
-              onPress={() => console.log("zz")}
-              style={{ margin: 0, padding: 0 }}
-              size={27}
-            />
-            <IconButton
-              icon="camera"
-              color={theme.colors.text}
-              onPress={() => console.log("zz")}
-              style={{ margin: 0, padding: 0 }}
-              size={28}
-            />
+              <IconButton
+                icon="image-plus"
+                color={theme.colors.text}
+                onPress={() => console.log("zz")}
+                style={{ margin: 0, padding: 0 }}
+                size={27}
+              />
+              <IconButton
+                icon="camera"
+                color={theme.colors.text}
+                onPress={() => console.log("zz")}
+                style={{ margin: 0, padding: 0 }}
+                size={28}
+              />
             </View>
             <View style={modalStyles.ctn}>
-            <IconButton
-              icon="image-plus"
-              color={theme.colors.text}
-              onPress={() => console.log("zz")}
-              style={{ margin: 0, padding: 0 }}
-              size={27}
-            />
-            <IconButton
-              icon="camera"
-              color={theme.colors.text}
-              onPress={() =>
-                geocoder(jsonFalopa).then((data) => console.log(data))
-              }
-              style={{ margin: 0, padding: 0 }}
-              size={28}
-            />
+              <IconButton
+                icon="image-plus"
+                color={theme.colors.text}
+                onPress={() => console.log("zz")}
+                style={{ margin: 0, padding: 0 }}
+                size={27}
+              />
+              <IconButton
+                icon="camera"
+                color={theme.colors.text}
+                onPress={() => console.log("zz")}
+                style={{ margin: 0, padding: 0 }}
+                size={28}
+              />
+            </View>
+            <View style={modalStyles.ctn}>
+              <IconButton
+                icon="image-plus"
+                color={theme.colors.text}
+                onPress={() => console.log("zz")}
+                style={{ margin: 0, padding: 0 }}
+                size={27}
+              />
+              <IconButton
+                icon="camera"
+                color={theme.colors.text}
+                onPress={() =>
+                  geocoder(jsonFalopa).then((data) => console.log(data))
+                }
+                style={{ margin: 0, padding: 0 }}
+                size={28}
+              />
             </View>
           </View>
         </View>
 
         <View style={modalStyles.buttonContainer}>
           {GlobalButton(
-           [{borderColor:theme.colors.secondary,borderStyle:'solid',borderWidth:1},modalStyles.button],
-            { color: theme.colors.text,textAlign:'center'  },
+            [{ borderColor: theme.colors.secondary }, modalStyles.button],
+            { color: theme.colors.text, textAlign: "center" },
             "Cancelar",
             hideModal
           )}
-          {GlobalButton([{backgroundColor:theme.colors.secondary},modalStyles.button], { color: theme.colors.secondaryText,textAlign:'center' }, "Agregar", hideModal)}
+          {GlobalButton(
+            [
+              {
+                backgroundColor: theme.colors.secondary,
+                borderColor: theme.colors.secondary,
+              },
+              modalStyles.button,
+            ],
+            { color: theme.colors.secondaryText, textAlign: "center" },
+            "Agregar",
+            hideModal
+          )}
         </View>
       </Modal>
     </Portal>

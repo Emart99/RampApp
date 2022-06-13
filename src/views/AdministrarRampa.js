@@ -9,9 +9,11 @@ import CrearRampa from "../components/modales/CrearRampa";
 const AdministrarRampa = () => {
   // const [rampas, setRampas] = React.useState([]);
   const theme = useTheme();
-  const [visible, setVisible] = React.useState(false);
+  const [visibleModalCrear, setVisibleModalCrear] = React.useState(false);
 
-  const showModal = () => setVisible(true);
+
+  const showModalCrear = () => setVisibleModalCrear(true);
+
 
   // useEffect(() => {
   //   traerRampas().then(response => {
@@ -32,7 +34,7 @@ const AdministrarRampa = () => {
           { backgroundColor: theme.colors.secondary },
           cardStyles.agregarButton,
         ]}
-        onPress={showModal}
+        onPress={showModalCrear}
       >
         <Text
           style={{
@@ -45,7 +47,8 @@ const AdministrarRampa = () => {
         </Text>
       </TouchableOpacity>
 
-      {CrearRampa(visible, setVisible)}
+      {CrearRampa(visibleModalCrear, setVisibleModalCrear)}
+
     </>
   );
 };

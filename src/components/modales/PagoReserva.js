@@ -9,8 +9,6 @@ import modalStyles from "../../styles/modalStyles";
 
 const PagoReserva = (visible, setVisible) => {
   const theme = useTheme();
-  const [mes, setMes] = useState(0);
-  const [anio, setAnio] = useState(0);
   const hideModal = () => setVisible(false);
 
   return (
@@ -32,15 +30,7 @@ const PagoReserva = (visible, setVisible) => {
             "setNumero",
             styles.inputView,
             false,
-            "default"
-          )}
-          {GlobalInput(
-            "Código de seguridad",
-            "",
-            "setCCV",
-            styles.inputView,
-            false,
-            "default"
+            "number-pad"
           )}
           {GlobalInput(
             "Nombre del titular",
@@ -50,9 +40,45 @@ const PagoReserva = (visible, setVisible) => {
             false,
             "default"
           )}
-          <Text>Inserte mes picker</Text>
-          <Text>Inserte año picker</Text>
-          
+          <Text style={{ color: theme.colors.text, fontSize: 16 }}>
+            Fecha de vencimiento
+          </Text>
+          <View style={modalStyles.fechaContainer}>
+            {GlobalInput(
+              "Mes",
+              "",
+              "setMes",
+              { width: "25%", height: 45, marginRight: 25 },
+              false,
+              "number-pad"
+            )}
+            {GlobalInput(
+              "Año",
+              "",
+              "setAnio",
+              { width: "25%", height: 45 },
+              false,
+              "number-pad"
+            )}
+          </View>
+
+          {GlobalInput(
+            "Código de seguridad",
+            "",
+            "setCCV",
+            styles.inputView,
+            false,
+            "number-pad"
+          )}
+
+          {GlobalInput(
+            "DNI del titular",
+            "",
+            "setDNI",
+            styles.inputView,
+            false,
+            "number-pad"
+          )}
         </View>
 
         <View style={modalStyles.buttonContainer}>
@@ -60,8 +86,6 @@ const PagoReserva = (visible, setVisible) => {
             [
               {
                 borderColor: theme.colors.secondary,
-                borderStyle: "solid",
-                borderWidth: 1,
               },
               modalStyles.button,
             ],
@@ -70,7 +94,13 @@ const PagoReserva = (visible, setVisible) => {
             hideModal
           )}
           {GlobalButton(
-            [{ backgroundColor: theme.colors.secondary }, modalStyles.button],
+            [
+              {
+                backgroundColor: theme.colors.secondary,
+                borderColor: theme.colors.secondary,
+              },
+              modalStyles.button,
+            ],
             { color: theme.colors.secondaryText, textAlign: "center" },
             "Abonar",
             hideModal
@@ -82,5 +112,3 @@ const PagoReserva = (visible, setVisible) => {
 };
 
 export default PagoReserva;
-
-
