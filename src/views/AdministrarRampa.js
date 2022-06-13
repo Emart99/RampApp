@@ -12,7 +12,7 @@ const AdministrarRampa = () => {
   const insets = useSafeAreaInsets();
   const theme = useTheme();
   const [visibleModalCrear, setVisibleModalCrear] = React.useState(false);
-
+  
 
   const showModalCrear = () => setVisibleModalCrear(true);
 

@@ -6,13 +6,51 @@ import GlobalInput from "../GlobalInput";
 import GlobalButton from "../GlobalButton";
 import styles from "../../styles/styles";
 import modalStyles from "../../styles/modalStyles";
+import AwesomeAlert from 'react-native-awesome-alerts';
 
 const PagoReserva = (visible, setVisible) => {
   const theme = useTheme();
   const hideModal = () => setVisible(false);
-
+  const [showAlertDatosCorrectos,setShowAlertDatosCorrectos] = React.useState(false);
+  const [showAlertDatosInvalidos,setShowAlertDatosInvalidos] = React.useState(false);
+  const abonarHandler = () =>{
+    setShowAlertDatosCorrectos(true)
+    hideModal()
+  }
   return (
     <Portal>
+      <AwesomeAlert
+          titleStyle={{width:"100%",color:theme.colors.text}}
+          contentContainerStyle={{backgroundColor:theme.colors.background}}
+          show={showAlertDatosCorrectos}
+          showProgress={false}
+          title="Abonado correctamente!"
+          closeOnHardwareBackPress={false}
+          showConfirmButton={true}
+          confirmText="Ok"
+          confirmButtonColor="#00DB6F"
+          closeOnTouchOutside={false}
+          onConfirmPressed={() => {
+            setShowAlertDatosCorrectos(false)
+            hideModal()
+          }}
+        />
+        {/* ALERT DE REGISTRADO INCORRECTO */}
+        <AwesomeAlert
+          titleStyle={{width:"100%",color:theme.colors.text}}
+          contentContainerStyle={{backgroundColor:theme.colors.background}}
+          show={showAlertDatosInvalidos}
+          showProgress={false}
+          title="Error, problema con el pago!"
+          closeOnHardwareBackPress={false}
+          showConfirmButton={true}
+          confirmText="Volver a introducir datos"
+          confirmButtonColor="#DD6B55"
+          closeOnTouchOutside={false}
+          onConfirmPressed={() => {
+            setShowAlertDatosInvalidos(false)
+          }}
+        />
       <Modal
         dismissable={false}
         contentContainerStyle={[
@@ -103,7 +141,7 @@ const PagoReserva = (visible, setVisible) => {
             ],
             { color: theme.colors.secondaryText, textAlign: "center" },
             "Abonar",
-            hideModal
+            abonarHandler
           )}
         </View>
       </Modal>

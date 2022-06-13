@@ -1,7 +1,7 @@
 import React from "react";
 import { Text, IconButton, useTheme, Portal, Modal } from "react-native-paper";
 import { View } from "react-native";
-
+import AwesomeAlert from 'react-native-awesome-alerts';
 import GlobalInput from "../GlobalInput";
 import GlobalButton from "../GlobalButton";
 import styles from "../../styles/styles";
@@ -10,11 +10,50 @@ import { geocoder } from "../../api/http";
 
 const CrearRampa = (visible, setVisible) => {
   const theme = useTheme();
-
-  const hideModal = () => setVisible(false);
+  const [showAlertDatosCorrectos,setShowAlertDatosCorrectos] = React.useState(false);
+  const [showAlertDatosInvalidos,setShowAlertDatosInvalidos] = React.useState(false);
+  const hideModal = () => {
+    setVisible(false)
+  }
+  const hideModalCorrecta = () =>{
+    hideModal()
+    setShowAlertDatosCorrectos(true);
+  }
 
   return (
     <Portal>
+      <AwesomeAlert
+          titleStyle={{width:"100%",color:theme.colors.text}}
+          contentContainerStyle={{backgroundColor:theme.colors.background}}
+          show={showAlertDatosCorrectos}
+          showProgress={false}
+          title="Registrada correctamente!"
+          closeOnHardwareBackPress={false}
+          showConfirmButton={true}
+          confirmText="Ok"
+          confirmButtonColor="#00DB6F"
+          closeOnTouchOutside={false}
+          onConfirmPressed={() => {
+            setShowAlertDatosCorrectos(false)
+            hideModal()
+          }}
+        />
+        {/* ALERT DE REGISTRADO INCORRECTO */}
+        <AwesomeAlert
+          titleStyle={{width:"100%",color:theme.colors.text}}
+          contentContainerStyle={{backgroundColor:theme.colors.background}}
+          show={showAlertDatosInvalidos}
+          showProgress={false}
+          title="Error, la rampa ya estaba registrada!"
+          closeOnHardwareBackPress={false}
+          showConfirmButton={true}
+          confirmText="Volver a registrarse"
+          confirmButtonColor="#DD6B55"
+          closeOnTouchOutside={false}
+          onConfirmPressed={() => {
+            setShowAlertDatosInvalidos(false)
+          }}
+        />
       <Modal
         dismissable={false}
         contentContainerStyle={[
@@ -145,7 +184,7 @@ const CrearRampa = (visible, setVisible) => {
             ],
             { color: theme.colors.secondaryText, textAlign: "center" },
             "Agregar",
-            hideModal
+            hideModalCorrecta
           )}
         </View>
       </Modal>

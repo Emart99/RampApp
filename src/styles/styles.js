@@ -23,6 +23,7 @@ export const LightTheme = {
     background:'#F0F2F5',
     secondary:'#202124',
     text:'black',
+    onSurface:"#F0F2F5",
     secondaryText:'white',
     borderTextInput:'#CCD0D5',
     mapTheme:"light"
@@ -37,6 +38,7 @@ export const _DarkTheme = {
     headerPerfil:"#575757",
     input:"#5C5C5C",
     background:'#333',
+    onSurface:"#F0F2F5",
     secondary:"#FFEC70",
     text:'white',
     secondaryText:'black',

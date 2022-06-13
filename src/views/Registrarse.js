@@ -10,6 +10,7 @@ import { registrar } from '../api/http';
 import GlobalButton from './../components/GlobalButton';
 import GlobalInput from '../components/GlobalInput';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import AwesomeAlert from 'react-native-awesome-alerts';
 
 
 const Registrarse = ({navigation}) => {
@@ -24,7 +25,10 @@ const Registrarse = ({navigation}) => {
   const [fechaNacimiento, setFechaNacimiento] = useState(new Date());
   const [dni, setDni] = useState("");
   const theme = useTheme();
+  const [showAlertDatosCorrectos,setShowAlertDatosCorrectos] = useState(false);
+  const [showAlertDatosInvalidos,setShowAlertDatosInvalidos] = useState(false);
 
+   
   const handleSubmit = () => {
     const registro = {
       nombre: nombre, apellido: apellido, dni: dni, fechaDeNacimiento: fechaNacimiento, userName: usuario,
@@ -35,8 +39,9 @@ const Registrarse = ({navigation}) => {
   };
 
   const registerHelper = () =>{
-    handleSubmit();
-    navigation.navigate('Login');
+    setShowAlertDatosCorrectos(true);
+    
+    //navigation.navigate('Login');
   }
 
   return (
@@ -52,6 +57,39 @@ const Registrarse = ({navigation}) => {
         size={35}
         onPress={() => navigation.navigate('Login')}
       />
+      {/* ALERT DE REGISTRADO CORRECTO */}
+      <AwesomeAlert
+          titleStyle={{width:"100%",color:theme.colors.text}}
+          contentContainerStyle={{backgroundColor:theme.colors.background}}
+          show={showAlertDatosCorrectos}
+          showProgress={false}
+          title="Registrado correctamente!"
+          closeOnHardwareBackPress={false}
+          showConfirmButton={true}
+          confirmText="Volver al login"
+          confirmButtonColor="#00DB6F"
+          closeOnTouchOutside={false}
+          onConfirmPressed={() => {
+            setShowAlertDatosCorrectos(false)
+            navigation.navigate("Login")
+          }}
+        />
+        {/* ALERT DE REGISTRADO INCORRECTO */}
+        <AwesomeAlert
+          titleStyle={{width:"100%",color:theme.colors.text}}
+          contentContainerStyle={{backgroundColor:theme.colors.background}}
+          show={showAlertDatosInvalidos}
+          showProgress={false}
+          title="Error, datos invalidos!"
+          closeOnHardwareBackPress={false}
+          showConfirmButton={true}
+          confirmText="Volver a registrarse"
+          confirmButtonColor="#DD6B55"
+          closeOnTouchOutside={false}
+          onConfirmPressed={() => {
+            setShowAlertDatosInvalidos(false)
+          }}
+        />
       <Text style={[{color:theme.colors.text},styles.crearText]}> Crear cuenta </Text>
       {GlobalInput('Usuario',usuario,setUsuario,styles.inputView,false,'default')}
       {GlobalInput('Contraseña',contraseña,setContraseña,styles.inputView,true,'default')}
@@ -91,8 +129,8 @@ const Registrarse = ({navigation}) => {
 
       {GlobalInput('DNI',dni,setDni,styles.inputView,false,'number-pad')}
       {GlobalButton([styles.loginButton,{ backgroundColor: theme.colors.secondary}],{color: theme.colors.secondaryText},"REGISTRAR",registerHelper)} 
+      
     </View>
-   
     </TouchableWithoutFeedback>
     </KeyboardAwareScrollView>
     
