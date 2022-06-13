@@ -36,6 +36,7 @@ const Login = ({ navigation }) => {
             <Text style={[{color:theme.colors.secondary},styles.loguito]} >RampApp</Text>
             {GlobalInput("Usuario",username,setUsername,styles.inputView,false,'default')}
             {GlobalInput("Contraseña",password,setPassword,styles.inputView,true,'default')}
+            <View style={{marginTop:10}}/>
             {GlobalButton("",{color: theme.colors.text},"Olvido su contraseña?",olvidoSuContraseniaHelper)}
             {OlvidoSuContrasenia(visibleOlvidoSuContrasenia,setVisibleOlvidoSuContrasenia)} 
             {GlobalButton([styles.loginButton,{ backgroundColor: theme.colors.secondary}],{color: theme.colors.secondaryText},"INGRESAR",loginHandler)}

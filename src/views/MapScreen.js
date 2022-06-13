@@ -2,11 +2,13 @@ import React from 'react';
 import { Text, View } from 'react-native';
 import styles from '../styles/styles'
 import Mapa from '../components/Mapa'
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const MapScreen = () =>{
-   
+    const insets = useSafeAreaInsets();
+
     return(
-        <View style={styles.page}>
+        <View style={[{paddingTop: insets.top},styles.page]}>
             <View style={styles.containerMap}>
                 <Mapa />     
             </View> 

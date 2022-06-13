@@ -6,16 +6,18 @@ import cardStyles from '../styles/cardStyles';
 import reservaStyles from './../styles/reservaStyles';
 import CardCarrito from '../components/cards/CardCarrito';
 import PagoReserva from '../components/modales/PagoReserva';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const Carrito = () => {
   const theme = useTheme();
+  const insets = useSafeAreaInsets();
   const [visible, setVisible] = React.useState(false);
 
   const showModal = () => setVisible(true);
   
   return (
     <>
-      <Text style={[{color: theme.colors.text}, reservaStyles.titulo]}>
+      <Text style={[{color: theme.colors.text,paddingTop:insets.top}, reservaStyles.titulo]}>
         Carrito
       </Text>
       <ScrollView style={cardStyles.scrolleableContainer}>

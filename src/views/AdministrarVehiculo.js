@@ -7,13 +7,14 @@ import { traerVehiculos } from '../api/http';
 import CrearVehiculo from "../components/modales/CrearVehiculo";
 import cardStyles from "../styles/cardStyles";
 import  vehiculoStyles  from "../styles/vehiculoStyles";
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 
 const AdministrarVehiculo = () => {
   const theme = useTheme();
   // const [vehiculos, setVehiculos] = useState([])
   const [visible, setVisible] = React.useState(false);
-
+  const insets = useSafeAreaInsets();
   // useEffect(() => {
     //   traerVehiculos().then(response => {setVehiculos(response)});
     // },[]);
@@ -22,7 +23,7 @@ const AdministrarVehiculo = () => {
 
   return (
     <>
-      <Text style={[{color:theme.colors.text},cardStyles.titulo]}>Vehiculo</Text>
+      <Text style={[{color:theme.colors.text,paddingTop:insets.top},cardStyles.titulo]}>Vehiculo</Text>
       <ScrollView style={cardStyles.scrolleableContainer}>
         {vehiculos.map(vehiculo => VehiculoCard(theme,vehiculo))}
       </ScrollView>

@@ -11,12 +11,15 @@ import * as Location from 'expo-location';
 import {
   NavigationContainer,
 } from '@react-navigation/native';
+import * as SplashScreen from 'expo-splash-screen';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { LogBox } from "react-native";
 import {
   Provider as PaperProvider,
 } from 'react-native-paper';
 import { PreferencesContext } from './src/themeContext';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+
 import AdministrarVehiculo from './src/views/AdministrarVehiculo';
 import AdministrarRampa from './src/views/AdministrarRampa'
 import MiPerfil from './src/views/Mi Perfil';
@@ -48,6 +51,7 @@ const CombinedDarkTheme = {
 const Stack = createNativeStackNavigator();
 
 export default function App() {
+  const [appIsReady, setAppIsReady] = React.useState(false);
   let { status } =  Location.requestForegroundPermissionsAsync();
   const [isThemeDark, setIsThemeDark] = React.useState(false);
   let theme = isThemeDark ? CombinedDarkTheme : CombinedDefaultTheme;
@@ -63,8 +67,29 @@ export default function App() {
     }),
     [toggleTheme, isThemeDark]
   );
+  useEffect(() => {
+    async function prepare() {
+      try {
+        // Keep the splash screen visible while we fetch resources
+        await SplashScreen.preventAutoHideAsync();
+        // Pre-load fonts, make any API calls you need to do here
+        // Artificially delay for two seconds to simulate a slow loading
+        // experience. Please remove this if you copy and paste the code!
+        await new Promise(resolve => setTimeout(resolve, 2000));
+      } catch (e) {
+        console.warn(e);
+      } finally {
+        // Tell the application to render
+        setAppIsReady(true);
+        await SplashScreen.hideAsync();
+      }
+    }
+
+    prepare();
+  }, []);
 
   return (
+    <SafeAreaProvider>
     <PreferencesContext.Provider value={preferences}>
       <PaperProvider theme={theme}>
         <NavigationContainer theme={theme}>
@@ -79,5 +104,6 @@ export default function App() {
         </NavigationContainer>
       </PaperProvider>
     </PreferencesContext.Provider>
+    </SafeAreaProvider>
   );
 }

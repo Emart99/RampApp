@@ -9,9 +9,11 @@ import styles from '../styles/styles';
 import { registrar } from '../api/http';
 import GlobalButton from './../components/GlobalButton';
 import GlobalInput from '../components/GlobalInput';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 
 const Registrarse = ({navigation}) => {
+  const insets = useSafeAreaInsets();
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [usuario, setUsuario] = useState("");
   const [contraseña, setContraseña] = useState("");
@@ -38,7 +40,7 @@ const Registrarse = ({navigation}) => {
   }
 
   return (
-    <KeyboardAwareScrollView>
+    <KeyboardAwareScrollView style={{marginTop:insets.top}}>
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}  >
       
     <View style={styles.containerLogin}>

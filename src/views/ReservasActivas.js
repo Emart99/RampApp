@@ -5,12 +5,14 @@ import {useTheme} from 'react-native-paper';
 import cardStyles from './../styles/cardStyles';
 import reservaStyles from '../styles/reservaStyles';
 import CardReserva from '../components/cards/CardReserva';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const AdministrarReservas = ({navigation}) => {
   const theme = useTheme();
+  const insets = useSafeAreaInsets();
   return (
     <>
-      <Text style={[{color: theme.colors.text}, reservaStyles.titulo]}>
+      <Text style={[{color: theme.colors.text,paddingTop:insets.top}, reservaStyles.titulo]}>
         Reservas Activas
       </Text>
       <ScrollView style={cardStyles.scrolleableContainer}>

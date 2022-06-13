@@ -5,9 +5,11 @@ import { useTheme } from "react-native-paper";
 import cardStyles from "./../styles/cardStyles";
 import CardRampa from "../components/cards/CardRampa";
 import CrearRampa from "../components/modales/CrearRampa";
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const AdministrarRampa = () => {
   // const [rampas, setRampas] = React.useState([]);
+  const insets = useSafeAreaInsets();
   const theme = useTheme();
   const [visibleModalCrear, setVisibleModalCrear] = React.useState(false);
 
@@ -23,7 +25,7 @@ const AdministrarRampa = () => {
 
   return (
     <>
-      <Text style={[{ color: theme.colors.text }, cardStyles.titulo]}>
+      <Text style={[{ color: theme.colors.text ,paddingTop:insets.top}, cardStyles.titulo]}>
         Rampas
       </Text>
       <ScrollView style={cardStyles.scrolleableContainer}>

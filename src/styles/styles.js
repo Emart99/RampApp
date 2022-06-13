@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
       fontSize:16
     },
     olvidoSuContraseniaModalView:{
-      width:"85%",
+      width:"100%",
       borderRadius:8,
       height:45,
       alignSelf:'center',

@@ -5,11 +5,13 @@ import styles from '../styles/styles'
 import { traerUsuario } from "../api/http";
 import { PreferencesContext } from "../themeContext";
 import GlobalButton from './../components/GlobalButton';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 
 const MiPerfil = ({navigation}) =>{
     const [isSwitchOn, setIsSwitchOn] = useState(false);
     const theme = useTheme();
+    const insets = useSafeAreaInsets();
     const { toggleTheme, isThemeDark } = React.useContext(PreferencesContext);
     let temaString = isThemeDark ? "Oscuro" : "Claro"
 
@@ -34,7 +36,7 @@ const MiPerfil = ({navigation}) =>{
 
     return(
         
-        <ScrollView   style={styles.containerPerfil}>
+        <ScrollView  style={[{marginTop:insets.top},styles.containerPerfil]}>
             
             <View  style={[{backgroundColor:theme.colors.headerPerfil},styles.containerHeaderPerfil]}>
                 <Avatar.Icon size={150} style={{marginTop:15}} icon="account" />
