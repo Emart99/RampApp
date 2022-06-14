@@ -8,20 +8,30 @@ import {
   Switch,
 } from "react-native-paper";
 import { View } from "react-native";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 import modalStyles from "../../styles/modalStyles";
 import GlobalButton from "../GlobalButton";
 
 const AdminRampa = (idRampa, visible, setVisible) => {
   const theme = useTheme();
-  const [isSwitchOn, setIsSwitchOn] = useState(false);
-  const [horaDesde, setHoraDesde] = useState();
-  const [horaHasta, setHoraHasta] = useState();
+  const [isSwitchOn, setIsSwitchOn] = useState(true);
+  const [horaDesde, setHoraDesde] = useState(0);
+  const [horaHasta, setHoraHasta] = useState(0);
   const hideModal = () => setVisible(false);
+  const [visibleTimePickerD, setVisibleTimePickerD] = useState(false);
+  const [visibleTimePickerH, setVisibleTimePickerH] = useState(false);
+
+  const onConfirm = (date, func) => {
+    setVisibleTimePickerD(false);
+    setVisibleTimePickerH(false);
+    func(date.getHours());
+  };
 
   const onToggleSwitch = () => {
     setIsSwitchOn(!isSwitchOn);
   };
+
   return (
     <Portal key={Math.random}>
       <Modal
@@ -47,7 +57,7 @@ const AdminRampa = (idRampa, visible, setVisible) => {
         <View style={modalStyles.gralContainer}>
           <View style={modalStyles.switchContainer}>
             <Text style={{ fontSize: 18, color: theme.colors.text }}>
-              {isSwitchOn ? "Deshabilitada" : "Habilitada"}
+              {isSwitchOn ? "Habilitada" : "Deshabilitada"}
             </Text>
             <Switch
               value={isSwitchOn}
@@ -55,38 +65,61 @@ const AdminRampa = (idRampa, visible, setVisible) => {
               style={modalStyles.switch}
             />
           </View>
-
-          <Text
-            style={[{ color: theme.colors.text }, modalStyles.textHorarios]}
-          >
-            Seleccionar horario para el día de hoy
-          </Text>
-          <View style={modalStyles.horariosContainer}>
-            <View>
-              <Text style={{ fontSize: 18, color: theme.colors.text }}>
-                Desde: 10:00{horaDesde}
+          {/* La mejor funcionalidad mejormente implementada */}
+          {!isSwitchOn && (
+            <View style={{ marginBottom: 50, marginTop: 50 }}></View>
+          )}
+          {isSwitchOn && (
+            <>
+              <Text
+                style={[{ color: theme.colors.text }, modalStyles.textHorarios]}
+              >
+                Seleccionar horario para el día de hoy
               </Text>
-              <IconButton
-                icon="clock-outline"
-                color={theme.colors.text}
-                onPress={() => console.log("zz")}
-                size={40}
-                style={{ padding: 0 }}
-              />
-            </View>
-            <View>
-              <Text style={{ fontSize: 18, color: theme.colors.text }}>
-                Hasta: 11:00{horaHasta}
-              </Text>
-              <IconButton
-                icon="clock-outline"
-                color={theme.colors.text}
-                onPress={() => console.log("zz")}
-                size={40}
-                style={{ padding: 0 }}
-              />
-            </View>
-          </View>
+              <View style={modalStyles.horariosContainer}>
+                <View>
+                  <Text style={{ fontSize: 18, color: theme.colors.text }}>
+                    Desde: {horaDesde} hs
+                  </Text>
+                  <IconButton
+                    icon="clock-outline"
+                    color={theme.colors.text}
+                    onPress={() => setVisibleTimePickerD(true)}
+                    size={40}
+                    style={{ padding: 0 }}
+                  />
+                  <DateTimePickerModal
+                    isVisible={visibleTimePickerD}
+                    mode="time"
+                    onConfirm={(date) => onConfirm(date, setHoraDesde)}
+                    onCancel={() => setVisibleTimePickerD(false)}
+                    date={new Date()}
+                    minuteInterval={30}
+                  />
+                </View>
+                <View>
+                  <Text style={{ fontSize: 18, color: theme.colors.text }}>
+                    Hasta: {horaHasta} hs
+                  </Text>
+                  <IconButton
+                    icon="clock-outline"
+                    color={theme.colors.text}
+                    onPress={() => setVisibleTimePickerH(true)}
+                    size={40}
+                    style={{ padding: 0 }}
+                  />
+                  <DateTimePickerModal
+                    isVisible={visibleTimePickerH}
+                    mode="time"
+                    onConfirm={(date) => onConfirm(date, setHoraHasta)}
+                    onCancel={() => setVisibleTimePickerH(false)}
+                    date={new Date()}
+                    minuteInterval={30}
+                  />
+                </View>
+              </View>
+            </>
+          )}
         </View>
         <View style={modalStyles.buttonContainer}>
           {GlobalButton(

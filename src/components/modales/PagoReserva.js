@@ -86,7 +86,7 @@ const PagoReserva = (visible, setVisible) => {
               "Mes",
               "",
               "setMes",
-              { width: "25%", height: 45, marginRight: 25 },
+              { width: "40%", height: 45, marginRight: 25 },
               false,
               "number-pad"
             )}
@@ -94,7 +94,7 @@ const PagoReserva = (visible, setVisible) => {
               "Año",
               "",
               "setAnio",
-              { width: "25%", height: 45 },
+              { width: "40%", height: 45 },
               false,
               "number-pad"
             )}

@@ -49,7 +49,7 @@ const MiPerfil = ({navigation}) =>{
                 <Text style={styles.perfilMiniContentText}>Apellido: {usuario.apellido}</Text>
                 <Text style={styles.perfilMiniContentText}>Fecha De Nacimiento: {usuario.fechaDeNacimiento}</Text>
                 <Text style={styles.perfilMiniContentText}>DNI: {usuario.dni}</Text>
-                <Text style={styles.perfilMiniContentText}>Cambiar Contrasenia</Text>
+                <Text style={styles.perfilMiniContentText}>Cambiar Contraseña</Text>
 
                 <Text style={[{marginTop:20},styles.perfilContentText]}>Ajustes</Text>
                 <View style={styles.alinearSwitch}>

@@ -74,10 +74,11 @@ const modalStyles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     alignSelf: "center",
+    marginBottom:20
   },
   switch: {
     marginLeft: 10,
-    marginTop: -5,
+    marginBottom: 9
   },
   textHorarios: {
     fontSize: 18,
