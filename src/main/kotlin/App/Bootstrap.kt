@@ -102,22 +102,28 @@ class Bootstrap : InitializingBean {
             dominio = "PEO342"
         }
 
-        rampa3.agregarHorario(horario1)
-        repositorioVehiculo.save(vehiculo1)
-        repositorioVehiculo.save(vehiculo2)
-        repositorioRampas.save(rampa1)
-        repositorioRampas.save(rampa2)
-        repositorioRampas.save(rampa3)
-        repositorioUsuarios.save(usuario1)
-        repositorioUsuarios.save(usuario2)
-        repositorioUsuarios.save(usuario3)
-        repositorioUsuarios.save(usuario4)
+
 
         usuario1.rampasPropias.add(rampa1)
         usuario2.rampasPropias.add(rampa3)
         usuario2.rampasPropias.add(rampa2)
         usuario3.vehiculos.add(vehiculo1)
         usuario4.vehiculos.add(vehiculo2)
+
+        repositorioUsuarios.save(usuario1)
+        repositorioUsuarios.save(usuario2)
+        repositorioUsuarios.save(usuario3)
+        repositorioUsuarios.save(usuario4)
+
+        rampa3.agregarHorario(horario1)
+        repositorioVehiculo.save(vehiculo1)
+        repositorioVehiculo.save(vehiculo2)
+        repositorioRampas.save(rampa1)
+        repositorioRampas.save(rampa2)
+        repositorioRampas.save(rampa3)
+
+
+
     }
 
     override fun afterPropertiesSet() {

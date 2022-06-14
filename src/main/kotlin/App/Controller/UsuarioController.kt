@@ -29,6 +29,7 @@ class UsuarioController {
     @Operation(summary ="crea un usuario que no esta registrado con Dni")
     fun registrarUsuario(@RequestBody usuario: Usuario) : Usuario= usuarioService.registrarNuevoUsuario(usuario)
 
+
     @PutMapping("/agregarVehiculo/{idUsuario}")
     @Operation(summary ="permite agregar un vehiculo no registrado")
     fun agregarVehiculoUsuario(@PathVariable idUsuario: Long,@RequestBody vehiculoNuevo: Vehiculo) = usuarioService.agregarVehiculo(idUsuario, vehiculoNuevo)

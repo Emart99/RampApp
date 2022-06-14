@@ -34,10 +34,12 @@ open class Usuario {
 
     @OneToMany(fetch=FetchType.EAGER, cascade= [CascadeType.ALL])
     @OrderColumn
+    @JoinColumn(name = "usuarioId")
     var rampasPropias= mutableListOf<Rampa>()
 
 
     @OneToMany(fetch= FetchType.EAGER, cascade= [CascadeType.ALL])
     @OrderColumn
+    @JoinColumn(name = "usuarioId")
     var vehiculos= mutableListOf<Vehiculo>()
 }

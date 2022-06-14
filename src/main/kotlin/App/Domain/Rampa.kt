@@ -28,12 +28,11 @@ class Rampa {
 
     var estadoRampa: String = "Disponible"
 
-    @OneToMany(fetch=FetchType.EAGER, cascade= [CascadeType.ALL])
+    @OneToMany(fetch=FetchType.LAZY, cascade= [CascadeType.ALL])
     var horariosDisponibles = mutableListOf<Horarios>()
 
 
     @OneToMany(fetch= FetchType.EAGER, cascade= [CascadeType.ALL])
-    @OrderColumn
     var reservasRealizadas: MutableCollection<Reserva> =mutableListOf()
 
 

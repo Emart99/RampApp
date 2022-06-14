@@ -6,6 +6,7 @@ import App.Service.UsuarioService
 import io.swagger.v3.oas.annotations.Operation
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
+import java.time.LocalDate
 
 @RestController
 @CrossOrigin(origins=["*"])
@@ -37,5 +38,9 @@ class AdministradorController {
     @GetMapping("/administrador/rechazarDenuncia/{idDenuncia}")
     @Operation(summary ="El admin rechaza una denuncia pendiente")
     fun rechazarUnaDenuncia(@PathVariable idDenuncia: Long): Denuncia = administradorService.rechazarDenuncia(idDenuncia)
+
+    @GetMapping("/administrador/obtenerBalance/{fechaBusqueda}")
+    @Operation(summary ="El admin obtiene el balance del uso de rampas")
+    fun obtenerBalance(@PathVariable fechaBusqueda: LocalDate): List<Rampa> = administradorService.obtenerBalance(fechaBusqueda)
 
 }

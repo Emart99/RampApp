@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.server.ResponseStatusException
+import java.time.LocalDate
 
 
 @Service
@@ -80,5 +81,10 @@ class AdministradorService {
         }.orElseThrow{
             ResponseStatusException(HttpStatus.NOT_FOUND, "No se pudo rechazar la denuncia")
         }
+    }
+
+    fun obtenerBalance(fechaBusqueda: LocalDate): List<Rampa> {
+
+        return repositorioRampa.findAllByReservasRealizadasFechaReservaEquals(fechaBusqueda)
     }
 }

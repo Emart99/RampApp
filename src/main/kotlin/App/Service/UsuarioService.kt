@@ -55,8 +55,8 @@ class UsuarioService {
        val vehiculoARegistrar = repositorioVehiculo.findByDominio(vehiculoNuevo.dominio)
        if (vehiculoARegistrar === null) {
            val usuario = this.buscarUsuaiorId(idUsuario)
-           repositorioVehiculo.save(vehiculoNuevo)
            usuario.vehiculos.add(vehiculoNuevo)
+           repositorioVehiculo.save(vehiculoNuevo)
        } else {
           ResponseStatusException(HttpStatus.NOT_FOUND, "El vehiculo con dominio ${vehiculoNuevo.dominio} ya se encuentra registrado")
        }
