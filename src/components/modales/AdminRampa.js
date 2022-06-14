@@ -33,7 +33,8 @@ const AdminRampa = (idRampa, visible, setVisible) => {
   };
 
   return (
-    <Portal key={Math.random}>
+    <Portal theme={{colors:{backdrop:'rgba(0, 0, 0, 0.35)'}}}
+    key={Math.random}>
       <Modal
         dismissable={false}
         key={idRampa}

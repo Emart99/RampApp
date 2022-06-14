@@ -60,7 +60,7 @@ const CrearRampa = (visible, setVisible) => {
 
   return (
     
-    <Portal>
+    <Portal theme={{colors:{backdrop:'rgba(0, 0, 0, 0.35)'}}}>
       <AwesomeAlert
           titleStyle={{width:"100%",color:theme.colors.text}}
           contentContainerStyle={{backgroundColor:theme.colors.background}}

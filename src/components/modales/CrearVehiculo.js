@@ -13,7 +13,7 @@ const CrearVehiculo = (visible, setVisible) => {
   const hideModal = () => setVisible(false);
 
   return (
-    <Portal>
+    <Portal theme={{colors:{backdrop:'rgba(0, 0, 0, 0.35)'}}}>
       <Modal
         dismissable={false}
         contentContainerStyle={[

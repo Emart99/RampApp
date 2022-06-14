@@ -8,12 +8,31 @@ import {
 import {View} from 'react-native';
 
 import newCardStyles from '../../styles/newCardStyles';
+import  AwesomeAlert  from 'react-native-awesome-alerts';
+import { useState } from 'react';
 
 const CardReserva = (reserva, theme) => {
+  const [showAlertDatosCorrectos,setShowAlertDatosCorrectos] = useState(false)
   return (
     <Card
       key={reserva.id} style={[newCardStyles.card, {backgroundColor: theme.colors.headerPerfil}]}
       elevation={10}>
+        <AwesomeAlert
+            titleStyle={{ width: "100%",textAlign:'center', color: theme.colors.text }}
+            contentContainerStyle={{ backgroundColor: theme.colors.background }}
+            confirmButtonTextStyle={{color:theme.colors.secondaryText}}
+            show={showAlertDatosCorrectos}
+            showProgress={false}
+            title="Denunciar infractor!"
+            closeOnHardwareBackPress={false}
+            showConfirmButton={true}
+            confirmText="Sacar foto"
+            confirmButtonColor={theme.colors.secondary}
+            closeOnTouchOutside={false}
+            onConfirmPressed={() => {
+              setShowAlertDatosCorrectos(false);
+            }}
+          />
       <Card.Title
         style={{marginTop: 10}}
         title={`${reserva.calle} ${reserva.altura}`}
@@ -24,7 +43,7 @@ const CardReserva = (reserva, theme) => {
           <IconButton
             icon="alert"
             color={theme.colors.text}
-            onPress={() => console.log('zz')}
+            onPress={() => setShowAlertDatosCorrectos(true)}
           />
         )}
         titleNumberOfLines={2}

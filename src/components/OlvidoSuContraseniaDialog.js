@@ -17,7 +17,7 @@ const OlvidoSuContrasenia = (props, setProps) => {
   const [text, setText] = React.useState("");
 
   return (
-    <Portal>
+    <Portal theme={{colors:{backdrop:'rgba(0, 0, 0, 0.35)'}}}>
       <Dialog
         style={{ backgroundColor: theme.colors.modal,marginTop:15,marginBottom:10 }}
         visible={props}
