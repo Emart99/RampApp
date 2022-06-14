@@ -2,6 +2,7 @@ import axios from "axios";
 //axios.defaults.baseURL = "http://localhost:9000";
 const IP_DEV = "192.168.56.1"
 const ENV_DEV_URL = 'http://' + IP_DEV + ':9000'
+const ENV_IMGUR_CLIENT_ID = "bd34bd7d458c396"
 
 // export async function traerVehiculos(){
 //     let response = await axios.get("/vehiculos");
@@ -34,6 +35,16 @@ export async function logear(userName, contrasenia) {
 }
 
 export async function geocoder(datosDireccion) {
-    const response = await axios.get("https://nominatim.openstreetmap.org/search?" + `q=${datosDireccion.altura}%2C+${datosDireccion.calle}%2C+${datosDireccion.ciudad}%2C+${datosDireccion.partido}%2C+Buenos+Aires%2C+B${datosDireccion.codigopostal}%2C+Argentina+&format=json`)
+    const response = await axios.get("https://nominatim.openstreetmap.org/search?" + `q=${datosDireccion.altura}%2C+${datosDireccion.calle}%2C+${datosDireccion.localidad}%2C+${datosDireccion.partido}%2C+Buenos+Aires%2C+B${datosDireccion.codigopostal}%2C+Argentina+&format=json`)
+    return response.data
+}
+
+export async function subirImagen (base64img){
+    const response = await axios.post("https://api.imgur.com/3/image",{
+        type:"base64",
+        image:base64img
+    },
+    {headers:{"Authorization" : "Client-ID "+ENV_IMGUR_CLIENT_ID}}
+    )
     return response.data
 }

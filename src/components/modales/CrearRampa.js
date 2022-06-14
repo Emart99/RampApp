@@ -3,12 +3,11 @@ import { Text, IconButton, useTheme, Portal, Modal } from "react-native-paper";
 import { Image, View } from "react-native";
 import AwesomeAlert from 'react-native-awesome-alerts';
 import * as ImagePicker from 'expo-image-picker';
-
 import GlobalInput from "../GlobalInput";
 import GlobalButton from "../GlobalButton";
 import styles from "../../styles/styles";
 import modalStyles from "../../styles/modalStyles";
-import { geocoder } from "../../api/http";
+import { geocoder, subirImagen } from "../../api/http";
 
 const CrearRampa = (visible, setVisible) => {
   const theme = useTheme();
@@ -22,12 +21,12 @@ const CrearRampa = (visible, setVisible) => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       quality: 1,
+      base64:true
     });
 
-    console.log(result);
 
     if (!result.cancelled) {
-      setImage(result.uri);
+      setImage(result.base64);
     }
   };
 
@@ -40,13 +39,14 @@ const CrearRampa = (visible, setVisible) => {
       return;
     }
 
-    const result = await ImagePicker.launchCameraAsync();
+    const result = await ImagePicker.launchCameraAsync({
+      base64:true
+    });
 
-    console.log(result);
 
     if (!result.cancelled) {
-      setPickedImagePath(result.uri);
-      console.log(result.uri);
+      setPickedImagePath(result.base64);
+     await subirImagen(result.base64).then(data => console.log(data.data.link))
     }
   }
 
@@ -59,6 +59,7 @@ const CrearRampa = (visible, setVisible) => {
   }
 
   return (
+    
     <Portal>
       <AwesomeAlert
           titleStyle={{width:"100%",color:theme.colors.text}}
@@ -92,6 +93,7 @@ const CrearRampa = (visible, setVisible) => {
             setShowAlertDatosInvalidos(false)
           }}
         />
+      
       <Modal
         dismissable={false}
         contentContainerStyle={[
@@ -239,7 +241,7 @@ export default CrearRampa;
 const jsonFalopa = {
   altura: 3964,
   calle: "Jose Hernandez",
-  localidad: "",
+  localidad: "Las Heras",
   ciudad: "Villa Ballester",
   partido: "San Martin",
   codigopostal: 1653,

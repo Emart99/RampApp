@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Card, Paragraph, Avatar } from "react-native-paper";
+import { Card, Paragraph, Avatar, Provider } from "react-native-paper";
 import { Pressable, View } from "react-native";
 
 import newCardStyles from "../../styles/newCardStyles";
@@ -13,7 +13,7 @@ const CardRampa = (rampa, theme) => {
   };
 
   return (
-    <> 
+    <>
     {/* error de key zzz */}
       <Pressable key={rampa.id} onPress={touchHandler}>
         <Card
