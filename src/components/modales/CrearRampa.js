@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { Text, IconButton, useTheme, Portal, Modal } from "react-native-paper";
-import { View } from "react-native";
+import { Image, View } from "react-native";
 import AwesomeAlert from 'react-native-awesome-alerts';
+import * as ImagePicker from 'expo-image-picker';
+
 import GlobalInput from "../GlobalInput";
 import GlobalButton from "../GlobalButton";
 import styles from "../../styles/styles";
@@ -10,8 +12,44 @@ import { geocoder } from "../../api/http";
 
 const CrearRampa = (visible, setVisible) => {
   const theme = useTheme();
-  const [showAlertDatosCorrectos,setShowAlertDatosCorrectos] = React.useState(false);
-  const [showAlertDatosInvalidos,setShowAlertDatosInvalidos] = React.useState(false);
+  const [showAlertDatosCorrectos,setShowAlertDatosCorrectos] = useState(false);
+  const [showAlertDatosInvalidos,setShowAlertDatosInvalidos] = useState(false);
+  const [image, setImage] = useState(null);
+  const [pickedImagePath, setPickedImagePath] = useState(null);
+
+  const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      quality: 1,
+    });
+
+    console.log(result);
+
+    if (!result.cancelled) {
+      setImage(result.uri);
+    }
+  };
+
+   const openCamera = async () => {
+    // Ask the user for the permission to access the camera
+    const permissionResult = await ImagePicker.requestCameraPermissionsAsync();
+
+    if (permissionResult.granted === false) {
+      alert("Se necesitan permisos para usar la cámara");
+      return;
+    }
+
+    const result = await ImagePicker.launchCameraAsync();
+
+    console.log(result);
+
+    if (!result.cancelled) {
+      setPickedImagePath(result.uri);
+      console.log(result.uri);
+    }
+  }
+
   const hideModal = () => {
     setVisible(false)
   }
@@ -107,7 +145,6 @@ const CrearRampa = (visible, setVisible) => {
           )}
         </View>
         <View style={modalStyles.imgInputsContainer}>
-          {/* <Text style={{fontSize:20, alignSelf:'center'}}>Fotos </Text> */}
           <View style={[modalStyles.imgContainer]}>
             <Text style={modalStyles.textStyle}>Foto Rampa</Text>
             <Text style={modalStyles.textStyle}>Foto DNI</Text>
@@ -118,14 +155,14 @@ const CrearRampa = (visible, setVisible) => {
               <IconButton
                 icon="image-plus"
                 color={theme.colors.text}
-                onPress={() => console.log("zz")}
+                onPress={pickImage}
                 style={{ margin: 0, padding: 0 }}
                 size={27}
               />
               <IconButton
                 icon="camera"
                 color={theme.colors.text}
-                onPress={() => console.log("zz")}
+                onPress={openCamera}
                 style={{ margin: 0, padding: 0 }}
                 size={28}
               />
@@ -165,6 +202,12 @@ const CrearRampa = (visible, setVisible) => {
               />
             </View>
           </View>
+          {/* img preview SACAR*/}
+          <View style={{flex:1,flexDirection:'row'}}>
+          {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
+          {pickedImagePath && <Image source={{ uri: pickedImagePath }} style={{ width: 200, height: 200 }} />}
+          </View>
+           {/*fin img preview*/}
         </View>
 
         <View style={modalStyles.buttonContainer}>
