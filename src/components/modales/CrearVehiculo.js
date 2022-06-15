@@ -7,25 +7,20 @@ import GlobalButton from "../GlobalButton";
 import styles from "../../styles/styles";
 import modalStyles from "../../styles/modalStyles";
 import { crearVehiculo } from "../../api/http";
+import { Formik } from "formik";
+import { vehiculoValidationSchema } from "../../utils/vehiculoSchema";
 const CrearVehiculo = (visible, setVisible) => {
   const theme = useTheme();
-
   const hideModal = () => setVisible(false);
-  const [marca,setMarca] = React.useState("")
-  const [modelo,setModelo] = React.useState("")
-  const [dominio,setDominio] = React.useState("")
 
-  const vehiculoCrear = async () => {
-    await crearVehiculo(marca,modelo,dominio).then(data => {
-      setMarca("")
-      setModelo("")
-      setDominio("")
-      hideModal()
-    })
-  }
+  const vehiculoCrear = async (values) => {
+    await crearVehiculo(values).then(() => {
+      hideModal();
+    });
+  };
 
   return (
-    <Portal theme={{colors:{backdrop:'rgba(0, 0, 0, 0.35)'}}}>
+    <Portal theme={{ colors: { backdrop: "rgba(0, 0, 0, 0.35)" } }}>
       <Modal
         dismissable={false}
         contentContainerStyle={[
@@ -35,54 +30,84 @@ const CrearVehiculo = (visible, setVisible) => {
         animationType="fade"
         visible={visible}
       >
-        <View style={modalStyles.inputContainer}>
-          <Text style={modalStyles.titulo}>Agregar Vehículo</Text>
-          {GlobalInput(
-            "Marca",
-            marca,
-            setMarca,
-            styles.inputView,
-            false,
-            "default"
-          )}
-          {GlobalInput(
-            "Modelo",
-            modelo,
-            setModelo,
-            styles.inputView,
-            false,
-            "default"
-          )}
-          {GlobalInput(
-            "Dominio",
-            dominio,
-            setDominio,
-            styles.inputView,
-            false,
-            "default"
-          )}
-        </View>
+        <Formik
+          validationSchema={vehiculoValidationSchema}
+          initialValues={{ marca: "", modelo: "", dominio: "" }}
+          onSubmit={(values) => vehiculoCrear(values)}
+        >
+          {({
+            handleChange,
+            handleBlur,
+            handleSubmit,
+            values,
+            errors,
+            isValid,
+          }) => (
+            <>
+              <View style={modalStyles.inputContainer}>
+                <Text style={modalStyles.titulo}>Agregar Vehículo</Text>
 
-        <View style={modalStyles.buttonContainer}>
-          {GlobalButton(
-            [{ borderColor: theme.colors.secondary }, modalStyles.button],
-            { color: theme.colors.text, textAlign: "center" },
-            "Cancelar",
-            hideModal
+                {GlobalInput(
+                  "Marca",
+                  values.marca,
+                  handleChange("marca"),
+                  handleBlur("marca"),
+                  styles.inputView,
+                  false,
+                  "default"
+                )}
+                {errors.marca && (
+                  <Text style={styles.inputInvalidText}>{errors.marca}</Text>
+                )}
+                {GlobalInput(
+                  "Modelo",
+                  values.modelo,
+                  handleChange("modelo"),
+                  handleBlur("modelo"),
+                  styles.inputView,
+                  false,
+                  "default"
+                )}
+                {errors.modelo && (
+                  <Text style={styles.inputInvalidText}>{errors.modelo}</Text>
+                )}
+                {GlobalInput(
+                  "Dominio",
+                  values.dominio,
+                  handleChange("dominio"),
+                  handleBlur("dominio"),
+                  styles.inputView,
+                  false,
+                  "default"
+                )}
+                {errors.dominio && (
+                  <Text style={styles.inputInvalidText}>{errors.dominio}</Text>
+                )}
+              </View>
+              <View style={modalStyles.buttonContainer}>
+                {GlobalButton(
+                  [{ borderColor: theme.colors.secondary }, modalStyles.button],
+                  { color: theme.colors.text, textAlign: "center" },
+                  "Cancelar",
+                  hideModal
+                )}
+                {GlobalButton(
+                  [
+                    {
+                      backgroundColor: theme.colors.secondary,
+                      borderColor: theme.colors.secondary,
+                    },
+                    modalStyles.button,
+                  ],
+                  { color: theme.colors.secondaryText, textAlign: "center" },
+                  "Agregar",
+                  handleSubmit,
+                  isValid
+                )}
+              </View>
+            </>
           )}
-          {GlobalButton(
-            [
-              {
-                backgroundColor: theme.colors.secondary,
-                borderColor: theme.colors.secondary,
-              },
-              modalStyles.button,
-            ],
-            { color: theme.colors.secondaryText, textAlign: "center" },
-            "Agregar",
-            vehiculoCrear
-          )}
-        </View>
+        </Formik>
       </Modal>
     </Portal>
   );

@@ -109,6 +109,7 @@ const CrearRampa = (visible, setVisible) => {
             "Calle",
             "",
             "setCalle",
+            "",
             styles.inputView,
             false,
             "default"
@@ -117,6 +118,7 @@ const CrearRampa = (visible, setVisible) => {
             "Altura",
             "",
             "setAltura",
+            "",
             styles.inputView,
             false,
             "default"
@@ -125,6 +127,7 @@ const CrearRampa = (visible, setVisible) => {
             "Partido",
             "",
             "setPartido",
+            "",
             styles.inputView,
             false,
             "default"
@@ -133,6 +136,7 @@ const CrearRampa = (visible, setVisible) => {
             "Localidad",
             "",
             "setLocalidad",
+            "",
             styles.inputView,
             false,
             "default"
@@ -141,6 +145,7 @@ const CrearRampa = (visible, setVisible) => {
             "Código Postal",
             "",
             "setCodigoPostal",
+            "",
             styles.inputView,
             false,
             "default"

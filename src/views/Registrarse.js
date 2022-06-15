@@ -12,42 +12,37 @@ import { useTheme } from "react-native-paper";
 import AwesomeAlert from "react-native-awesome-alerts";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { Formik } from "formik";
 
 import styles from "../styles/styles";
 import { registrar } from "../api/http";
 import GlobalButton from "./../components/GlobalButton";
 import GlobalInput from "../components/GlobalInput";
+import { registerValidationSchema } from "../utils/registerSchema";
 
 const Registrarse = ({ navigation }) => {
   const insets = useSafeAreaInsets();
   const [showDatePicker, setShowDatePicker] = useState(false);
-  const [usuario, setUsuario] = useState("");
-  const [contraseña, setContraseña] = useState("");
-  const [confirmarContraseña, setConfirmarContraseña] = useState("");
-  const [email, setEmail] = useState("");
-  const [nombre, setNombre] = useState("");
-  const [apellido, setApellido] = useState("");
   const [fechaNacimiento, setFechaNacimiento] = useState(new Date());
-  const [dni, setDni] = useState("");
   const theme = useTheme();
   const [showAlertDatosCorrectos, setShowAlertDatosCorrectos] = useState(false);
   const [showAlertDatosInvalidos, setShowAlertDatosInvalidos] = useState(false);
 
-  const handleSubmit = () => {
+  const registerHandler = (values) => {
     const registro = {
-      nombre: nombre,
-      apellido: apellido,
-      dni: dni,
+      nombre: values.nombre,
+      apellido: values.apellido,
+      dni: values.dni,
       fechaDeNacimiento: fechaNacimiento,
-      userName: usuario,
-      contrasenia: contraseña,
-      email: email,
+      userName: values.userName,
+      contrasenia: values.contrasenia,
+      email: values.email,
     };
+    // console.log(registro);
     registrar(registro)
       .then((resp) => setShowAlertDatosCorrectos(true))
       .catch((error) => setShowAlertDatosInvalidos(true));
   };
-
 
   const onConfirm = (date) => {
     setShowDatePicker(false);
@@ -103,101 +98,161 @@ const Registrarse = ({ navigation }) => {
             {" "}
             Crear cuenta{" "}
           </Text>
-          {GlobalInput(
-            "Usuario",
-            usuario,
-            setUsuario,
-            styles.inputView,
-            false,
-            "default"
-          )}
-          {GlobalInput(
-            "Contraseña",
-            contraseña,
-            setContraseña,
-            styles.inputView,
-            true,
-            "default"
-          )}
-          {GlobalInput(
-            "Confirmar contraseña",
-            confirmarContraseña,
-            setConfirmarContraseña,
-            styles.inputView,
-            true,
-            "default"
-          )}
-          {GlobalInput(
-            "Email",
-            email,
-            setEmail,
-            styles.inputView,
-            false,
-            "email-address"
-          )}
-          {GlobalInput(
-            "Nombre",
-            nombre,
-            setNombre,
-            styles.inputView,
-            false,
-            "default"
-          )}
-          {GlobalInput(
-            "Apellido",
-            apellido,
-            setApellido,
-            styles.inputView,
-            false,
-            "default"
-          )}
-
-          {/* Date Picker */}
-          <TouchableOpacity
-            style={styles.inputView}
-            onPress={(e) => {
-              setShowDatePicker(true);
+          <Formik
+            validationSchema={registerValidationSchema}
+            initialValues={{
+              nombre: "",
+              apellido: "",
+              dni: "",
+              userName: "",
+              contrasenia: "",
+              confirmarContrasenia: "",
+              email: "",
             }}
+            onSubmit={(values) => registerHandler(values)}
           >
-            <TextInput
-              mode="outlined"
-              editable={false}
-              outlineColor="transparent"
-              theme={{
-                colors: {
-                  placeholder: theme.colors.text,
-                  background: theme.colors.input,
-                },
-              }}
-            >
-              {"Fecha de nacimiento: " +
-                `${fechaNacimiento.getDate()}/${fechaNacimiento.getMonth()}/${fechaNacimiento.getFullYear()}`}
-            </TextInput>
-          </TouchableOpacity>
+            {({
+              handleChange,
+              handleBlur,
+              handleSubmit,
+              values,
+              errors,
+              isValid,
+            }) => (
+              <>
+                {GlobalInput(
+                  "Usuario",
+                  values.userName,
+                  handleChange("userName"),
+                  handleBlur("userName"),
+                  styles.inputView,
+                  false,
+                  "default"
+                )}
+                {errors.userName && (
+                  <Text style={styles.inputInvalidText}>{errors.userName}</Text>
+                )}
+                {GlobalInput(
+                  "Contraseña",
+                  values.contrasenia,
+                  handleChange("contrasenia"),
+                  handleBlur("contrasenia"),
+                  styles.inputView,
+                  true,
+                  "default"
+                )}
+                {errors.contrasenia && (
+                  <Text style={styles.inputInvalidText}>
+                    {errors.contrasenia}
+                  </Text>
+                )}
+                {GlobalInput(
+                  "Confirmar contraseña",
+                  values.confirmarContrasenia,
+                  handleChange("confirmarContrasenia"),
+                  handleBlur("confirmarContrasenia"),
+                  styles.inputView,
+                  true,
+                  "default"
+                )}
+                {errors.confirmarContrasenia && (
+                  <Text style={styles.inputInvalidText}>
+                    {errors.confirmarContrasenia}
+                  </Text>
+                )}
+                {GlobalInput(
+                  "Email",
+                  values.email,
+                  handleChange("email"),
+                  handleBlur("email"),
+                  styles.inputView,
+                  false,
+                  "email-address"
+                )}
+                {errors.email && (
+                  <Text style={styles.inputInvalidText}>{errors.email}</Text>
+                )}
+                {GlobalInput(
+                  "Nombre",
+                  values.nombre,
+                  handleChange("nombre"),
+                  handleBlur("nombre"),
+                  styles.inputView,
+                  false,
+                  "default"
+                )}
+                {errors.nombre && (
+                  <Text style={styles.inputInvalidText}>{errors.nombre}</Text>
+                )}
+                {GlobalInput(
+                  "Apellido",
+                  values.apellido,
+                  handleChange("apellido"),
+                  handleBlur("apellido"),
+                  styles.inputView,
+                  false,
+                  "default"
+                )}
+                {errors.apellido && (
+                  <Text style={styles.inputInvalidText}>{errors.apellido}</Text>
+                )}
+                {/* Date Picker */}
+                <TouchableOpacity
+                  style={styles.inputView}
+                  onPress={(e) => {
+                    setShowDatePicker(true);
+                  }}
+                >
+                  <TextInput
+                    mode="outlined"
+                    editable={false}
+                    outlineColor="transparent"
+                    theme={{
+                      colors: {
+                        placeholder: theme.colors.text,
+                        background: theme.colors.input,
+                      },
+                    }}
+                  >
+                    {"Fecha de nacimiento: " +
+                      `${fechaNacimiento.getDate()}/${fechaNacimiento.getMonth()}/${fechaNacimiento.getFullYear()}`}
+                  </TextInput>
+                </TouchableOpacity>
 
-          <DateTimePickerModal
-            isVisible={showDatePicker}
-            mode="date"
-            onConfirm={(date) => onConfirm(date)}
-            onCancel={() => setShowDatePicker(false)}
-            date={new Date()}
-          />
-          {/* Date Picker */}
-
-          {GlobalInput(
-            "DNI",
-            dni,
-            setDni,
-            styles.inputView,
-            false,
-            "number-pad"
-          )}
-          {GlobalButton(
-            [styles.loginButton, { backgroundColor: theme.colors.secondary }],
-            { color: theme.colors.secondaryText },
-            "REGISTRAR",
-            handleSubmit
-          )}
+                <DateTimePickerModal
+                  isVisible={showDatePicker}
+                  mode="date"
+                  onConfirm={(date) => onConfirm(date)}
+                  onCancel={() => setShowDatePicker(false)}
+                  date={new Date()}
+                />
+                {/* Date Picker */}
+                {/* falta validacion fecha nacimiento */}
+                {GlobalInput(
+                  "DNI",
+                  values.dni,
+                  handleChange("dni"),
+                  handleBlur("dni"),
+                  styles.inputView,
+                  false,
+                  "number-pad"
+                )}
+                {errors.dni && (
+                  <Text style={styles.inputInvalidText}>{errors.dni}</Text>
+                )}
+                {GlobalButton(
+                  [
+                    styles.loginButton,
+                    { backgroundColor: theme.colors.secondary },
+                  ],
+                  { color: theme.colors.secondaryText },
+                  "REGISTRAR",
+                  handleSubmit,
+                  isValid
+                )}
+              </>
+            )}
+          </Formik>
         </View>
       </TouchableWithoutFeedback>
     </KeyboardAwareScrollView>

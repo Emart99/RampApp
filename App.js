@@ -132,6 +132,9 @@ export default function App() {
     prepare();
   }, []);
 
+  if (!fontsLoaded) {
+    return null;
+  }
 
   return (
     <SafeAreaProvider>

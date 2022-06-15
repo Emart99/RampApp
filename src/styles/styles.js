@@ -168,6 +168,13 @@ const styles = StyleSheet.create({
       alignSelf:'center',
       alignItems:"center",
       justifyContent:"center",
+    },
+    inputInvalidText:{
+      color: "red",
+      alignSelf: "flex-start",
+      marginTop: -15,
+      marginBottom: 15,
+      marginStart: "8%",
     }
   });
   

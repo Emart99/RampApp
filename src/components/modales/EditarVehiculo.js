@@ -46,6 +46,7 @@ const EditarVehiculo = (visible, setVisible) => {
             "Marca",
             marca,
             setMarca,
+            "",
             styles.inputView,
             false,
             "default"
@@ -54,6 +55,7 @@ const EditarVehiculo = (visible, setVisible) => {
             "Modelo",
             modelo,
             setModelo,
+            "",
             styles.inputView,
             false,
             "default"
@@ -62,6 +64,7 @@ const EditarVehiculo = (visible, setVisible) => {
             "Dominio",
             dominio,
             setDominio,
+            "",
             styles.inputView,
             false,
             "default"

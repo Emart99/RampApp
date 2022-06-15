@@ -1,7 +1,7 @@
 import axios from "axios";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 //axios.defaults.baseURL = "http://localhost:9000";
-const IP_DEV = "192.168.56.1"
+const IP_DEV = "192.168.1.2"
 const ENV_DEV_URL = 'http://' + IP_DEV + ':9000'
 const ENV_IMGUR_CLIENT_ID = "bd34bd7d458c396"
 
@@ -52,15 +52,10 @@ export async function traerUsuario() {
 
 export async function registrar(datosRegistro) {
     const response = await axios.put(ENV_DEV_URL + '/usuario/registrar', datosRegistro)
-
     return response.data
 }
 
-export async function logear(userName, contrasenia) {
-    const _usuario = {
-        userName: userName,
-        contrasenia: contrasenia
-    }
+export async function logear(_usuario) {
     const response = await axios.post(ENV_DEV_URL + '/usuario/login', _usuario)
     return response.data
 }
@@ -80,12 +75,7 @@ export async function subirImagen (base64img){
     return response.data
 }
 
-export async function crearVehiculo (marca,modelo,dominio){
-    const vehiculoJSON = {
-        marca:marca,
-        modelo:modelo,
-        dominio:dominio
-    }
+export async function crearVehiculo (vehiculoJSON){
     const response = await axios.put(ENV_DEV_URL + "/agregarVehiculo/"+ await getUsuarioId() , vehiculoJSON)
     return response.data
 }

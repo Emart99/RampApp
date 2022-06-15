@@ -1,52 +1,144 @@
-import React from 'react';
-import { View, Text, Keyboard ,TouchableWithoutFeedback  } from 'react-native';
-import { TextInput } from 'react-native-paper';
-import { useTheme } from 'react-native-paper';
-import styles from '../styles/styles'
-import OlvidoSuContrasenia from './../components/OlvidoSuContraseniaDialog';
-import { logear } from '../api/http';
-import GlobalButton from './../components/GlobalButton';
-import GlobalInput from '../components/GlobalInput';
-import { setUsuarioId } from './../api/http';
+import React from "react";
+import {
+  View,
+  Text,
+  Keyboard,
+  TouchableWithoutFeedback,
+} from "react-native";
+import { Snackbar } from "react-native-paper";
+import { useTheme } from "react-native-paper";
+import { Formik } from "formik";
+
+import styles from "../styles/styles";
+import OlvidoSuContrasenia from "./../components/OlvidoSuContraseniaDialog";
+import { logear } from "../api/http";
+import GlobalButton from "./../components/GlobalButton";
+import GlobalInput from "../components/GlobalInput";
+import { setUsuarioId } from "./../api/http";
+import { loginValidationSchema } from "../utils/loginSchema";
 
 const Login = ({ navigation }) => {
-    const [visibleOlvidoSuContrasenia, setVisibleOlvidoSuContrasenia] = React.useState(false);
-    const [username, setUsername] = React.useState('');
-    const [password, setPassword] = React.useState('');
-    const theme = useTheme();
+  const [visibleOlvidoSuContrasenia, setVisibleOlvidoSuContrasenia] =
+    React.useState(false);
+  const theme = useTheme();
+  const [visible, setVisible] = React.useState(false);
+  const [mensajeError, setMensajeError] = React.useState("");
 
-    const loginHandler = () => {
-         logear(username, password).then(response => {
-             console.log(response);
-                navigation.navigate('MainScreen');
-                setUsuarioId(response.id)
-             })
-             .catch(error => {console.log(error)})
-    }
+  const onToggleSnackBar = () => setVisible(!visible);
+  const onDismissSnackBar = () => setVisible(false);
 
-    const registerNavigation = () => {
-        navigation.navigate("Registrarse")
-    }
+  const loginHandler = (values) => {
+    logear(values)
+      .then((response) => {
+        console.log(response);
+        navigation.navigate("MainScreen");
+        setUsuarioId(response.id);
+      })
+      .catch((error) => {
+        setMensajeError(error.response.data.message);
+        onToggleSnackBar();
+      });
+  };
 
-    const olvidoSuContraseniaHelper = () =>{
-        setVisibleOlvidoSuContrasenia(!visibleOlvidoSuContrasenia)
-    }   
+  const registerNavigation = () => {
+    navigation.navigate("Registrarse");
+  };
 
-    return (
-        <TouchableWithoutFeedback  onPress={Keyboard.dismiss}  >
-        <View  style ={styles.containerLogin}  >
-            <Text style={[{color:theme.colors.secondary},styles.loguito]} >RampApp</Text>
-            {GlobalInput("Usuario",username,setUsername,styles.inputView,false,'default')}
-            {GlobalInput("Contraseña",password,setPassword,styles.inputView,true,'default')}
-            <View style={{marginTop:10}}/>
-            {GlobalButton("",{color: theme.colors.text},"Olvido su contraseña?",olvidoSuContraseniaHelper)}
-            {OlvidoSuContrasenia(visibleOlvidoSuContrasenia,setVisibleOlvidoSuContrasenia)} 
-            {GlobalButton([styles.loginButton,{ backgroundColor: theme.colors.secondary}],{color: theme.colors.secondaryText},"INGRESAR",loginHandler)}
-            {GlobalButton("",{color: theme.colors.text},"Registrarse",registerNavigation)}
-            
-        </View>
-        </TouchableWithoutFeedback >
-    )
-}
+  const olvidoSuContraseniaHelper = () => {
+    setVisibleOlvidoSuContrasenia(!visibleOlvidoSuContrasenia);
+  };
+
+  return (
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <View style={styles.containerLogin}>
+        <Text style={[{ color: theme.colors.secondary }, styles.loguito]}>
+          RampApp
+        </Text>
+        <Snackbar
+          visible={visible}
+          onDismiss={onDismissSnackBar}
+          duration={3000}
+          style={{
+            backgroundColor: "#550000",
+            width: "85%",
+            height: 45,
+            alignSelf: "center",
+          }}
+        >
+          <Text style={{ color: theme.colors.text }}>{mensajeError}</Text>
+        </Snackbar>
+        <Formik
+          validationSchema={loginValidationSchema}
+          initialValues={{ userName: "", contrasenia: "" }}
+          onSubmit={(values) => loginHandler(values)}
+        >
+          {({
+            handleChange,
+            handleBlur,
+            handleSubmit,
+            values,
+            errors,
+            isValid,
+          }) => (
+            <>
+              {GlobalInput(
+                "Usuario",
+                values.userName,
+                handleChange("userName"),
+                handleBlur("userName"),
+                styles.inputView,
+                false,
+                "default"
+              )}
+              {errors.userName && (
+                <Text style={styles.inputInvalidText}>{errors.userName}</Text>
+              )}
+              {GlobalInput(
+                "Contraseña",
+                values.contrasenia,
+                handleChange("contrasenia"),
+                handleBlur("contrasenia"),
+                styles.inputView,
+                true,
+                "default"
+              )}
+              {errors.contrasenia && (
+                <Text style={styles.inputInvalidText}>
+                  {errors.contrasenia}
+                </Text>
+              )}
+              <View style={{ marginTop: 10 }} />
+              {GlobalButton(
+                "",
+                { color: theme.colors.text },
+                "Olvido su contraseña?",
+                olvidoSuContraseniaHelper
+              )}
+              {OlvidoSuContrasenia(
+                visibleOlvidoSuContrasenia,
+                setVisibleOlvidoSuContrasenia
+              )}
+              {GlobalButton(
+                [
+                  styles.loginButton,
+                  { backgroundColor: theme.colors.secondary },
+                ],
+                { color: theme.colors.secondaryText },
+                "INGRESAR",
+                handleSubmit,
+                isValid
+              )}
+              {GlobalButton(
+                "",
+                { color: theme.colors.text },
+                "Registrarse",
+                registerNavigation
+              )}
+            </>
+          )}
+        </Formik>
+      </View>
+    </TouchableWithoutFeedback>
+  );
+};
 export default Login;
-
