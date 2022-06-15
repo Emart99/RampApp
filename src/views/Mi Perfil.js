@@ -2,10 +2,11 @@ import { Text,Avatar,Switch,Divider, useTheme   } from "react-native-paper"
 import {View,TouchableOpacity,ScrollView } from "react-native"
 import React, {useEffect, useState} from 'react';
 import styles from '../styles/styles'
-import { traerUsuario } from "../api/http";
+import { getUsuarioId, traerUsuario } from "../api/http";
 import { PreferencesContext } from "../themeContext";
 import GlobalButton from './../components/GlobalButton';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { cerrarSesion } from './../api/http';
 
 
 const MiPerfil = ({navigation}) =>{
@@ -21,10 +22,11 @@ const MiPerfil = ({navigation}) =>{
     };
     const [usuario,setUsuario] = useState('')
     useEffect(() => {
-        traerUsuario(6).then(response => {setUsuario(response)});
+        traerUsuario().then(response => {setUsuario(response)});
       },[]);
 
     const loginNavigation = () =>{
+        cerrarSesion()
         navigation.navigate("Login")
     }
     const administrarVehiculoNavigation= () =>{
@@ -49,8 +51,7 @@ const MiPerfil = ({navigation}) =>{
                 <Text style={styles.perfilMiniContentText}>Apellido: {usuario.apellido}</Text>
                 <Text style={styles.perfilMiniContentText}>Fecha De Nacimiento: {usuario.fechaDeNacimiento}</Text>
                 <Text style={styles.perfilMiniContentText}>DNI: {usuario.dni}</Text>
-                <Text style={styles.perfilMiniContentText}>Cambiar Contraseña</Text>
-
+              
                 <Text style={[{marginTop:20},styles.perfilContentText]}>Ajustes</Text>
                 <View style={styles.alinearSwitch}>
                     <Text style={styles.perfilMiniContentText}>Tema: {temaString}</Text>

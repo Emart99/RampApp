@@ -7,6 +7,7 @@ import OlvidoSuContrasenia from './../components/OlvidoSuContraseniaDialog';
 import { logear } from '../api/http';
 import GlobalButton from './../components/GlobalButton';
 import GlobalInput from '../components/GlobalInput';
+import { setUsuarioId } from './../api/http';
 
 const Login = ({ navigation }) => {
     const [visibleOlvidoSuContrasenia, setVisibleOlvidoSuContrasenia] = React.useState(false);
@@ -15,11 +16,12 @@ const Login = ({ navigation }) => {
     const theme = useTheme();
 
     const loginHandler = () => {
-        // logear(username, password).then(response => {
-            // console.log(response);
-            navigation.navigate('MainScreen');
-            // })
-            // .catch(error => {console.log(error)})
+         logear(username, password).then(response => {
+             console.log(response);
+                navigation.navigate('MainScreen');
+                setUsuarioId(response.id)
+             })
+             .catch(error => {console.log(error)})
     }
 
     const registerNavigation = () => {

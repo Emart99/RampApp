@@ -13,8 +13,6 @@ const CardRampa = (rampa, theme) => {
   };
 
   return (
-    <>
-    {/* error de key zzz */}
       <Pressable key={rampa.id} onPress={touchHandler}>
         <Card
           style={[
@@ -53,9 +51,9 @@ const CardRampa = (rampa, theme) => {
             </View>
           </Card.Content>
         </Card>
+        {AdminRampa(rampa.id, visibleModalAdmin, setVisibleModalAdmin)}
       </Pressable>
-      {AdminRampa(rampa.id, visibleModalAdmin, setVisibleModalAdmin)}
-    </>
+  
   );
 };
 

@@ -6,8 +6,9 @@ import GlobalInput from "../GlobalInput";
 import GlobalButton from "../GlobalButton";
 import styles from "../../styles/styles";
 import modalStyles from "../../styles/modalStyles";
-import { crearVehiculo } from "../../api/http";
-const CrearVehiculo = (visible, setVisible) => {
+import { crearVehiculo, modificarVehiculo, traerVehiculo } from "../../api/http";
+
+const EditarVehiculo = (visible, setVisible) => {
   const theme = useTheme();
 
   const hideModal = () => setVisible(false);
@@ -15,14 +16,18 @@ const CrearVehiculo = (visible, setVisible) => {
   const [modelo,setModelo] = React.useState("")
   const [dominio,setDominio] = React.useState("")
 
-  const vehiculoCrear = async () => {
-    await crearVehiculo(marca,modelo,dominio).then(data => {
-      setMarca("")
-      setModelo("")
-      setDominio("")
+  const vehiculoModificar  = async () => {
+    await modificarVehiculo(marca,modelo,dominio).then(data => {
       hideModal()
     })
   }
+  React.useEffect(()=>{
+    traerVehiculo().then(data =>{
+      setMarca(data.marca)
+      setModelo(data.modelo)
+      setDominio(data.dominio)  
+    })
+  },[])
 
   return (
     <Portal theme={{colors:{backdrop:'rgba(0, 0, 0, 0.35)'}}}>
@@ -80,7 +85,7 @@ const CrearVehiculo = (visible, setVisible) => {
             ],
             { color: theme.colors.secondaryText, textAlign: "center" },
             "Agregar",
-            vehiculoCrear
+            vehiculoModificar
           )}
         </View>
       </Modal>
@@ -88,4 +93,4 @@ const CrearVehiculo = (visible, setVisible) => {
   );
 };
 
-export default CrearVehiculo;
+export default EditarVehiculo;

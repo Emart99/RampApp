@@ -3,11 +3,12 @@ import { View, Text, TouchableOpacity, Pressable } from 'react-native';
 import { ScrollView } from 'react-native';
 import { IconButton,useTheme } from "react-native-paper";
 
-import { traerVehiculos } from '../api/http';
 import CrearVehiculo from "../components/modales/CrearVehiculo";
 import cardStyles from "../styles/cardStyles";
 import  vehiculoStyles  from "../styles/vehiculoStyles";
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { borrarVehiculo, traerVehiculo } from "../api/http";
+import EditarVehiculo from './../components/modales/EditarVehiculo';
 
 
 const AdministrarVehiculo = () => {
@@ -40,6 +41,13 @@ const AdministrarVehiculo = () => {
 export default AdministrarVehiculo;
 
 const VehiculoCard = (theme,vehiculo) => {
+  const [visible,setVisible] = React.useState(false)
+
+  const vehiculoBorrar = async () =>{
+    await borrarVehiculo().then() // aca falta el id
+  }
+   
+
   return (
       <View key={vehiculo.id} style={[{backgroundColor:theme.colors.headerPerfil},vehiculoStyles.card,vehiculoStyles.elevation]}>
         <IconButton
@@ -55,14 +63,15 @@ const VehiculoCard = (theme,vehiculo) => {
             icon="trash-can-outline"
             color="red"
             size={25}
-          // onPress={() => navigation.navigate('Login')}
+          onPress={() => vehiculoBorrar()}
           />
           <IconButton
             icon="pencil"
             color="black"
             size={25}
-          // onPress={() => navigation.navigate('Login')}
+          onPress={() => setVisible(true)}
           />
+         {EditarVehiculo(visible,setVisible)} 
         </View>
       </View>
       )

@@ -16,6 +16,7 @@ export function themeHelper(){
 
 export const LightTheme = {
   ...DefaultTheme,
+  fontFamily: {...DefaultTheme.fonts.regular.fontFamily = 'Poppins_300Light'} ,
   colors: {
     modal:'#c2c2c2',
     headerPerfil:"#d9d9d9",
@@ -33,6 +34,7 @@ export const LightTheme = {
 
 export const _DarkTheme = {
   ...DarkTheme,
+  fontFamily: {...DarkTheme.fonts.regular.fontFamily = 'Poppins_300Light'} ,
   colors: {
     modal:'#404040',
     headerPerfil:"#575757",
@@ -69,9 +71,8 @@ const styles = StyleSheet.create({
       width: "100%",
     },
     loguito:{
-      fontWeight:"bold",
-      fontSize:60,
-      marginBottom:40
+      fontSize:67,
+      marginBottom:30
     },
     inputView:{
       width:"85%",

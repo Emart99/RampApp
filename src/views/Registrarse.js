@@ -44,15 +44,10 @@ const Registrarse = ({ navigation }) => {
       email: email,
     };
     registrar(registro)
-      .then((resp) => console.log(resp))
-      .catch((error) => console.log(error));
+      .then((resp) => setShowAlertDatosCorrectos(true))
+      .catch((error) => setShowAlertDatosInvalidos(true));
   };
 
-  const registerHelper = () => {
-    setShowAlertDatosCorrectos(true);
-
-    //navigation.navigate('Login');
-  };
 
   const onConfirm = (date) => {
     setShowDatePicker(false);
@@ -201,7 +196,7 @@ const Registrarse = ({ navigation }) => {
             [styles.loginButton, { backgroundColor: theme.colors.secondary }],
             { color: theme.colors.secondaryText },
             "REGISTRAR",
-            registerHelper
+            handleSubmit
           )}
         </View>
       </TouchableWithoutFeedback>

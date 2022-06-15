@@ -7,7 +7,7 @@ const GlobalButton = (_stylesButton,_stylesText,texto,onPress) =>{
     return (       
         <TouchableOpacity onPress={onPress} style={_stylesButton}
         >
-            <Text style={_stylesText}>{texto}</Text>
+            <Text style={[{fontFamily:'Poppins_300Light'},_stylesText]}>{texto}</Text>
         </TouchableOpacity>
     )
 }
