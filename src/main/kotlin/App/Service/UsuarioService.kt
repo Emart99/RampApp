@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.server.ResponseStatusException
+import java.time.LocalDateTime
 
 @Service
 class UsuarioService {
@@ -43,12 +44,11 @@ class UsuarioService {
     @Transactional
     fun registrarNuevoUsuario(usuario: Usuario): Usuario {
        val usuarioARegistrar = repositorioUsuarios.findByDni(usuario.dni)
-        if (usuarioARegistrar === null) {
-            repositorioUsuarios.save(usuario)
+        if (usuarioARegistrar == null) {
+           return repositorioUsuarios.save(usuario)
      } else {
-           ResponseStatusException(HttpStatus.NOT_FOUND, "El usuario con dni ${usuario.dni} ya se encuentra registrado")
+           throw ResponseStatusException(HttpStatus.NOT_FOUND, "El usuario con dni ${usuario.dni} ya se encuentra registrado")
       }
-        return usuario
     }
 
    fun agregarVehiculo(idUsuario: Long, vehiculoNuevo: Vehiculo){
@@ -58,7 +58,7 @@ class UsuarioService {
            usuario.vehiculos.add(vehiculoNuevo)
            repositorioVehiculo.save(vehiculoNuevo)
        } else {
-          ResponseStatusException(HttpStatus.NOT_FOUND, "El vehiculo con dominio ${vehiculoNuevo.dominio} ya se encuentra registrado")
+         throw ResponseStatusException(HttpStatus.NOT_FOUND, "El vehiculo con dominio ${vehiculoNuevo.dominio} ya se encuentra registrado")
        }
     }
 
@@ -81,5 +81,22 @@ class UsuarioService {
             imagen = denuncia.imagen
         }
         return repositorioDenuncia.save(nuevaDenuncia)
+    }
+
+    fun traerRampasPropias(idUsuario: Long): List<Rampa> {
+        val usuario = this.getUsuario(idUsuario)
+        return usuario.rampasPropias
+    }
+
+    fun traerVehiculosPropios(idUsuario: Long): List<Vehiculo> {
+        val usuario = this.getUsuario(idUsuario)
+        return usuario.vehiculos
+    }
+
+    fun traerReservasActivas(idUsuario: Long): List<Reserva> {
+        val usuario = this.getUsuario(idUsuario)
+        val horaActual = LocalDateTime.now()
+        return usuario.reservasRealizadas.filter{reserva -> reserva.horaFinReserva < horaActual }
+
     }
 }

@@ -24,4 +24,5 @@ class Reserva {
     @Column(length=15)
     var importePagado: Double = 0.00
 
+
 }

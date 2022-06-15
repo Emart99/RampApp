@@ -1,10 +1,8 @@
 package App.Controller
 
-import App.Domain.Denuncia
-import App.Domain.Rampa
-import App.Domain.Usuario
-import App.Domain.Vehiculo
+import App.Domain.*
 import App.Service.UsuarioService
+import app.serializers.View
 import com.fasterxml.jackson.annotation.JsonView
 import io.swagger.v3.oas.annotations.Operation
 import org.springframework.beans.factory.annotation.Autowired
@@ -19,10 +17,12 @@ class UsuarioController {
 
     @PostMapping("/usuario/login")
     @Operation(summary ="Devuelve el usuario cuyo username y contraseña coincide con lo que pasamos como parámetro")
+    @JsonView(View.Usuario.DatosBasicos::class)
     fun buscarLoguearse(@RequestBody usuario: Usuario): Usuario = usuarioService.buscar(usuario)
 
     @GetMapping("/usuario/{id}")
     @Operation(summary = "Devuelve usuario por id")
+    @JsonView(View.Usuario.DatosBasicos::class)
     fun traerUsuario(@PathVariable id: Long) = usuarioService.getUsuario(id)
 
     @PutMapping("/usuario/registrar")
@@ -41,5 +41,17 @@ class UsuarioController {
     @PutMapping("/realizarDenuncia/{idUsuario}")
     @Operation(summary = "registra una denuncia")
     fun crearDenuncia(@PathVariable idUsuario: Long,@RequestBody denuncia: Denuncia ) = usuarioService.realizarDenuncia(idUsuario,denuncia)
+
+    @GetMapping("/usuario/rampasPropias/{idUsuario}")
+    @Operation(summary = "Devuelve las rampas que posee un usuario")
+    fun traerRampasPropias(@PathVariable idUsuario: Long): List<Rampa> = usuarioService.traerRampasPropias(idUsuario)
+
+    @GetMapping("/usuario/vehiculosPropios/{idUsuario}")
+    @Operation(summary = "Devuelve los vehiculos de un usuario")
+    fun traerVehiculosRegistrados(@PathVariable idUsuario: Long): List<Vehiculo> = usuarioService.traerVehiculosPropios(idUsuario)
+
+    @GetMapping("/usuario/reservasActivas/{idUsuario}")
+    @Operation(summary = "Devuelve las reservas que realizo un usuario")
+    fun traerReservasRealizadas(@PathVariable idUsuario: Long): List<Reserva> = usuarioService.traerReservasActivas(idUsuario)
 
 }

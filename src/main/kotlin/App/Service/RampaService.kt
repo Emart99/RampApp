@@ -4,6 +4,7 @@ import App.Domain.*
 import App.Repository.RepositorioAdministrador
 import App.Repository.RepositorioRampas
 import App.Repository.RepositorioRampasPendienteAprobacion
+import App.Repository.RepositorioUsuario
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
@@ -21,6 +22,8 @@ class RampaService {
     @Autowired
     lateinit var repositorioHorarios: RepositorioAdministrador
 
+    @Autowired
+    lateinit var repositorioUsuario: RepositorioUsuario
 
     @Autowired
     lateinit var usuarioService:UsuarioService
@@ -70,7 +73,16 @@ class RampaService {
     }
 
     @Transactional
-    fun reservarRampa(idRampa: Long, reserva: Reserva): Rampa {
+    fun reservarRampa(idRampa: Long,idUsuario: Long, reserva: Reserva): Rampa {
+        repositorioUsuario
+            .findById(idUsuario)
+            .map {
+                it.reservasRealizadas.add(reserva)
+                repositorioUsuario.save(it)
+            }
+            .orElseThrow {
+                ResponseStatusException(HttpStatus.NOT_FOUND, "El usuario con identificador $idUsuario no existe")
+            }
         return repositorioRampa
             .findById(idRampa)
             .map {
