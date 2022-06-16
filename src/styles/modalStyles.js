@@ -78,12 +78,12 @@ const modalStyles = StyleSheet.create({
   },
   switch: {
     marginLeft: 10,
-    marginBottom: 9
+    marginBottom: -4
   },
   textHorarios: {
     fontSize: 18,
     alignSelf: "center",
-    marginBottom: 10,
+    marginBottom: 20,
   },
   horariosContainer: {
     flex: 2,

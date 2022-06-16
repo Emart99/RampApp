@@ -74,7 +74,7 @@ const AdminRampa = (
             style={{ marginTop: -10 }}
           />
         </View>
-        <View style={modalStyles.gralContainer}>
+        <View style={[{marginBottom:10},modalStyles.gralContainer]}>
           <View style={modalStyles.switchContainer}>
             <Text style={{ fontSize: 18, color: theme.colors.text }}>
               {isSwitchOn ? "Habilitada" : "Deshabilitada"}
@@ -106,7 +106,7 @@ const AdminRampa = (
                     color={theme.colors.text}
                     onPress={() => setVisibleTimePickerD(true)}
                     size={40}
-                    style={{ padding: 0 }}
+                    style={{ padding: 0 ,marginTop:-10}}
                   />
                   <DateTimePickerModal
                     isVisible={visibleTimePickerD}
@@ -126,7 +126,7 @@ const AdminRampa = (
                     color={theme.colors.text}
                     onPress={() => setVisibleTimePickerH(true)}
                     size={40}
-                    style={{ padding: 0 }}
+                    style={{ padding: 0 ,marginTop:-10}}
                   />
                   <DateTimePickerModal
                     isVisible={visibleTimePickerH}
@@ -143,13 +143,13 @@ const AdminRampa = (
         </View>
         <View style={modalStyles.buttonContainer}>
           {GlobalButton(
-            [{ borderColor: theme.colors.secondary }, modalStyles.button2],
+            [{ borderColor: theme.colors.secondary , alignSelf:'flex-end'}, modalStyles.button2],
             { color: theme.colors.text, textAlign: "center" },
             "Deshabilitar por motivos externos",
             hideModal
           )}
           {GlobalButton(
-            [{ borderColor: theme.colors.secondary }, modalStyles.button],
+            [{ borderColor: theme.colors.secondary, alignSelf:'flex-end' }, modalStyles.button],
             { color: theme.colors.text, textAlign: "center" },
             "Cancelar",
             hideModal
@@ -159,6 +159,7 @@ const AdminRampa = (
               {
                 backgroundColor: theme.colors.secondary,
                 borderColor: theme.colors.secondary,
+                 alignSelf:'flex-end'
               },
               modalStyles.button,
             ],

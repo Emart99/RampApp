@@ -56,15 +56,16 @@ const Login = ({ navigation }) => {
         <Snackbar
           visible={visible}
           onDismiss={onDismissSnackBar}
-          duration={3000}
+          duration={4500}
           style={{
-            backgroundColor: "#850909",
-            width: "85%",
-            height: 45,
+            backgroundColor: "#F8615A",
+            width: "100%",
+            borderRadius:0,
+            height: "100%",
             alignSelf: "center",
           }}
         >
-          <Text style={{ color: theme.colors.text }}>{mensajeError}</Text>
+          <Text style={{ color: theme.colors.text,fontSize:17}}>{mensajeError}</Text>
         </Snackbar>
         <Formik
           validationSchema={loginValidationSchema}
