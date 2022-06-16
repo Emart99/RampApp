@@ -2,8 +2,7 @@ package App.Controller
 
 import App.Domain.*
 import App.Service.UsuarioService
-import app.serializers.View
-import com.fasterxml.jackson.annotation.JsonView
+
 import io.swagger.v3.oas.annotations.Operation
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
@@ -17,12 +16,11 @@ class UsuarioController {
 
     @PostMapping("/usuario/login")
     @Operation(summary ="Devuelve el usuario cuyo username y contraseña coincide con lo que pasamos como parámetro")
-    @JsonView(View.Usuario.DatosBasicos::class)
+
     fun buscarLoguearse(@RequestBody usuario: Usuario): Usuario = usuarioService.buscar(usuario)
 
     @GetMapping("/usuario/{id}")
     @Operation(summary = "Devuelve usuario por id")
-    @JsonView(View.Usuario.DatosBasicos::class)
     fun traerUsuario(@PathVariable id: Long) = usuarioService.getUsuario(id)
 
     @PutMapping("/usuario/registrar")
@@ -34,9 +32,9 @@ class UsuarioController {
     @Operation(summary ="permite agregar un vehiculo no registrado")
     fun agregarVehiculoUsuario(@PathVariable idUsuario: Long,@RequestBody vehiculoNuevo: Vehiculo) = usuarioService.agregarVehiculo(idUsuario, vehiculoNuevo)
 
-    @DeleteMapping("/eliminarVehiculo/{id}")
+    @DeleteMapping("/eliminarVehiculo/{idUsuario}/{idVehiculo}")
     @Operation(summary = "Elimina un vehiculo por id")
-    fun eliminarVehiculoID(@PathVariable idUsuario: Long,@RequestBody vehiculoAEliminar: Vehiculo) = usuarioService.eliminarVehiculoPorId(idUsuario,vehiculoAEliminar)
+    fun eliminarVehiculoID(@PathVariable idUsuario: Long,@PathVariable idVehiculo: Long) = usuarioService.eliminarVehiculoPorId(idUsuario,idVehiculo)
 
     @PutMapping("/realizarDenuncia/{idUsuario}")
     @Operation(summary = "registra una denuncia")

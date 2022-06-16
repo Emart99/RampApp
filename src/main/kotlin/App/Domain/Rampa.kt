@@ -23,6 +23,15 @@ class Rampa {
     @Column(length=5)
     var altura: Int = 0
 
+    @Column
+    var imagenRampa:String = ""
+
+    @Column
+    var imagenDni:String = ""
+
+    @Column
+    var imagenEscritura:String = ""
+
     @Column(length=5)
     var nroPartidaInmobiliaria: Int = 0
 

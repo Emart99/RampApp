@@ -62,9 +62,9 @@ class UsuarioService {
        }
     }
 
-    fun eliminarVehiculoPorId(idUsuario: Long, vehiculoAEliminar: Vehiculo){
+    fun eliminarVehiculoPorId(idUsuario: Long, idVehiculo: Long){
         val usuario = this.buscarUsuaiorId(idUsuario)
-        val vehiculo: Vehiculo= repositorioVehiculo.findById(vehiculoAEliminar.id).orElseThrow {
+        val vehiculo: Vehiculo= repositorioVehiculo.findById(idVehiculo).orElseThrow {
             ResponseStatusException(HttpStatus.NOT_FOUND, "El usuario no existe")
         }
         usuario.vehiculos.remove(vehiculo)
