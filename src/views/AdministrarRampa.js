@@ -22,7 +22,8 @@ const AdministrarRampa = () => {
   const [horaHasta, setHoraHasta] = React.useState(0);
   const [visibleTimePickerD, setVisibleTimePickerD] = React.useState(false);
   const [visibleTimePickerH, setVisibleTimePickerH] = React.useState(false);
-
+  const [visibleLoading,setVisibleLoading] = React.useState(false);
+  
   const showModalCrear = () => setVisibleModalCrear(true);
 
   useEffect(() => {
@@ -63,7 +64,7 @@ const AdministrarRampa = () => {
             visibleTimePickerD,
             setVisibleTimePickerD,
             visibleTimePickerH,
-            setVisibleTimePickerH
+            setVisibleTimePickerH,
           )
         )}
       </ScrollView>
@@ -92,7 +93,9 @@ const AdministrarRampa = () => {
         showAlertDatosCorrectos,
         setShowAlertDatosCorrectos,
         showAlertDatosInvalidos,
-        setShowAlertDatosInvalidos
+        setShowAlertDatosInvalidos,
+        visibleLoading,
+        setVisibleLoading
       )}
     </>
   );

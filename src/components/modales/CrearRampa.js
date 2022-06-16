@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Text, IconButton, useTheme, Portal, Modal } from "react-native-paper";
+import { Text, IconButton, useTheme, Portal, Modal, ActivityIndicator } from "react-native-paper";
 import { View, TouchableWithoutFeedback, Keyboard } from "react-native";
 import { Formik } from "formik";
 import AwesomeAlert from "react-native-awesome-alerts";
@@ -19,7 +19,9 @@ const CrearRampa = (visible,
                     showAlertDatosCorrectos,
                     setShowAlertDatosCorrectos,
                     showAlertDatosInvalidos,
-                    setShowAlertDatosInvalidos) => {
+                    setShowAlertDatosInvalidos,
+                    visibleLoading,
+                    setVisibleLoading) => {
   
   
   const pickImage = async (setFieldValue, setFieldTouched, imgValue) => {
@@ -63,14 +65,10 @@ const CrearRampa = (visible,
 
   const agregarRampa = async (values) => {
     const imagenRampa = await subirImagen(values.imgRampa).catch((err) => {
-      console.log(err);
     });
     const imagenDNI = await subirImagen(values.imgDNI).catch((err) => {
-      console.log(err);
     });
-    const imagenEscritura = await subirImagen(values.imgEscritura).catch(
-      (err) => {
-        console.log(err);
+    const imagenEscritura = await subirImagen(values.imgEscritura).catch((err) => {
       }
     );
 
@@ -79,13 +77,12 @@ const CrearRampa = (visible,
       calle: values.calle,
       partido: values.partido,
       codigopostal: values.cp,
-    }).catch((err) => {
-      console.log(err);
-    });
-    console.log("Rampa: " + imagenRampa.data.link);
-    console.log("DNI: " + imagenDNI.data.link);
-    console.log("Escritura: " + imagenEscritura.data.link);
-    console.log(geoJson[0].lat,geoJson[0].lon);
+    })
+    
+    if(geoJson[0] == undefined){
+      setVisibleLoading(false)
+      return setShowAlertDatosInvalidos(true)
+    }
     const rampaJSON = {
       posx: geoJson[0].lon,
       posy: geoJson[0].lat,
@@ -96,7 +93,11 @@ const CrearRampa = (visible,
       imagenDNI: imagenDNI.data.link,
       imagenEscritura: imagenEscritura.data.link,
   }
-  creacionDeRampa(rampaJSON);
+  creacionDeRampa(rampaJSON).catch((err)=> {
+    console.log(err)
+  });
+  setVisibleLoading(false);
+  setShowAlertDatosCorrectos(true)
 
   };
 
@@ -124,7 +125,7 @@ const CrearRampa = (visible,
         contentContainerStyle={{ backgroundColor: theme.colors.background }}
         show={showAlertDatosInvalidos}
         showProgress={false}
-        title="Error, la rampa ya estaba registrada!"
+        title="Error la direccion no fue encontrada!"
         closeOnHardwareBackPress={false}
         showConfirmButton={true}
         confirmText="Volver a registrarse"
@@ -158,7 +159,11 @@ const CrearRampa = (visible,
                 imgEscritura: "",
                 imgDNI: "",
               }}
-              onSubmit={(values) => agregarRampa(values)}
+              onSubmit={(values) => {
+                setVisibleLoading(true)
+                agregarRampa(values).then()
+
+              }}
             >
               {({
                 handleChange,
@@ -349,7 +354,7 @@ const CrearRampa = (visible,
                       </View>
                     </View>
                   </View>
-
+                  <ActivityIndicator animating={visibleLoading} hidesWhenStopped={true} color={theme.colors.text} />
                   <View style={modalStyles.buttonContainer}>
                     {GlobalButton(
                       [
@@ -388,11 +393,3 @@ const CrearRampa = (visible,
 };
 
 export default CrearRampa;
-const jsonFalopa = {
-  altura: 3964,
-  calle: "Jose Hernandez",
-  localidad: "Las Heras",
-  ciudad: "Villa Ballester",
-  partido: "San Martin",
-  codigopostal: 1653,
-};
