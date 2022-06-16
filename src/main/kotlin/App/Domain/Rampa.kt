@@ -85,6 +85,15 @@ class RampaPendienteAprobacion(
     @Column(length=5)
     var nroPartidaInmobiliaria: Int = 0,
 
+    @Column
+    var imagenRampa:String = "",
+
+    @Column
+    var imagenDni:String = "",
+
+    @Column
+    var imagenEscritura:String = "",
+
     @OneToOne(fetch= FetchType.EAGER)
     var usuarioPropietario: Usuario= Usuario())
 {

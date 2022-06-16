@@ -51,8 +51,8 @@ class RampaService {
         var rampaARegistrar: Rampa? = this.repositorioRampa.findByNroPartidaInmobiliaria(rampaNueva.nroPartidaInmobiliaria)
         if (rampaARegistrar  === null) {
             val locador = usuarioService.buscarUsuaiorId(idUsuario)
-            val rampaPendiente= RampaPendienteAprobacion(rampaNueva.calle,rampaNueva.posx
-                ,rampaNueva.posy,rampaNueva.altura, rampaNueva.nroPartidaInmobiliaria, locador)
+            val rampaPendiente= RampaPendienteAprobacion(rampaNueva.posx
+                ,rampaNueva.posy,rampaNueva.calle,rampaNueva.altura, rampaNueva.nroPartidaInmobiliaria, rampaNueva.imagenDni, rampaNueva.imagenRampa,rampaNueva.imagenEscritura,locador)
             repositorioRampaPendienteAprobacion.save(rampaPendiente)
             }else {
                ResponseStatusException(HttpStatus.NOT_FOUND, "El usuario con dni ${rampaNueva.nroPartidaInmobiliaria} ya se encuentra registrado")
