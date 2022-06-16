@@ -10,13 +10,14 @@ import modalStyles from "../../styles/modalStyles";
 import { crearVehiculo } from "../../api/http";
 import { vehiculoValidationSchema } from "../../utils/vehiculoSchema";
 
-const CrearVehiculo = (visible, setVisible) => {
+const CrearVehiculo = (visible, setVisible,onPressRefresh,setOnPressRefresh) => {
   const theme = useTheme();
   const hideModal = () => setVisible(false);
 
   const vehiculoCrear = async (values) => {
     await crearVehiculo(values).then(() => {
       hideModal();
+      setOnPressRefresh(!onPressRefresh)
     });
   };
 

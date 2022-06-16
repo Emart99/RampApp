@@ -13,11 +13,15 @@ import modalStyles from "../../styles/modalStyles";
 import { geocoder, subirImagen } from "../../api/http";
 import { rampaValidationSchema } from "../../utils/rampaSchema";
 
-const CrearRampa = (visible, setVisible) => {
-  const theme = useTheme();
-  const [showAlertDatosCorrectos, setShowAlertDatosCorrectos] = useState(false);
-  const [showAlertDatosInvalidos, setShowAlertDatosInvalidos] = useState(false);
-
+const CrearRampa = (visible,
+                    setVisible,
+                    theme,
+                    showAlertDatosCorrectos,
+                    setShowAlertDatosCorrectos,
+                    showAlertDatosInvalidos,
+                    setShowAlertDatosInvalidos) => {
+  
+  
   const pickImage = async (setFieldValue, setFieldTouched, imgValue) => {
     // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -58,40 +62,52 @@ const CrearRampa = (visible, setVisible) => {
   };
 
   const agregarRampa = async (values) => {
-    await subirImagen(values.imgRampa)
-      .then((data) => {
-        console.log("Rampa: " + data.data.link);
-      })
-      .catch((err) => {
+    const imagenRampa = await subirImagen(values.imgRampa).catch((err) => {
+      console.log(err);
+    });
+    const imagenDNI = await subirImagen(values.imgDNI).catch((err) => {
+      console.log(err);
+    });
+    const imagenEscritura = await subirImagen(values.imgEscritura).catch(
+      (err) => {
         console.log(err);
-      });
-    await subirImagen(values.imgDNI)
-      .then((data) => {
-        console.log("DNI: " + data.data.link);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    await subirImagen(values.imgEscritura)
-      .then((data) => {
-        console.log("Escritura: " + data.data.link);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    await geocoder({
+      }
+    );
+
+    const geoJson = await geocoder({
       altura: values.altura,
       calle: values.calle,
       partido: values.partido,
       codigopostal: values.cp,
-    })
-      .then((data) => {
-        console.log(data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    }).catch((err) => {
+      console.log(err);
+    });
+    console.log("Rampa: " + imagenRampa.data.link);
+    console.log("DNI: " + imagenDNI.data.link);
+    console.log("Escritura: " + imagenEscritura.data.link);
+    console.log(geoJson[0].lat,geoJson[0].lon);
   };
+
+  // Array [
+  //   Object {
+  //     "boundingbox": Array [
+  //       "-34.617574",
+  //       "-34.617474",
+  //       "-58.557539",
+  //       "-58.557439",
+  //     ],
+  //     "class": "place",
+  //     "display_name": "4371, 640 - Guaminí, Barrio Evita, Villa Alianza, Caseros, Partido de Tres de Febrero, Buenos Aires, B1678BFF, Argentina",
+  //     "importance": 1.021,
+  //     "lat": "-34.617523999999996",
+  //     "licence": "Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright",
+  //     "lon": "-58.557489000000004",
+  //     "osm_id": 682177340,
+  //     "osm_type": "way",
+  //     "place_id": 92109122,
+  //     "type": "house",
+  //   },
+  // ]
 
   return (
     <Portal theme={{ colors: { backdrop: "rgba(0, 0, 0, 0.35)" } }}>

@@ -30,7 +30,6 @@ const Login = ({ navigation }) => {
   const loginHandler = (values) => {
     logear(values)
       .then((response) => {
-        console.log(response);
         navigation.navigate("MainScreen");
         setUsuarioId(response.id);
       })

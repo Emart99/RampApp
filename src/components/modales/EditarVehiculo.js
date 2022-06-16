@@ -7,27 +7,20 @@ import GlobalButton from "../GlobalButton";
 import styles from "../../styles/styles";
 import modalStyles from "../../styles/modalStyles";
 import { crearVehiculo, modificarVehiculo, traerVehiculo } from "../../api/http";
+import { Formik } from 'formik';
 
-const EditarVehiculo = (visible, setVisible) => {
-  const theme = useTheme();
+const EditarVehiculo = (visible, setVisible,theme,vehiculo,setOnPressRefresh,onPressRefresh) => {
+  
 
   const hideModal = () => setVisible(false);
-  const [marca,setMarca] = React.useState("")
-  const [modelo,setModelo] = React.useState("")
-  const [dominio,setDominio] = React.useState("")
 
-  const vehiculoModificar  = async () => {
-    await modificarVehiculo(marca,modelo,dominio).then(data => {
+  const vehiculoModificar  = async (values) => {
+    await modificarVehiculo(vehiculo.id,values.marca,values.modelo,values.dominio).then(data => {
       hideModal()
+      setOnPressRefresh(!onPressRefresh)
     })
   }
-  React.useEffect(()=>{
-    traerVehiculo().then(data =>{
-      setMarca(data.marca)
-      setModelo(data.modelo)
-      setDominio(data.dominio)  
-    })
-  },[])
+
 
   return (
     <Portal theme={{colors:{backdrop:'rgba(0, 0, 0, 0.35)'}}}>
@@ -40,12 +33,26 @@ const EditarVehiculo = (visible, setVisible) => {
         animationType="fade"
         visible={visible}
       >
+        <Formik
+          initialValues={{ marca: vehiculo.marca, modelo: vehiculo.modelo, dominio: vehiculo.dominio }}
+          onSubmit={(values) => vehiculoModificar(values)}
+        >
+          {({
+            handleChange,
+            handleBlur,
+            handleSubmit,
+            values,
+            errors,
+            touched,
+            isValid,
+          }) => (
+            <>
         <View style={modalStyles.inputContainer}>
           <Text style={modalStyles.titulo}>Agregar Vehículo</Text>
           {GlobalInput(
             "Marca",
-            marca,
-            setMarca,
+            values.marca,
+            handleChange("marca"),
             "",
             styles.inputView,
             false,
@@ -53,8 +60,8 @@ const EditarVehiculo = (visible, setVisible) => {
           )}
           {GlobalInput(
             "Modelo",
-            modelo,
-            setModelo,
+            values.modelo,
+            handleChange("modelo"),
             "",
             styles.inputView,
             false,
@@ -62,14 +69,15 @@ const EditarVehiculo = (visible, setVisible) => {
           )}
           {GlobalInput(
             "Dominio",
-            dominio,
-            setDominio,
+            values.dominio,
+            handleChange("dominio"),
             "",
             styles.inputView,
             false,
             "default"
           )}
         </View>
+        
 
         <View style={modalStyles.buttonContainer}>
           {GlobalButton(
@@ -88,9 +96,11 @@ const EditarVehiculo = (visible, setVisible) => {
             ],
             { color: theme.colors.secondaryText, textAlign: "center" },
             "Agregar",
-            vehiculoModificar
+            handleSubmit
           )}
         </View>
+        </>)}
+        </Formik>
       </Modal>
     </Portal>
   );

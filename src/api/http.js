@@ -1,7 +1,7 @@
 import axios from "axios";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 //axios.defaults.baseURL = "http://localhost:9000";
-const IP_DEV = "192.168.1.2"
+const IP_DEV = "192.168.56.1"
 const ENV_DEV_URL = 'http://' + IP_DEV + ':9000'
 const ENV_IMGUR_CLIENT_ID = "bd34bd7d458c396"
 
@@ -66,7 +66,7 @@ export async function geocoder(datosDireccion) {
 }
 
 export async function subirImagen (base64img){
-    const response = await axios.post("https://api.imgur.com/3/image",{
+    const response = await axios.post("https://api.imgur.com/3/upload",{
         type:"base64",
         image:base64img
     },
@@ -94,24 +94,32 @@ export async function traerVehiculo() {
     return response.data
 }
 
-export async function modificarVehiculo(marca,modelo,dominio) {
+export async function modificarVehiculo(idVehiculo,marca,modelo,dominio) {
     const vehiculoJSON = {
         marca:marca,
         modelo:modelo,
         dominio:dominio
     }
-    const response = await axios.put(ENV_DEV_URL + "/modificarVehiculo/7",vehiculoJSON)
+    const response = await axios.put(ENV_DEV_URL + "/modificarVehiculo/"+idVehiculo,vehiculoJSON)
     return response.data
 }
 
-export async function borrarVehiculo(){
-    const vehiculo = {
-        id:"7",
-        marca:"Fordsito",
-        modelo:"Fiesta",
-        dominio:"KEQ989"
-        
-    }
-    const response = await axios.delete(ENV_DEV_URL + "/eliminarVehiculo/"+ await getUsuarioId(),vehiculo)
+export async function borrarVehiculo(vehiculo){
+    const response = await axios.delete(ENV_DEV_URL + "/eliminarVehiculo/"+ await getUsuarioId()+"/"+vehiculo.id)
     return response.data
+}
+
+export async function traerVehiculosDelUsuario(){
+    let response = await axios.get(ENV_DEV_URL + "/usuario/vehiculosPropios/"+ await getUsuarioId());
+    return response.data;
+}
+
+export async function traerRampasDelUsuario(){
+    let response = await axios.get(ENV_DEV_URL + "/usuario/rampasPropias/"+ await getUsuarioId());
+    return response.data;
+}
+
+export async function traerReservasDelUsuario(){
+    let response = await axios.get(ENV_DEV_URL + "/usuario/reservasActivas/"+ await getUsuarioId());
+    return response.data;
 }

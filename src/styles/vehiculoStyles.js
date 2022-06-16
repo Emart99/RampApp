@@ -31,6 +31,10 @@ const vehiculoStyles = StyleSheet.create({
     buttonContainer: {
       display: "flex",
       flexDirection: "row",
+    },
+    elevation:{
+      elevation:10,
+      shadowColor:'black'
     }
     
   });

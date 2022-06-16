@@ -12,7 +12,7 @@ const imgStyle = StyleSheet.create({
   imgRampa: {
       margin: 'auto',
       width: '87%',
-      height: '24.5%',
+      height: '18.5%',
       borderRadius: 3,
       resizeMode: "cover",
   }
@@ -57,12 +57,12 @@ const RampasSheets = () =>{
              <ScrollView nestedScrollEnabled={true}
               onMomentumScrollEnd={() =>
                 actionSheetRef.current?.handleChildScrollEnd()
-              } contentContainerStyle={{height:'123%'}}>
+              } contentContainerStyle={{height:'100%'}}>
                 <FlatGrid
-                    style={{  }}
+                    style={{ }}
                     spacing={12}
                     itemDimension={75}
-                    data={["24:00", "23:00", "24:00", "23:00", "24:00", "23:00", "24:00", "23:00", "24:00", "23:00", "24:00", "23:00", "24:00", "23:00", "24:00", "23:00", "24:00", "23:00", "24:00", "23:00", "24:00", "23:00", "24:00", "23:00"]}
+                    data={["00:00", "01:00", "02:00", "03:00", "24:00", "23:00", "24:00", "23:00", "24:00", "23:00", "24:00", "23:00", "24:00", "23:00", "24:00", "23:00", "24:00", "23:00", "24:00", "23:00", "24:00", "23:00", "24:00", "23:00"]}
                     renderItem={({ item }) => (
                         <TouchableOpacity style={{ elevation: 5, shadowColor: 'black', backgroundColor: theme.colors.headerPerfil, padding: 8, borderRadius: 5 }}>
                             <Text style={{ fontSize: 19, color: theme.colors.text, textAlign: 'center' }}>{item}</Text>

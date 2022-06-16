@@ -13,19 +13,33 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 import modalStyles from "../../styles/modalStyles";
 import GlobalButton from "../GlobalButton";
 
-const AdminRampa = (idRampa, visible, setVisible) => {
-  const theme = useTheme();
-  const [isSwitchOn, setIsSwitchOn] = useState(true);
-  const [horaDesde, setHoraDesde] = useState(0);
-  const [horaHasta, setHoraHasta] = useState(0);
+const AdminRampa = (
+  idRampa,
+  visible,
+  setVisible,
+  theme,
+  isSwitchOn,
+  setIsSwitchOn,
+  horaDesde,
+  setHoraDesde,
+  horaHasta,
+  setHoraHasta,
+  visibleTimePickerD,
+  setVisibleTimePickerD, 
+  visibleTimePickerH,
+  setVisibleTimePickerH,
+  onPressRefresh,
+  setOnPressRefresh,
+) => {
+  
+
   const hideModal = () => setVisible(false);
-  const [visibleTimePickerD, setVisibleTimePickerD] = useState(false);
-  const [visibleTimePickerH, setVisibleTimePickerH] = useState(false);
 
   const onConfirm = (date, func) => {
     setVisibleTimePickerD(false);
     setVisibleTimePickerH(false);
     func(date.getHours());
+    setOnPressRefresh(onPressRefresh)
   };
 
   const onToggleSwitch = () => {
@@ -33,8 +47,10 @@ const AdminRampa = (idRampa, visible, setVisible) => {
   };
 
   return (
-    <Portal theme={{colors:{backdrop:'rgba(0, 0, 0, 0.35)'}}}
-    key={Math.random}>
+    <Portal
+      theme={{ colors: { backdrop: "rgba(0, 0, 0, 0.35)" } }}
+      key={Math.random}
+    >
       <Modal
         dismissable={false}
         key={idRampa}

@@ -38,7 +38,6 @@ const Registrarse = ({ navigation }) => {
       contrasenia: values.contrasenia,
       email: values.email,
     };
-    // console.log(registro);
     registrar(registro)
       .then((resp) => setShowAlertDatosCorrectos(true))
       .catch((error) => setShowAlertDatosInvalidos(true));
