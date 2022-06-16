@@ -117,6 +117,7 @@ const Registrarse = ({ navigation }) => {
               handleSubmit,
               values,
               errors,
+              touched,
               isValid,
             }) => (
               <>
@@ -129,7 +130,7 @@ const Registrarse = ({ navigation }) => {
                   false,
                   "default"
                 )}
-                {errors.userName && (
+                {errors.userName && touched.userName && (
                   <Text style={styles.inputInvalidText}>{errors.userName}</Text>
                 )}
                 {GlobalInput(
@@ -141,7 +142,7 @@ const Registrarse = ({ navigation }) => {
                   true,
                   "default"
                 )}
-                {errors.contrasenia && (
+                {errors.contrasenia && touched.contrasenia && (
                   <Text style={styles.inputInvalidText}>
                     {errors.contrasenia}
                   </Text>
@@ -155,7 +156,7 @@ const Registrarse = ({ navigation }) => {
                   true,
                   "default"
                 )}
-                {errors.confirmarContrasenia && (
+                {errors.confirmarContrasenia && touched.confirmarContrasenia && (
                   <Text style={styles.inputInvalidText}>
                     {errors.confirmarContrasenia}
                   </Text>
@@ -169,7 +170,7 @@ const Registrarse = ({ navigation }) => {
                   false,
                   "email-address"
                 )}
-                {errors.email && (
+                {errors.email && touched.email && (
                   <Text style={styles.inputInvalidText}>{errors.email}</Text>
                 )}
                 {GlobalInput(
@@ -181,7 +182,7 @@ const Registrarse = ({ navigation }) => {
                   false,
                   "default"
                 )}
-                {errors.nombre && (
+                {errors.nombre && touched.nombre && (
                   <Text style={styles.inputInvalidText}>{errors.nombre}</Text>
                 )}
                 {GlobalInput(
@@ -193,7 +194,7 @@ const Registrarse = ({ navigation }) => {
                   false,
                   "default"
                 )}
-                {errors.apellido && (
+                {errors.apellido && touched.apellido && (
                   <Text style={styles.inputInvalidText}>{errors.apellido}</Text>
                 )}
                 {/* Date Picker */}
@@ -237,7 +238,7 @@ const Registrarse = ({ navigation }) => {
                   false,
                   "number-pad"
                 )}
-                {errors.dni && (
+                {errors.dni && touched.dni && (
                   <Text style={styles.inputInvalidText}>{errors.dni}</Text>
                 )}
                 {GlobalButton(

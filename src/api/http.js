@@ -61,7 +61,7 @@ export async function logear(_usuario) {
 }
 
 export async function geocoder(datosDireccion) {
-    const response = await axios.get("https://nominatim.openstreetmap.org/search?" + `q=${datosDireccion.altura}%2C+${datosDireccion.calle}%2C+${datosDireccion.localidad}%2C+${datosDireccion.partido}%2C+Buenos+Aires%2C+B${datosDireccion.codigopostal}%2C+Argentina+&format=json`)
+    const response = await axios.get("https://nominatim.openstreetmap.org/search?" + `q=${datosDireccion.altura}%2C+${datosDireccion.calle}%2C+Partido de ${datosDireccion.partido}%2C+Buenos+Aires%2C+B${datosDireccion.codigopostal}%2C+Argentina+&format=json`)
     return response.data
 }
 
@@ -72,6 +72,15 @@ export async function subirImagen (base64img){
     },
     {headers:{"Authorization" : "Client-ID "+ENV_IMGUR_CLIENT_ID}}
     )
+    return response.data
+}
+
+
+export async function CrearRampa (rampa, imgRampa, imgDNI,imgEscritura){
+    const rampaJSON = {
+
+    }
+    const response = await axios.put(ENV_DEV_URL + "/agregarRampa/"+ await getUsuarioId(), rampaJSON)
     return response.data
 }
 

@@ -59,7 +59,7 @@ const Login = ({ navigation }) => {
           onDismiss={onDismissSnackBar}
           duration={3000}
           style={{
-            backgroundColor: "#550000",
+            backgroundColor: "#850909",
             width: "85%",
             height: 45,
             alignSelf: "center",
@@ -78,6 +78,7 @@ const Login = ({ navigation }) => {
             handleSubmit,
             values,
             errors,
+            touched,
             isValid,
           }) => (
             <>
@@ -90,7 +91,7 @@ const Login = ({ navigation }) => {
                 false,
                 "default"
               )}
-              {errors.userName && (
+              {errors.userName && touched.userName && (
                 <Text style={styles.inputInvalidText}>{errors.userName}</Text>
               )}
               {GlobalInput(
@@ -102,7 +103,7 @@ const Login = ({ navigation }) => {
                 true,
                 "default"
               )}
-              {errors.contrasenia && (
+              {errors.contrasenia && touched.contrasenia &&(
                 <Text style={styles.inputInvalidText}>
                   {errors.contrasenia}
                 </Text>

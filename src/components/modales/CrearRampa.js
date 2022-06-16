@@ -1,99 +1,133 @@
 import React, { useState } from "react";
 import { Text, IconButton, useTheme, Portal, Modal } from "react-native-paper";
-import { Image, View } from "react-native";
-import AwesomeAlert from 'react-native-awesome-alerts';
-import * as ImagePicker from 'expo-image-picker';
+import { View, TouchableWithoutFeedback, Keyboard } from "react-native";
+import { Formik } from "formik";
+import AwesomeAlert from "react-native-awesome-alerts";
+import * as ImagePicker from "expo-image-picker";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+
 import GlobalInput from "../GlobalInput";
 import GlobalButton from "../GlobalButton";
 import styles from "../../styles/styles";
 import modalStyles from "../../styles/modalStyles";
 import { geocoder, subirImagen } from "../../api/http";
+import { rampaValidationSchema } from "../../utils/rampaSchema";
 
 const CrearRampa = (visible, setVisible) => {
   const theme = useTheme();
-  const [showAlertDatosCorrectos,setShowAlertDatosCorrectos] = useState(false);
-  const [showAlertDatosInvalidos,setShowAlertDatosInvalidos] = useState(false);
-  const [image, setImage] = useState(null);
-  const [pickedImagePath, setPickedImagePath] = useState(null);
+  const [showAlertDatosCorrectos, setShowAlertDatosCorrectos] = useState(false);
+  const [showAlertDatosInvalidos, setShowAlertDatosInvalidos] = useState(false);
 
-  const pickImage = async () => {
+  const pickImage = async (setFieldValue, setFieldTouched, imgValue) => {
     // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       quality: 1,
-      base64:true
+      base64: true,
     });
-
-
-    if (!result.cancelled) {
-      setImage(result.base64);
-    }
+    setImage(setFieldValue, setFieldTouched, imgValue, result);
   };
 
-   const openCamera = async () => {
+  const openCamera = async (setFieldValue, setFieldTouched, imgValue) => {
     // Ask the user for the permission to access the camera
     const permissionResult = await ImagePicker.requestCameraPermissionsAsync();
-
     if (permissionResult.granted === false) {
       alert("Se necesitan permisos para usar la cámara");
       return;
     }
-
     const result = await ImagePicker.launchCameraAsync({
-      base64:true
+      base64: true,
     });
+    setImage(setFieldValue, setFieldTouched, imgValue, result);
+  };
 
-
+  const setImage = (setFieldValue, setFieldTouched, imgValue, result) => {
     if (!result.cancelled) {
-      setPickedImagePath(result.base64);
-     await subirImagen(result.base64).then(data => console.log(data.data.link))
+      setFieldValue(imgValue, result.base64);
+      setFieldTouched(imgValue, true);
     }
-  }
+  };
 
   const hideModal = () => {
-    setVisible(false)
-  }
-  const hideModalCorrecta = () =>{
-    hideModal()
+    setVisible(false);
+  };
+
+  const hideModalCorrecta = () => {
+    hideModal();
     setShowAlertDatosCorrectos(true);
-  }
+  };
+
+  const agregarRampa = async (values) => {
+    await subirImagen(values.imgRampa)
+      .then((data) => {
+        console.log("Rampa: " + data.data.link);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    await subirImagen(values.imgDNI)
+      .then((data) => {
+        console.log("DNI: " + data.data.link);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    await subirImagen(values.imgEscritura)
+      .then((data) => {
+        console.log("Escritura: " + data.data.link);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    await geocoder({
+      altura: values.altura,
+      calle: values.calle,
+      partido: values.partido,
+      codigopostal: values.cp,
+    })
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
-    
-    <Portal theme={{colors:{backdrop:'rgba(0, 0, 0, 0.35)'}}}>
+    <Portal theme={{ colors: { backdrop: "rgba(0, 0, 0, 0.35)" } }}>
       <AwesomeAlert
-          titleStyle={{width:"100%",color:theme.colors.text}}
-          contentContainerStyle={{backgroundColor:theme.colors.background}}
-          show={showAlertDatosCorrectos}
-          showProgress={false}
-          title="Registrada correctamente!"
-          closeOnHardwareBackPress={false}
-          showConfirmButton={true}
-          confirmText="Ok"
-          confirmButtonColor="#00DB6F"
-          closeOnTouchOutside={false}
-          onConfirmPressed={() => {
-            setShowAlertDatosCorrectos(false)
-            hideModal()
-          }}
-        />
-        {/* ALERT DE REGISTRADO INCORRECTO */}
-        <AwesomeAlert
-          titleStyle={{width:"100%",color:theme.colors.text}}
-          contentContainerStyle={{backgroundColor:theme.colors.background}}
-          show={showAlertDatosInvalidos}
-          showProgress={false}
-          title="Error, la rampa ya estaba registrada!"
-          closeOnHardwareBackPress={false}
-          showConfirmButton={true}
-          confirmText="Volver a registrarse"
-          confirmButtonColor="#DD6B55"
-          closeOnTouchOutside={false}
-          onConfirmPressed={() => {
-            setShowAlertDatosInvalidos(false)
-          }}
-        />
-      
+        titleStyle={{ width: "100%", color: theme.colors.text }}
+        contentContainerStyle={{ backgroundColor: theme.colors.background }}
+        show={showAlertDatosCorrectos}
+        showProgress={false}
+        title="Registrada correctamente!"
+        closeOnHardwareBackPress={false}
+        showConfirmButton={true}
+        confirmText="Ok"
+        confirmButtonColor="#00DB6F"
+        closeOnTouchOutside={false}
+        onConfirmPressed={() => {
+          setShowAlertDatosCorrectos(false);
+          hideModal();
+        }}
+      />
+      {/* ALERT DE REGISTRADO INCORRECTO */}
+      <AwesomeAlert
+        titleStyle={{ width: "100%", color: theme.colors.text }}
+        contentContainerStyle={{ backgroundColor: theme.colors.background }}
+        show={showAlertDatosInvalidos}
+        showProgress={false}
+        title="Error, la rampa ya estaba registrada!"
+        closeOnHardwareBackPress={false}
+        showConfirmButton={true}
+        confirmText="Volver a registrarse"
+        confirmButtonColor="#DD6B55"
+        closeOnTouchOutside={false}
+        onConfirmPressed={() => {
+          setShowAlertDatosInvalidos(false);
+        }}
+      />
+
       <Modal
         dismissable={false}
         contentContainerStyle={[
@@ -103,140 +137,244 @@ const CrearRampa = (visible, setVisible) => {
         animationType="fade"
         visible={visible}
       >
-        <View style={modalStyles.inputContainer}>
-          <Text style={modalStyles.titulo}>Agregar Rampa</Text>
-          {GlobalInput(
-            "Calle",
-            "",
-            "setCalle",
-            "",
-            styles.inputView,
-            false,
-            "default"
-          )}
-          {GlobalInput(
-            "Altura",
-            "",
-            "setAltura",
-            "",
-            styles.inputView,
-            false,
-            "default"
-          )}
-          {GlobalInput(
-            "Partido",
-            "",
-            "setPartido",
-            "",
-            styles.inputView,
-            false,
-            "default"
-          )}
-          {GlobalInput(
-            "Localidad",
-            "",
-            "setLocalidad",
-            "",
-            styles.inputView,
-            false,
-            "default"
-          )}
-          {GlobalInput(
-            "Código Postal",
-            "",
-            "setCodigoPostal",
-            "",
-            styles.inputView,
-            false,
-            "default"
-          )}
-        </View>
-        <View style={modalStyles.imgInputsContainer}>
-          <View style={[modalStyles.imgContainer]}>
-            <Text style={modalStyles.textStyle}>Foto Rampa</Text>
-            <Text style={modalStyles.textStyle}>Foto DNI</Text>
-            <Text style={modalStyles.textStyle}>Foto Escritura</Text>
-          </View>
-          <View style={modalStyles.imgContainer}>
-            <View style={modalStyles.ctn}>
-              <IconButton
-                icon="image-plus"
-                color={theme.colors.text}
-                onPress={pickImage}
-                style={{ margin: 0, padding: 0 }}
-                size={27}
-              />
-              <IconButton
-                icon="camera"
-                color={theme.colors.text}
-                onPress={openCamera}
-                style={{ margin: 0, padding: 0 }}
-                size={28}
-              />
-            </View>
-            <View style={modalStyles.ctn}>
-              <IconButton
-                icon="image-plus"
-                color={theme.colors.text}
-                onPress={() => console.log("zz")}
-                style={{ margin: 0, padding: 0 }}
-                size={27}
-              />
-              <IconButton
-                icon="camera"
-                color={theme.colors.text}
-                onPress={() => console.log("zz")}
-                style={{ margin: 0, padding: 0 }}
-                size={28}
-              />
-            </View>
-            <View style={modalStyles.ctn}>
-              <IconButton
-                icon="image-plus"
-                color={theme.colors.text}
-                onPress={() => console.log("zz")}
-                style={{ margin: 0, padding: 0 }}
-                size={27}
-              />
-              <IconButton
-                icon="camera"
-                color={theme.colors.text}
-                onPress={() =>
-                  geocoder(jsonFalopa).then((data) => console.log(data))
-                }
-                style={{ margin: 0, padding: 0 }}
-                size={28}
-              />
-            </View>
-          </View>
-          {/* img preview SACAR*/}
-          <View style={{flex:1,flexDirection:'row'}}>
-          {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
-          {pickedImagePath && <Image source={{ uri: pickedImagePath }} style={{ width: 200, height: 200 }} />}
-          </View>
-           {/*fin img preview*/}
-        </View>
+        <KeyboardAwareScrollView>
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <Formik
+              validationSchema={rampaValidationSchema}
+              initialValues={{
+                calle: "",
+                altura: "",
+                partido: "",
+                cp: "",
+                nroPartida: "",
+                imgRampa: "",
+                imgEscritura: "",
+                imgDNI: "",
+              }}
+              onSubmit={(values) => agregarRampa(values)}
+            >
+              {({
+                handleChange,
+                handleBlur,
+                handleSubmit,
+                setFieldValue,
+                setFieldTouched,
+                values,
+                errors,
+                isValid,
+                touched,
+              }) => (
+                <>
+                  <View style={modalStyles.inputContainer}>
+                    <Text style={modalStyles.titulo}>Agregar Rampa</Text>
+                    {GlobalInput(
+                      "Calle",
+                      values.calle,
+                      handleChange("calle"),
+                      handleBlur("calle"),
+                      styles.inputView,
+                      false,
+                      "default"
+                    )}
+                    {errors.calle && touched.calle && (
+                      <Text style={styles.inputInvalidText}>
+                        {errors.calle}
+                      </Text>
+                    )}
+                    {GlobalInput(
+                      "Altura",
+                      values.altura,
+                      handleChange("altura"),
+                      handleBlur("altura"),
+                      styles.inputView,
+                      false,
+                      "default"
+                    )}
+                    {errors.altura && touched.altura && (
+                      <Text style={styles.inputInvalidText}>
+                        {errors.altura}
+                      </Text>
+                    )}
+                    {GlobalInput(
+                      "Partido",
+                      values.partido,
+                      handleChange("partido"),
+                      handleBlur("partido"),
+                      styles.inputView,
+                      false,
+                      "default"
+                    )}
+                    {errors.partido && touched.partido && (
+                      <Text style={styles.inputInvalidText}>
+                        {errors.partido}
+                      </Text>
+                    )}
+                    {GlobalInput(
+                      "Código Postal",
+                      values.cp,
+                      handleChange("cp"),
+                      handleBlur("cp"),
+                      styles.inputView,
+                      false,
+                      "default"
+                    )}
+                    {errors.cp && touched.cp && (
+                      <Text style={styles.inputInvalidText}>{errors.cp}</Text>
+                    )}
+                    {GlobalInput(
+                      "Número de partida inmobiliaria",
+                      values.nroPartida,
+                      handleChange("nroPartida"),
+                      handleBlur("nroPartida"),
+                      styles.inputView,
+                      false,
+                      "default"
+                    )}
+                    {errors.nroPartida && touched.nroPartida && (
+                      <Text style={styles.inputInvalidText}>
+                        {errors.nroPartida}
+                      </Text>
+                    )}
+                  </View>
+                  <View
+                    style={{
+                      flex: 1,
+                      flexDirection: "row",
+                      justifyContent: "space-evenly",
+                    }}
+                  >
+                    <Text style={styles.inputValidImg}>
+                      {errors.imgRampa && touched.imgRampa && errors.imgRampa}
+                    </Text>
 
-        <View style={modalStyles.buttonContainer}>
-          {GlobalButton(
-            [{ borderColor: theme.colors.secondary }, modalStyles.button],
-            { color: theme.colors.text, textAlign: "center" },
-            "Cancelar",
-            hideModal
-          )}
-          {GlobalButton(
-            [
-              {
-                backgroundColor: theme.colors.secondary,
-                borderColor: theme.colors.secondary,
-              },
-              modalStyles.button,
-            ],
-            { color: theme.colors.secondaryText, textAlign: "center" },
-            "Agregar",
-            hideModalCorrecta
-          )}
-        </View>
+                    <Text style={styles.inputValidImg}>
+                      {errors.imgDNI && touched.imgDNI && errors.imgDNI}
+                    </Text>
+
+                    <Text style={styles.inputValidImg}>
+                      {errors.imgEscritura &&
+                        touched.imgEscritura &&
+                        errors.imgEscritura}
+                    </Text>
+                  </View>
+                  <View style={modalStyles.imgInputsContainer}>
+                    <View style={[modalStyles.imgContainer]}>
+                      <Text style={modalStyles.textStyle}>Foto Rampa</Text>
+                      <Text style={modalStyles.textStyle}>Foto DNI</Text>
+                      <Text style={modalStyles.textStyle}>Foto Escritura</Text>
+                    </View>
+                    <View style={modalStyles.imgContainer}>
+                      <View style={modalStyles.ctn}>
+                        <IconButton
+                          icon="image-plus"
+                          color={theme.colors.text}
+                          onPress={() =>
+                            pickImage(
+                              setFieldValue,
+                              setFieldTouched,
+                              "imgRampa"
+                            )
+                          }
+                          style={{ margin: 0, padding: 0 }}
+                          size={27}
+                        />
+                        <IconButton
+                          icon="camera"
+                          color={theme.colors.text}
+                          onPress={() =>
+                            openCamera(
+                              setFieldValue,
+                              setFieldTouched,
+                              "imgRampa"
+                            )
+                          }
+                          style={{ margin: 0, padding: 0 }}
+                          size={28}
+                        />
+                      </View>
+                      <View style={modalStyles.ctn}>
+                        <IconButton
+                          icon="image-plus"
+                          color={theme.colors.text}
+                          onPress={() =>
+                            pickImage(setFieldValue, setFieldTouched, "imgDNI")
+                          }
+                          style={{ margin: 0, padding: 0 }}
+                          size={27}
+                        />
+                        <IconButton
+                          icon="camera"
+                          color={theme.colors.text}
+                          onPress={() =>
+                            openCamera(setFieldValue, setFieldTouched, "imgDNI")
+                          }
+                          style={{ margin: 0, padding: 0 }}
+                          size={28}
+                        />
+                      </View>
+                      <View style={modalStyles.ctn}>
+                        <IconButton
+                          icon="image-plus"
+                          color={theme.colors.text}
+                          onPress={() =>
+                            pickImage(
+                              setFieldValue,
+                              setFieldTouched,
+                              "imgEscritura"
+                            )
+                          }
+                          style={{ margin: 0, padding: 0 }}
+                          size={27}
+                        />
+                        <IconButton
+                          icon="camera"
+                          color={theme.colors.text}
+                          onPress={() =>
+                            openCamera(
+                              setFieldValue,
+                              setFieldTouched,
+                              "imgEscritura"
+                            )
+                          }
+                          style={{ margin: 0, padding: 0 }}
+                          size={28}
+                        />
+                      </View>
+                    </View>
+                  </View>
+
+                  <View style={modalStyles.buttonContainer}>
+                    {GlobalButton(
+                      [
+                        { borderColor: theme.colors.secondary },
+                        modalStyles.button,
+                      ],
+                      { color: theme.colors.text, textAlign: "center" },
+                      "Cancelar",
+                      hideModal
+                    )}
+                    {GlobalButton(
+                      [
+                        {
+                          backgroundColor: theme.colors.secondary,
+                          borderColor: theme.colors.secondary,
+                        },
+                        modalStyles.button,
+                      ],
+                      {
+                        color: theme.colors.secondaryText,
+                        textAlign: "center",
+                      },
+                      "Agregar",
+                      handleSubmit,
+                      isValid
+                    )}
+                  </View>
+                </>
+              )}
+            </Formik>
+          </TouchableWithoutFeedback>
+        </KeyboardAwareScrollView>
       </Modal>
     </Portal>
   );

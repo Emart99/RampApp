@@ -1,14 +1,15 @@
 import React from "react";
-import { Text, IconButton, useTheme, Portal, Modal } from "react-native-paper";
+import { Text, useTheme, Portal, Modal } from "react-native-paper";
 import { View } from "react-native";
+import { Formik } from "formik";
 
 import GlobalInput from "../GlobalInput";
 import GlobalButton from "../GlobalButton";
 import styles from "../../styles/styles";
 import modalStyles from "../../styles/modalStyles";
 import { crearVehiculo } from "../../api/http";
-import { Formik } from "formik";
 import { vehiculoValidationSchema } from "../../utils/vehiculoSchema";
+
 const CrearVehiculo = (visible, setVisible) => {
   const theme = useTheme();
   const hideModal = () => setVisible(false);
@@ -41,6 +42,7 @@ const CrearVehiculo = (visible, setVisible) => {
             handleSubmit,
             values,
             errors,
+            touched,
             isValid,
           }) => (
             <>
@@ -56,7 +58,7 @@ const CrearVehiculo = (visible, setVisible) => {
                   false,
                   "default"
                 )}
-                {errors.marca && (
+                {errors.marca && touched.marca && (
                   <Text style={styles.inputInvalidText}>{errors.marca}</Text>
                 )}
                 {GlobalInput(
@@ -68,7 +70,7 @@ const CrearVehiculo = (visible, setVisible) => {
                   false,
                   "default"
                 )}
-                {errors.modelo && (
+                {errors.modelo && touched.modelo && (
                   <Text style={styles.inputInvalidText}>{errors.modelo}</Text>
                 )}
                 {GlobalInput(
@@ -80,7 +82,7 @@ const CrearVehiculo = (visible, setVisible) => {
                   false,
                   "default"
                 )}
-                {errors.dominio && (
+                {errors.dominio && touched.dominio && (
                   <Text style={styles.inputInvalidText}>{errors.dominio}</Text>
                 )}
               </View>
