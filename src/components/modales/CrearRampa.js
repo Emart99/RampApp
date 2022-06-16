@@ -354,7 +354,6 @@ const CrearRampa = (visible,
                       </View>
                     </View>
                   </View>
-                  <ActivityIndicator animating={visibleLoading} hidesWhenStopped={true} color={theme.colors.text} />
                   <View style={modalStyles.buttonContainer}>
                     {GlobalButton(
                       [
@@ -365,6 +364,7 @@ const CrearRampa = (visible,
                       "Cancelar",
                       hideModal
                     )}
+                    <ActivityIndicator size="large" animating={visibleLoading} hidesWhenStopped={true} color={theme.colors.text} />
                     {GlobalButton(
                       [
                         {
