@@ -10,7 +10,7 @@ import GlobalInput from "../GlobalInput";
 import GlobalButton from "../GlobalButton";
 import styles from "../../styles/styles";
 import modalStyles from "../../styles/modalStyles";
-import { geocoder, subirImagen } from "../../api/http";
+import { creacionDeRampa, geocoder, subirImagen } from "../../api/http";
 import { rampaValidationSchema } from "../../utils/rampaSchema";
 
 const CrearRampa = (visible,
@@ -86,28 +86,19 @@ const CrearRampa = (visible,
     console.log("DNI: " + imagenDNI.data.link);
     console.log("Escritura: " + imagenEscritura.data.link);
     console.log(geoJson[0].lat,geoJson[0].lon);
-  };
+    const rampaJSON = {
+      posx: geoJson[0].lon,
+      posy: geoJson[0].lat,
+      calle: values.calle,
+      altura: values.altura,
+      nroPartidaInmobiliaria: values.nroPartida,
+      imagenRampa: imagenRampa.data.link,
+      imagenDNI: imagenDNI.data.link,
+      imagenEscritura: imagenEscritura.data.link,
+  }
+  creacionDeRampa(rampaJSON);
 
-  // Array [
-  //   Object {
-  //     "boundingbox": Array [
-  //       "-34.617574",
-  //       "-34.617474",
-  //       "-58.557539",
-  //       "-58.557439",
-  //     ],
-  //     "class": "place",
-  //     "display_name": "4371, 640 - Guaminí, Barrio Evita, Villa Alianza, Caseros, Partido de Tres de Febrero, Buenos Aires, B1678BFF, Argentina",
-  //     "importance": 1.021,
-  //     "lat": "-34.617523999999996",
-  //     "licence": "Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright",
-  //     "lon": "-58.557489000000004",
-  //     "osm_id": 682177340,
-  //     "osm_type": "way",
-  //     "place_id": 92109122,
-  //     "type": "house",
-  //   },
-  // ]
+  };
 
   return (
     <Portal theme={{ colors: { backdrop: "rgba(0, 0, 0, 0.35)" } }}>

@@ -12,9 +12,10 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 import modalStyles from "../../styles/modalStyles";
 import GlobalButton from "../GlobalButton";
+import { modificarRampa } from "../../api/http";
 
 const AdminRampa = (
-  idRampa,
+  rampa,
   visible,
   setVisible,
   theme,
@@ -34,7 +35,9 @@ const AdminRampa = (
   
 
   const hideModal = () => setVisible(false);
-
+  const editRampa = async () =>{
+   // a implementar const modifRampa = await modificarRampa(rampa,horaDesde,horaHasta,isSwitchOn).then(data => hideModal())
+  }
   const onConfirm = (date, func) => {
     setVisibleTimePickerD(false);
     setVisibleTimePickerH(false);
@@ -53,7 +56,7 @@ const AdminRampa = (
     >
       <Modal
         dismissable={false}
-        key={idRampa}
+        key={rampa.id}
         contentContainerStyle={[
           { backgroundColor: theme.colors.modal, height: 300 },
           modalStyles.modal,
@@ -161,7 +164,7 @@ const AdminRampa = (
             ],
             { color: theme.colors.secondaryText, textAlign: "center" },
             "Agregar",
-            hideModal
+            editRampa
           )}
         </View>
       </Modal>

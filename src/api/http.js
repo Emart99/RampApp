@@ -76,10 +76,7 @@ export async function subirImagen (base64img){
 }
 
 
-export async function CrearRampa (rampa, imgRampa, imgDNI,imgEscritura){
-    const rampaJSON = {
-
-    }
+export async function creacionDeRampa (rampaJSON){
     const response = await axios.put(ENV_DEV_URL + "/agregarRampa/"+ await getUsuarioId(), rampaJSON)
     return response.data
 }
@@ -122,4 +119,23 @@ export async function traerRampasDelUsuario(){
 export async function traerReservasDelUsuario(){
     let response = await axios.get(ENV_DEV_URL + "/usuario/reservasActivas/"+ await getUsuarioId());
     return response.data;
+}
+
+export async function modificarRampa(rampa,horaDesde,horaHasta,isSwitchOn){
+    // const rampaJSON = {
+    //     id:rampa.id,
+    //     posx:rampa.posx,
+    //     posy:rampa.posy,
+    //     calle:rampa.calle,
+    //     altura:rampa.altura,
+    //     imagenRampa:rampa.imagenRampa,
+    //     imagenDni:rampa.imagenDni,
+    //     imagenEscritura:rampa.imagenEscritura,
+    //     nroPartidaInmobiliaria:rampa.nroPartidaInmobiliaria,
+    //     estadoRampa:isSwitchOn? "Disponible":"Ocupada",
+    //     horariosDisponibles:[{horarioDesde: newDate.setHours(1),horarioHasta: newDate.setHours(2)}],
+    //     reservasRealizadas:rampa.reservasRealizadas
+    // }
+    // const response = await axios.put(ENV_DEV_URL+"/modificarHorarioRampa/"+rampa.id, rampaJSON)
+    // return response.data
 }

@@ -67,7 +67,7 @@ const CardRampa = (
         </Card.Content>
       </Card>
       {AdminRampa(
-        rampa.id,
+        rampa,
         visibleModalAdmin,
         setVisibleModalAdmin,
         theme,
