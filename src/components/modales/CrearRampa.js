@@ -34,11 +34,11 @@ const CrearRampa = (
   const pickImage = async (setFieldValue, setFieldTouched, imgValue) => {
     // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      quality: 1,
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      quality: 0.8,
       base64: true,
     });
-    setImage(setFieldValue, setFieldTouched, imgValue, result);
+    setImage(setFieldValue, setFieldTouched, imgValue, result,error);
   };
 
   const openCamera = async (setFieldValue, setFieldTouched, imgValue) => {
@@ -49,6 +49,7 @@ const CrearRampa = (
       return;
     }
     const result = await ImagePicker.launchCameraAsync({
+      quality: 0.8,
       base64: true,
     });
     setImage(setFieldValue, setFieldTouched, imgValue, result);
@@ -59,6 +60,7 @@ const CrearRampa = (
       setFieldValue(imgValue, result.base64);
       setFieldTouched(imgValue, true);
     }
+  
   };
 
   const hideModal = () => {
@@ -198,7 +200,7 @@ const CrearRampa = (
                       handleBlur("altura"),
                       styles.inputView,
                       false,
-                      "default"
+                      "number-pad"
                     )}
                     {errors.altura && touched.altura && (
                       <Text style={styles.inputInvalidText}>
@@ -226,7 +228,7 @@ const CrearRampa = (
                       handleBlur("cp"),
                       styles.inputView,
                       false,
-                      "default"
+                      "number-pad"
                     )}
                     {errors.cp && touched.cp && (
                       <Text style={styles.inputInvalidText}>{errors.cp}</Text>
@@ -238,7 +240,7 @@ const CrearRampa = (
                       handleBlur("nroPartida"),
                       styles.inputView,
                       false,
-                      "default"
+                      "number-pad"
                     )}
                     {errors.nroPartida && touched.nroPartida && (
                       <Text style={styles.inputInvalidText}>
@@ -271,13 +273,13 @@ const CrearRampa = (
                       justifyContent: "space-evenly",
                     }}>
                   <Text style={styles.inputImgSubida}>
-                      {values.imgRampa && "Rampa subida"}
+                      {(values.imgRampa && !errors.imgRampa) && "Rampa subida"}
                     </Text>
                   <Text style={styles.inputImgSubida}>
-                      {values.imgDNI && "DNI subido"}
+                      {(values.imgDNI && !errors.imgDNI) && "DNI subido"}
                     </Text>
                   <Text style={styles.inputImgSubida}>
-                      {values.imgEscritura && "Escritura subida"}
+                      {(values.imgEscritura && !errors.imgEscritura) && "Escritura subida"}
                     </Text>
                     </View>
                   <View style={modalStyles.imgInputsContainer}>
