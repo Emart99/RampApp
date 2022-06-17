@@ -1,5 +1,31 @@
+import Table from 'react-bootstrap/Table';
+import React from 'react'
+import { useState, useEffect } from "react"
+import { adminService } from '../services/AdminService';
+import { obtenerMensaje } from "../services/obtenerMensaje";
+
 
 export function RampasAHabilitar(){
+
+    const [rampasAHabilitar, setRampasAHabilitar] = useState([])
+    const [errorMessage, SetErrorMessage ] = useState("")
+
+
+    const rampaAHabilitar = async () => {
+        try{
+        const canti = await adminService.traerRampasAHabilitar()
+        setRampasAHabilitar(canti)}catch (error) {
+            const message = obtenerMensaje(error)
+            SetErrorMessage(message)
+          }
+    }
+ 
+     useEffect(() => {
+
+        rampaAHabilitar()
+     }, [])
+
+
     return(
         <div className='container mt-5'>
             <div className='row text-center'>
@@ -7,16 +33,17 @@ export function RampasAHabilitar(){
                 <p className='col'>Direccion</p>
                 <p className='col'>Usuario</p>
             </div>
-            {/* aca enrealidad va a llegar una lista y va a haber que agregar un map */}
-            <a href='/habilitarRampa/1'>
-            <div className="card pt-2 pb-2 mt-3 bg-dark text-white ">
-                <div className='row text-center'>
-                    <div className='col'>10/06/33</div>
-                    <div className='col'>AV.jorgeEgger</div>
-                    <div className='col'>Gregorio1</div>
-                </div>
+        {rampasAHabilitar.map((data)=>   
+        <a href={'/habilitarRampa/'+ data.id}>
+        <div className="card pt-2 pb-2 mt-3 bg-dark text-white ">
+            <div className='row text-center'>
+                <div className='col'>{data.fechaCarga}</div>
+                <div className='col'>{data.calle}</div>
+                <div className='col'>{data.nombrePropietario}</div>
             </div>
-            </a> 
+            </div>
+            </a> )
+          }
         </div>
     )
 }
