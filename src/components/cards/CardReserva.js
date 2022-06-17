@@ -81,9 +81,9 @@ const CardReserva = (reserva, theme, showAlertDenuncia, setShowAlertDenuncia, vi
             color={theme.colors.text}
             style={{marginLeft: 5, marginRight: 5}}
           />
-          <Paragraph style={newCardStyles.font}>Desde: {reserva.desde}</Paragraph>
+          <Paragraph style={newCardStyles.font}>Desde: {reserva.horaInicioReserva}</Paragraph>
           <Paragraph style={[newCardStyles.font, {marginLeft: 15}]}>
-            Hasta: {reserva.hasta}
+            Hasta: {reserva.horaFinReserva}
           </Paragraph>
         </View>
       </Card.Content>
