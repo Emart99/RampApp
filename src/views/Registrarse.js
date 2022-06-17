@@ -126,6 +126,7 @@ const Registrarse = ({ navigation }) => {
                   handleChange("userName"),
                   handleBlur("userName"),
                   styles.inputView,
+                  theme.colors.background,
                   false,
                   "default"
                 )}
@@ -138,6 +139,7 @@ const Registrarse = ({ navigation }) => {
                   handleChange("contrasenia"),
                   handleBlur("contrasenia"),
                   styles.inputView,
+                  theme.colors.background,
                   true,
                   "default"
                 )}
@@ -152,6 +154,7 @@ const Registrarse = ({ navigation }) => {
                   handleChange("confirmarContrasenia"),
                   handleBlur("confirmarContrasenia"),
                   styles.inputView,
+                  theme.colors.background,
                   true,
                   "default"
                 )}
@@ -166,6 +169,7 @@ const Registrarse = ({ navigation }) => {
                   handleChange("email"),
                   handleBlur("email"),
                   styles.inputView,
+                  theme.colors.background,
                   false,
                   "email-address"
                 )}
@@ -178,6 +182,7 @@ const Registrarse = ({ navigation }) => {
                   handleChange("nombre"),
                   handleBlur("nombre"),
                   styles.inputView,
+                  theme.colors.background,
                   false,
                   "default"
                 )}
@@ -190,6 +195,7 @@ const Registrarse = ({ navigation }) => {
                   handleChange("apellido"),
                   handleBlur("apellido"),
                   styles.inputView,
+                  theme.colors.background,
                   false,
                   "default"
                 )}
@@ -204,15 +210,13 @@ const Registrarse = ({ navigation }) => {
                   }}
                 >
                   <TextInput
-                    mode="outlined"
+                    mode="flat"
                     editable={false}
                     outlineColor="transparent"
-                    theme={{
-                      colors: {
-                        placeholder: theme.colors.text,
-                        background: theme.colors.input,
-                      },
-                    }}
+                    style={{backgroundColor:theme.colors.background}}
+                    underlineColor={theme.colors.text}
+                    activeUnderlineColor={theme.colors.text}
+                    
                   >
                     {"Fecha de nacimiento: " +
                       `${fechaNacimiento.getDate()}/${fechaNacimiento.getMonth()}/${fechaNacimiento.getFullYear()}`}
@@ -234,6 +238,7 @@ const Registrarse = ({ navigation }) => {
                   handleChange("dni"),
                   handleBlur("dni"),
                   styles.inputView,
+                  theme.colors.background,
                   false,
                   "number-pad"
                 )}

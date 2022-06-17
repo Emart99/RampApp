@@ -189,6 +189,7 @@ const CrearRampa = (
                       handleChange("calle"),
                       handleBlur("calle"),
                       styles.inputView,
+                      theme.colors.modal,
                       false,
                       "default"
                     )}
@@ -203,6 +204,7 @@ const CrearRampa = (
                       handleChange("altura"),
                       handleBlur("altura"),
                       styles.inputView,
+                      theme.colors.modal,
                       false,
                       "number-pad"
                     )}
@@ -217,6 +219,7 @@ const CrearRampa = (
                       handleChange("partido"),
                       handleBlur("partido"),
                       styles.inputView,
+                      theme.colors.modal,
                       false,
                       "default"
                     )}
@@ -231,6 +234,7 @@ const CrearRampa = (
                       handleChange("cp"),
                       handleBlur("cp"),
                       styles.inputView,
+                      theme.colors.modal,
                       false,
                       "number-pad"
                     )}
@@ -243,6 +247,7 @@ const CrearRampa = (
                       handleChange("nroPartida"),
                       handleBlur("nroPartida"),
                       styles.inputView,
+                      theme.colors.modal,
                       false,
                       "number-pad"
                     )}
@@ -383,7 +388,7 @@ const CrearRampa = (
                         { borderColor: theme.colors.secondary },
                         modalStyles.button,
                       ],
-                      { color: theme.colors.text, textAlign: "center" },
+                      { color: theme.colors.text, textAlign: "center" ,fontSize:18,},
                       "Cancelar",
                       hideModal
                     )}
@@ -404,6 +409,7 @@ const CrearRampa = (
                       {
                         color: theme.colors.secondaryText,
                         textAlign: "center",
+                        fontSize:18,
                       },
                       "Agregar",
                       handleSubmit,

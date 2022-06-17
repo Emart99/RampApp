@@ -94,6 +94,7 @@ const PagoReserva = (visible, setVisible) => {
                   handleChange("numero"),
                   handleBlur("numero"),
                   styles.inputView,
+                  theme.colors.modal,
                   false,
                   "number-pad"
                 )}
@@ -106,6 +107,7 @@ const PagoReserva = (visible, setVisible) => {
                   handleChange("nombre"),
                   handleBlur("nombre"),
                   styles.inputView,
+                  theme.colors.modal,
                   false,
                   "default"
                 )}
@@ -122,6 +124,7 @@ const PagoReserva = (visible, setVisible) => {
                     handleChange("mes"),
                     handleBlur("mes"),
                     { width: "40%", height: 45, marginRight: 25 },
+                    theme.colors.modal,
                     false,
                     "number-pad"
                   )}
@@ -131,6 +134,7 @@ const PagoReserva = (visible, setVisible) => {
                     handleChange("anio"),
                     handleBlur("anio"),
                     { width: "40%", height: 45 },
+                    theme.colors.modal,
                     false,
                     "number-pad"
                   )}
@@ -144,6 +148,7 @@ const PagoReserva = (visible, setVisible) => {
                   handleChange("cvv"),
                   handleBlur("cvv"),
                   styles.inputView,
+                  theme.colors.modal,
                   false,
                   "number-pad"
                 )}
@@ -157,6 +162,7 @@ const PagoReserva = (visible, setVisible) => {
                   handleChange("dni"),
                   handleBlur("dni"),
                   styles.inputView,
+                  theme.colors.modal,
                   false,
                   "number-pad"
                 )}
@@ -173,7 +179,7 @@ const PagoReserva = (visible, setVisible) => {
                     },
                     modalStyles.button,
                   ],
-                  { color: theme.colors.text, textAlign: "center" },
+                  { color: theme.colors.text, textAlign: "center",fontSize:18, },
                   "Cancelar",
                   hideModal
                 )}
@@ -185,7 +191,7 @@ const PagoReserva = (visible, setVisible) => {
                     },
                     modalStyles.button,
                   ],
-                  { color: theme.colors.secondaryText, textAlign: "center" },
+                  { color: theme.colors.secondaryText, textAlign: "center" ,fontSize:18,},
                   "Abonar",
                   handleSubmit,
                   isValid

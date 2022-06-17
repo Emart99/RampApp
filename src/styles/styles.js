@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
   },
   loginButton: {
     width: "85%",
-    borderRadius: 4,
+    borderRadius: 2,
     height: 45,
     alignItems: "center",
     justifyContent: "center",
@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
   },
   perfilButton: {
     width: "85%",
-    borderRadius: 4,
+    borderRadius: 2,
     height: 45,
     alignSelf: "center",
     alignItems: "center",

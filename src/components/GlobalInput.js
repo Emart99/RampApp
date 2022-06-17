@@ -8,6 +8,7 @@ const GlobalInput = (
   _func,
   _funcBlur,
   _style,
+  _background,
   _secure,
   _keyboardType
 ) => {
@@ -19,12 +20,13 @@ const GlobalInput = (
         theme={{
           colors: {
             placeholder: theme.colors.text,
-            background: theme.colors.input,
+            background: theme.colors.background,
           },
         }}
-        outlineColor={theme.colors.input}
-        activeOutlineColor={theme.colors.text}
-        mode="outlined"
+        underlineColor={theme.colors.text}
+        activeUnderlineColor={theme.colors.text}
+        style={{backgroundColor:_background}}
+        mode="flat"
         label={_label}
         value={_value}
         onChangeText={(value) => _func(value)}

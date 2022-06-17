@@ -191,7 +191,7 @@ const AdminRampa = (
           )}
           {GlobalButton(
             [{ borderColor: theme.colors.secondary, alignSelf:'flex-end' }, modalStyles.button],
-            { color: theme.colors.text, textAlign: "center" },
+            { color: theme.colors.text, textAlign: "center" ,fontSize:18,},
             "Cancelar",
             hideModal
           )}
@@ -204,7 +204,7 @@ const AdminRampa = (
               },
               modalStyles.button,
             ],
-            { color: theme.colors.secondaryText, textAlign: "center" },
+            { color: theme.colors.secondaryText, textAlign: "center" ,fontSize:18,},
             "Agregar",
             editRampa
           )}

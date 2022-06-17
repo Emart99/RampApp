@@ -71,6 +71,7 @@ const EditarVehiculo = (
                   handleChange("marca"),
                   handleBlur("marca"),
                   styles.inputView,
+                  theme.colors.modal,
                   false,
                   "default"
                 )}
@@ -83,6 +84,7 @@ const EditarVehiculo = (
                   handleChange("modelo"),
                   handleBlur("modelo"),
                   styles.inputView,
+                  theme.colors.modal,
                   false,
                   "default"
                 )}
@@ -95,6 +97,7 @@ const EditarVehiculo = (
                   handleChange("dominio"),
                   handleBlur("dominio"),
                   styles.inputView,
+                  theme.colors.modal,
                   false,
                   "default"
                 )}{" "}
@@ -106,7 +109,7 @@ const EditarVehiculo = (
               <View style={modalStyles.buttonContainer}>
                 {GlobalButton(
                   [{ borderColor: theme.colors.secondary }, modalStyles.button],
-                  { color: theme.colors.text, textAlign: "center" },
+                  { color: theme.colors.text, textAlign: "center",fontSize:18, },
                   "Cancelar",
                   hideModal
                 )}
@@ -118,7 +121,7 @@ const EditarVehiculo = (
                     },
                     modalStyles.button,
                   ],
-                  { color: theme.colors.secondaryText, textAlign: "center" },
+                  { color: theme.colors.secondaryText, textAlign: "center" ,fontSize:18,},
                   "Agregar",
                   handleSubmit
                 )}

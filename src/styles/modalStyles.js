@@ -37,14 +37,14 @@ const modalStyles = StyleSheet.create({
     fontSize: 17,
   },
   button: {
-    borderRadius: 8,
-    width: 80,
+    borderRadius: 2,
+    width: 100,
     padding: 5,
     borderStyle: "solid",
     borderWidth: 1,
   },
   button2: {
-    borderRadius: 8,
+    borderRadius: 2,
     width: 150,
     padding: 5,
     borderStyle: "solid",

@@ -88,6 +88,7 @@ const Login = ({ navigation }) => {
                 handleChange("userName"),
                 handleBlur("userName"),
                 styles.inputView,
+                theme.colors.background,
                 false,
                 "default"
               )}
@@ -100,6 +101,7 @@ const Login = ({ navigation }) => {
                 handleChange("contrasenia"),
                 handleBlur("contrasenia"),
                 styles.inputView,
+                theme.colors.background,
                 true,
                 "default"
               )}

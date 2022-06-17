@@ -30,7 +30,7 @@ const Mapa = () => {
                     latitudeDelta: 0.0922,
                     longitudeDelta: 0.0421,
                 }} style={styles.map} >
-
+                    
                     <Marker  onPress={() => SheetManager.show('rampas_bottom_sheet')} coordinate={{
                         latitude: -34.56009155102,
                         longitude: -58.562973959184

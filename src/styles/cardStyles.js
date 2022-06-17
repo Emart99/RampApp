@@ -52,7 +52,7 @@ const cardStyles = StyleSheet.create({
       fontStyle: 'italic',
     },
     agregarButton: {
-      borderRadius: 8,
+      borderRadius: 2,
       position: 'absolute',
       width: 90,
       padding: 5,
