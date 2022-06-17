@@ -29,19 +29,23 @@ const CrearRampa = (
   showAlertDatosInvalidos,
   setShowAlertDatosInvalidos,
   visibleLoading,
-  setVisibleLoading
+  setVisibleLoading,
+  camaraDisabled, 
+  setCamaraDisabled
 ) => {
   const pickImage = async (setFieldValue, setFieldTouched, imgValue) => {
+    setCamaraDisabled(true);
     // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       quality: 0.8,
       base64: true,
     });
-    setImage(setFieldValue, setFieldTouched, imgValue, result,error);
+    setImage(setFieldValue, setFieldTouched, imgValue, result);
   };
 
   const openCamera = async (setFieldValue, setFieldTouched, imgValue) => {
+    setCamaraDisabled(true);
     // Ask the user for the permission to access the camera
     const permissionResult = await ImagePicker.requestCameraPermissionsAsync();
     if (permissionResult.granted === false) {
@@ -60,7 +64,7 @@ const CrearRampa = (
       setFieldValue(imgValue, result.base64);
       setFieldTouched(imgValue, true);
     }
-  
+    setCamaraDisabled(false);
   };
 
   const hideModal = () => {
@@ -291,6 +295,7 @@ const CrearRampa = (
                     <View style={modalStyles.imgContainer}>
                       <View style={modalStyles.ctn}>
                         <IconButton
+                        disabled={camaraDisabled}
                           icon="image-plus"
                           color={theme.colors.text}
                           onPress={() =>
@@ -304,6 +309,7 @@ const CrearRampa = (
                           size={27}
                         />
                         <IconButton
+                        disabled={camaraDisabled}
                           icon="camera"
                           color={theme.colors.text}
                           onPress={() =>
@@ -319,6 +325,7 @@ const CrearRampa = (
                       </View>
                       <View style={modalStyles.ctn}>
                         <IconButton
+                        disabled={camaraDisabled}
                           icon="image-plus"
                           color={theme.colors.text}
                           onPress={() =>
@@ -328,6 +335,7 @@ const CrearRampa = (
                           size={27}
                         />
                         <IconButton
+                        disabled={camaraDisabled}
                           icon="camera"
                           color={theme.colors.text}
                           onPress={() =>
@@ -339,6 +347,7 @@ const CrearRampa = (
                       </View>
                       <View style={modalStyles.ctn}>
                         <IconButton
+                        disabled={camaraDisabled}
                           icon="image-plus"
                           color={theme.colors.text}
                           onPress={() =>
@@ -352,6 +361,7 @@ const CrearRampa = (
                           size={27}
                         />
                         <IconButton
+                        disabled={camaraDisabled}
                           icon="camera"
                           color={theme.colors.text}
                           onPress={() =>

@@ -28,6 +28,7 @@ const AdministrarRampa = () => {
   const [visibleTimePickerH, setVisibleTimePickerH] = React.useState(false);
   const [visibleLoading, setVisibleLoading] = React.useState(false);
   const [visibleToast, setVisibleToast] = React.useState(false);
+  const [camaraDisbabled, setCamaraDisbabled] = React.useState(false);
 
   const showModalCrear = () => setVisibleModalCrear(true);
 
@@ -113,7 +114,9 @@ const AdministrarRampa = () => {
         showAlertDatosInvalidos,
         setShowAlertDatosInvalidos,
         visibleLoading,
-        setVisibleLoading
+        setVisibleLoading,
+        camaraDisbabled, 
+        setCamaraDisbabled
       )}
     </>
   );
