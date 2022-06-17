@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { Text, IconButton, useTheme, Portal, Modal, ActivityIndicator } from "react-native-paper";
+import {
+  Text,
+  IconButton,
+  useTheme,
+  Portal,
+  Modal,
+  ActivityIndicator,
+} from "react-native-paper";
 import { View, TouchableWithoutFeedback, Keyboard } from "react-native";
 import { Formik } from "formik";
 import AwesomeAlert from "react-native-awesome-alerts";
@@ -13,17 +20,17 @@ import modalStyles from "../../styles/modalStyles";
 import { creacionDeRampa, geocoder, subirImagen } from "../../api/http";
 import { rampaValidationSchema } from "../../utils/rampaSchema";
 
-const CrearRampa = (visible,
-                    setVisible,
-                    theme,
-                    showAlertDatosCorrectos,
-                    setShowAlertDatosCorrectos,
-                    showAlertDatosInvalidos,
-                    setShowAlertDatosInvalidos,
-                    visibleLoading,
-                    setVisibleLoading) => {
-  
-  
+const CrearRampa = (
+  visible,
+  setVisible,
+  theme,
+  showAlertDatosCorrectos,
+  setShowAlertDatosCorrectos,
+  showAlertDatosInvalidos,
+  setShowAlertDatosInvalidos,
+  visibleLoading,
+  setVisibleLoading
+) => {
   const pickImage = async (setFieldValue, setFieldTouched, imgValue) => {
     // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -58,18 +65,11 @@ const CrearRampa = (visible,
     setVisible(false);
   };
 
-  const hideModalCorrecta = () => {
-    hideModal();
-    setShowAlertDatosCorrectos(true);
-  };
-
   const agregarRampa = async (values) => {
-    const imagenRampa = await subirImagen(values.imgRampa).catch((err) => {
-    });
-    const imagenDNI = await subirImagen(values.imgDNI).catch((err) => {
-    });
-    const imagenEscritura = await subirImagen(values.imgEscritura).catch((err) => {
-      }
+    const imagenRampa = await subirImagen(values.imgRampa).catch((err) => {});
+    const imagenDNI = await subirImagen(values.imgDNI).catch((err) => {});
+    const imagenEscritura = await subirImagen(values.imgEscritura).catch(
+      (err) => {}
     );
 
     const geoJson = await geocoder({
@@ -77,11 +77,11 @@ const CrearRampa = (visible,
       calle: values.calle,
       partido: values.partido,
       codigopostal: values.cp,
-    })
-    
-    if(geoJson[0] == undefined){
-      setVisibleLoading(false)
-      return setShowAlertDatosInvalidos(true)
+    });
+
+    if (geoJson[0] == undefined) {
+      setVisibleLoading(false);
+      return setShowAlertDatosInvalidos(true);
     }
     const rampaJSON = {
       posx: geoJson[0].lon,
@@ -90,15 +90,14 @@ const CrearRampa = (visible,
       altura: values.altura,
       nroPartidaInmobiliaria: values.nroPartida,
       imagenRampa: imagenRampa.data.link,
-      imagenDNI: imagenDNI.data.link,
+      imagenDni: imagenDNI.data.link,
       imagenEscritura: imagenEscritura.data.link,
-  }
-  creacionDeRampa(rampaJSON).catch((err)=> {
-    console.log(err)
-  });
-  setVisibleLoading(false);
-  setShowAlertDatosCorrectos(true)
-
+    };
+    creacionDeRampa(rampaJSON).catch((err) => {
+      console.log(err);
+    });
+    setVisibleLoading(false);
+    setShowAlertDatosCorrectos(true);
   };
 
   return (
@@ -160,9 +159,8 @@ const CrearRampa = (visible,
                 imgDNI: "",
               }}
               onSubmit={(values) => {
-                setVisibleLoading(true)
-                agregarRampa(values).then()
-
+                setVisibleLoading(true);
+                agregarRampa(values).then();
               }}
             >
               {({
@@ -258,17 +256,30 @@ const CrearRampa = (visible,
                     <Text style={styles.inputValidImg}>
                       {errors.imgRampa && touched.imgRampa && errors.imgRampa}
                     </Text>
-
                     <Text style={styles.inputValidImg}>
                       {errors.imgDNI && touched.imgDNI && errors.imgDNI}
                     </Text>
-
                     <Text style={styles.inputValidImg}>
                       {errors.imgEscritura &&
                         touched.imgEscritura &&
                         errors.imgEscritura}
                     </Text>
                   </View>
+                  <View  style={{
+                      flex: 1,
+                      flexDirection: "row",
+                      justifyContent: "space-evenly",
+                    }}>
+                  <Text style={styles.inputImgSubida}>
+                      {values.imgRampa && "Rampa subida"}
+                    </Text>
+                  <Text style={styles.inputImgSubida}>
+                      {values.imgDNI && "DNI subido"}
+                    </Text>
+                  <Text style={styles.inputImgSubida}>
+                      {values.imgEscritura && "Escritura subida"}
+                    </Text>
+                    </View>
                   <View style={modalStyles.imgInputsContainer}>
                     <View style={[modalStyles.imgContainer]}>
                       <Text style={modalStyles.textStyle}>Foto Rampa</Text>
@@ -364,7 +375,12 @@ const CrearRampa = (visible,
                       "Cancelar",
                       hideModal
                     )}
-                    <ActivityIndicator size="large" animating={visibleLoading} hidesWhenStopped={true} color={theme.colors.text} />
+                    <ActivityIndicator
+                      size="large"
+                      animating={visibleLoading}
+                      hidesWhenStopped={true}
+                      color={theme.colors.text}
+                    />
                     {GlobalButton(
                       [
                         {

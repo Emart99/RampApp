@@ -1,18 +1,19 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Text,
   IconButton,
-  useTheme,
   Portal,
   Modal,
   Switch,
 } from "react-native-paper";
 import { View } from "react-native";
+import * as ImagePicker from "expo-image-picker";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+import AwesomeAlert from "react-native-awesome-alerts";
 
 import modalStyles from "../../styles/modalStyles";
 import GlobalButton from "../GlobalButton";
-import { modificarRampa } from "../../api/http";
+import { denunciarInfractor, modificarRampa, subirImagen } from "../../api/http";
 
 const AdminRampa = (
   rampa,
@@ -31,13 +32,18 @@ const AdminRampa = (
   setVisibleTimePickerH,
   onPressRefresh,
   setOnPressRefresh,
+  showAlertDenuncia,
+  setShowAlertDenuncia,
+  visibleToast, 
+  setVisibleToast
 ) => {
   
-
   const hideModal = () => setVisible(false);
+
   const editRampa = async () =>{
    // a implementar const modifRampa = await modificarRampa(rampa,horaDesde,horaHasta,isSwitchOn).then(data => hideModal())
   }
+
   const onConfirm = (date, func) => {
     setVisibleTimePickerD(false);
     setVisibleTimePickerH(false);
@@ -48,6 +54,24 @@ const AdminRampa = (
   const onToggleSwitch = () => {
     setIsSwitchOn(!isSwitchOn);
   };
+
+  const enviarDenuncia = async () => {
+    // Ask the user for the permission to access the camera
+    const permissionResult = await ImagePicker.requestCameraPermissionsAsync();
+    if (permissionResult.granted === false) {
+      alert("Se necesitan permisos para usar la cámara");
+      return;
+    }
+    const result = await ImagePicker.launchCameraAsync({
+      base64: true,
+    });
+    if (!result.cancelled) {
+      const imagen = await subirImagen(result.base64).catch((err) => {});
+      await denunciarInfractor("Estacionamiento indebido", imagen.data.link,"",`${rampa.calle} ${rampa.altura}`).then(data => {setVisible(false);onToggleSnackBar()})
+    }
+  }
+
+  const onToggleSnackBar = () => setVisibleToast(!visibleToast);
 
   return (
     <Portal
@@ -64,12 +88,29 @@ const AdminRampa = (
         animationType="fade"
         visible={visible}
       >
+        <AwesomeAlert
+            titleStyle={{ width: "100%",textAlign:'center', color: theme.colors.text }}
+            contentContainerStyle={{ backgroundColor: theme.colors.background }}
+            confirmButtonTextStyle={{color:theme.colors.secondaryText}}
+            show={showAlertDenuncia}
+            showProgress={false}
+            title="Denunciar infractor"
+            closeOnHardwareBackPress={false}
+            showConfirmButton={true}
+            confirmText="Sacar foto"
+            confirmButtonColor={theme.colors.secondary}
+            closeOnTouchOutside={false}
+            onConfirmPressed={() => {
+              enviarDenuncia();
+              setShowAlertDenuncia(false);
+            }}
+          />
         <View style={modalStyles.headerContainer}>
           <Text style={modalStyles.tituloBold}>Administrar Rampa</Text>
           <IconButton
             icon="alert"
             color={theme.colors.text}
-            onPress={() => console.log("zz")}
+            onPress={() => setShowAlertDenuncia(true)}
             size={30}
             style={{ marginTop: -10 }}
           />
@@ -118,7 +159,7 @@ const AdminRampa = (
                   />
                 </View>
                 <View>
-                  <Text style={{ fontSize: 18, color: theme.colors.text }}>
+                  <Text style={{ fontSize: 18, color: theme.colors.text}}>
                     Hasta: {horaHasta} hs
                   </Text>
                   <IconButton

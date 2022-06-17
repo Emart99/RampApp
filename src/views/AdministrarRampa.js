@@ -1,12 +1,13 @@
 import React, { useEffect } from "react";
 import { Text, ScrollView, TouchableOpacity } from "react-native";
-import { useTheme } from "react-native-paper";
+import { Snackbar, useTheme } from "react-native-paper";
 
 import cardStyles from "./../styles/cardStyles";
 import CardRampa from "../components/cards/CardRampa";
 import CrearRampa from "../components/modales/CrearRampa";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { traerRampasDelUsuario } from "../api/http";
+import styles from "../styles/styles";
 
 const AdministrarRampa = () => {
   const [rampas, setRampas] = React.useState([]);
@@ -14,16 +15,20 @@ const AdministrarRampa = () => {
   const theme = useTheme();
   const [visibleModalCrear, setVisibleModalCrear] = React.useState(false);
   const [visibleModalAdmin, setVisibleModalAdmin] = React.useState(false);
-  const [showAlertDatosCorrectos, setShowAlertDatosCorrectos] = React.useState(false);
-  const [showAlertDatosInvalidos, setShowAlertDatosInvalidos] = React.useState(false);
+  const [showAlertDatosCorrectos, setShowAlertDatosCorrectos] =
+    React.useState(false);
+  const [showAlertDatosInvalidos, setShowAlertDatosInvalidos] =
+    React.useState(false);
+  const [showAlertDenuncia, setShowAlertDenuncia] = React.useState(false);
   const [onPressRefresh, setOnPressRefresh] = React.useState(false);
   const [isSwitchOn, setIsSwitchOn] = React.useState(true);
   const [horaDesde, setHoraDesde] = React.useState(0);
   const [horaHasta, setHoraHasta] = React.useState(0);
   const [visibleTimePickerD, setVisibleTimePickerD] = React.useState(false);
   const [visibleTimePickerH, setVisibleTimePickerH] = React.useState(false);
-  const [visibleLoading,setVisibleLoading] = React.useState(false);
-  
+  const [visibleLoading, setVisibleLoading] = React.useState(false);
+  const [visibleToast, setVisibleToast] = React.useState(false);
+
   const showModalCrear = () => setVisibleModalCrear(true);
 
   useEffect(() => {
@@ -35,6 +40,8 @@ const AdministrarRampa = () => {
     }
     fetchRampas();
   }, [onPressRefresh]);
+
+  const onDismissSnackBar = () => setVisibleToast(false);
 
   return (
     <>
@@ -65,6 +72,10 @@ const AdministrarRampa = () => {
             setVisibleTimePickerD,
             visibleTimePickerH,
             setVisibleTimePickerH,
+            showAlertDenuncia,
+            setShowAlertDenuncia,
+            visibleToast,
+            setVisibleToast
           )
         )}
       </ScrollView>
@@ -85,7 +96,14 @@ const AdministrarRampa = () => {
           AGREGAR
         </Text>
       </TouchableOpacity>
-
+      <Snackbar
+        visible={visibleToast}
+        onDismiss={onDismissSnackBar}
+        duration={2500}
+        style={styles.toastDenuncia}
+        wrapperStyle={styles.toastDenunciaWrapper}
+      ><Text style={{ color: theme.colors.text,fontSize:17}}>Denuncia realizada con éxito</Text>
+      </Snackbar>
       {CrearRampa(
         visibleModalCrear,
         setVisibleModalCrear,

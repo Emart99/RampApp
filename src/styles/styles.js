@@ -177,6 +177,28 @@ const styles = StyleSheet.create({
     width: "30%",
     textAlign: "center",
   },
+  inputImgSubida: {
+    fontSize: 12,
+    marginTop: -20,
+    color: "green",
+    width: "30%",
+    textAlign: "center",
+  },
+  toastDenuncia: {
+    backgroundColor: "#3fab75",
+    elevation: 0,
+    width: "75%",
+    borderRadius: 0,
+    alignSelf: "center",
+    margin: 0,
+    padding: 0,
+  },
+  toastDenunciaWrapper: {
+    backgroundColor: "#3fab75",
+    width: "100%",
+    alignItems: "center",
+    height: "7%",
+  },
 });
 
 export default styles;

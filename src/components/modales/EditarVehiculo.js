@@ -6,24 +6,37 @@ import GlobalInput from "../GlobalInput";
 import GlobalButton from "../GlobalButton";
 import styles from "../../styles/styles";
 import modalStyles from "../../styles/modalStyles";
-import { crearVehiculo, modificarVehiculo, traerVehiculo } from "../../api/http";
-import { Formik } from 'formik';
+import {
+  crearVehiculo,
+  modificarVehiculo,
+  traerVehiculo,
+} from "../../api/http";
+import { Formik } from "formik";
 
-const EditarVehiculo = (visible, setVisible,theme,vehiculo,setOnPressRefresh,onPressRefresh) => {
-  
-
+const EditarVehiculo = (
+  visible,
+  setVisible,
+  theme,
+  vehiculo,
+  setOnPressRefresh,
+  onPressRefresh
+) => {
   const hideModal = () => setVisible(false);
 
-  const vehiculoModificar  = async (values) => {
-    await modificarVehiculo(vehiculo.id,values.marca,values.modelo,values.dominio).then(data => {
-      hideModal()
-      setOnPressRefresh(!onPressRefresh)
-    })
-  }
-
+  const vehiculoModificar = async (values) => {
+    await modificarVehiculo(
+      vehiculo.id,
+      values.marca,
+      values.modelo,
+      values.dominio
+    ).then((data) => {
+      hideModal();
+      setOnPressRefresh(!onPressRefresh);
+    });
+  };
 
   return (
-    <Portal theme={{colors:{backdrop:'rgba(0, 0, 0, 0.35)'}}}>
+    <Portal theme={{ colors: { backdrop: "rgba(0, 0, 0, 0.35)" } }}>
       <Modal
         dismissable={false}
         contentContainerStyle={[
@@ -34,7 +47,11 @@ const EditarVehiculo = (visible, setVisible,theme,vehiculo,setOnPressRefresh,onP
         visible={visible}
       >
         <Formik
-          initialValues={{ marca: vehiculo.marca, modelo: vehiculo.modelo, dominio: vehiculo.dominio }}
+          initialValues={{
+            marca: vehiculo.marca,
+            modelo: vehiculo.modelo,
+            dominio: vehiculo.dominio,
+          }}
           onSubmit={(values) => vehiculoModificar(values)}
         >
           {({
@@ -44,62 +61,70 @@ const EditarVehiculo = (visible, setVisible,theme,vehiculo,setOnPressRefresh,onP
             values,
             errors,
             touched,
-            isValid,
           }) => (
             <>
-        <View style={modalStyles.inputContainer}>
-          <Text style={modalStyles.titulo}>Agregar Vehículo</Text>
-          {GlobalInput(
-            "Marca",
-            values.marca,
-            handleChange("marca"),
-            "",
-            styles.inputView,
-            false,
-            "default"
-          )}
-          {GlobalInput(
-            "Modelo",
-            values.modelo,
-            handleChange("modelo"),
-            "",
-            styles.inputView,
-            false,
-            "default"
-          )}
-          {GlobalInput(
-            "Dominio",
-            values.dominio,
-            handleChange("dominio"),
-            "",
-            styles.inputView,
-            false,
-            "default"
-          )}
-        </View>
-        
+              <View style={modalStyles.inputContainer}>
+                <Text style={modalStyles.titulo}>Agregar Vehículo</Text>
+                {GlobalInput(
+                  "Marca",
+                  values.marca,
+                  handleChange("marca"),
+                  handleBlur("marca"),
+                  styles.inputView,
+                  false,
+                  "default"
+                )}
+                {errors.marca && touched.marca && (
+                  <Text style={styles.inputInvalidText}>{errors.marca}</Text>
+                )}
+                {GlobalInput(
+                  "Modelo",
+                  values.modelo,
+                  handleChange("modelo"),
+                  handleBlur("modelo"),
+                  styles.inputView,
+                  false,
+                  "default"
+                )}
+                {errors.modelo && touched.modelo && (
+                  <Text style={styles.inputInvalidText}>{errors.modelo}</Text>
+                )}
+                {GlobalInput(
+                  "Dominio",
+                  values.dominio,
+                  handleChange("dominio"),
+                  handleBlur("dominio"),
+                  styles.inputView,
+                  false,
+                  "default"
+                )}{" "}
+                {errors.dominio && touched.dominio && (
+                  <Text style={styles.inputInvalidText}>{errors.dominio}</Text>
+                )}
+              </View>
 
-        <View style={modalStyles.buttonContainer}>
-          {GlobalButton(
-            [{ borderColor: theme.colors.secondary }, modalStyles.button],
-            { color: theme.colors.text, textAlign: "center" },
-            "Cancelar",
-            hideModal
+              <View style={modalStyles.buttonContainer}>
+                {GlobalButton(
+                  [{ borderColor: theme.colors.secondary }, modalStyles.button],
+                  { color: theme.colors.text, textAlign: "center" },
+                  "Cancelar",
+                  hideModal
+                )}
+                {GlobalButton(
+                  [
+                    {
+                      backgroundColor: theme.colors.secondary,
+                      borderColor: theme.colors.secondary,
+                    },
+                    modalStyles.button,
+                  ],
+                  { color: theme.colors.secondaryText, textAlign: "center" },
+                  "Agregar",
+                  handleSubmit
+                )}
+              </View>
+            </>
           )}
-          {GlobalButton(
-            [
-              {
-                backgroundColor: theme.colors.secondary,
-                borderColor: theme.colors.secondary,
-              },
-              modalStyles.button,
-            ],
-            { color: theme.colors.secondaryText, textAlign: "center" },
-            "Agregar",
-            handleSubmit
-          )}
-        </View>
-        </>)}
         </Formik>
       </Modal>
     </Portal>

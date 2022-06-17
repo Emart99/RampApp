@@ -21,7 +21,11 @@ const CardRampa = (
   visibleTimePickerD,
   setVisibleTimePickerD,
   visibleTimePickerH,
-  setVisibleTimePickerH
+  setVisibleTimePickerH,
+  showAlertDenuncia,
+  setShowAlertDenuncia,
+  visibleToast,
+  setVisibleToast,
 ) => {
   const touchHandler = () => {
     setVisibleModalAdmin(true);
@@ -83,6 +87,10 @@ const CardRampa = (
         setVisibleTimePickerH,
         onPressRefresh,
         setOnPressRefresh,
+        showAlertDenuncia,
+        setShowAlertDenuncia,
+        visibleToast,
+        setVisibleToast,
       )}
     </Pressable>
   );
