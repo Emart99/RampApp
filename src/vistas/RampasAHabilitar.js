@@ -1,4 +1,4 @@
-import Table from 'react-bootstrap/Table';
+
 import React from 'react'
 import { useState, useEffect } from "react"
 import { adminService } from '../services/AdminService';
@@ -42,8 +42,7 @@ export function RampasAHabilitar(){
                 <div className='col'>{data.nombrePropietario}</div>
             </div>
             </div>
-            </a> )
-          }
+            </a> )}
         </div>
     )
 }
