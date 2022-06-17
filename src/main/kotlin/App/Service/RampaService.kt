@@ -30,7 +30,7 @@ class RampaService {
 
     @Transactional
     fun traerRampasParaRamapasDisponibles(): List<Rampa> {
-        val horaActual = LocalDateTime.now()
+        val horaActual = LocalDateTime.now().hour
         val todasLasRampas = repositorioRampa.findAll()
         todasLasRampas.forEach {rampa -> rampa.controlarEstadoRampa(horaActual)}
        repositorioRampa.saveAll(todasLasRampas)
@@ -95,4 +95,17 @@ class RampaService {
             }
 
     }
+
+    fun agregarHorariosRampa(idRampa: Long, horarioAAgregar: Horarios): Rampa {
+        val rampa = this.traerRampaPorID(idRampa)
+        rampa.horariosDisponibles.add(horarioAAgregar)
+        return rampa
+    }
+
+    fun quitarHorariosRampa(idRampa: Long, horarioAQuitar: Horarios): Rampa {
+        val rampa = this.traerRampaPorID(idRampa)
+        rampa.horariosDisponibles.remove( horarioAQuitar)
+        return rampa
+    }
+
 }

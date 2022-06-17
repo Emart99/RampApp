@@ -18,7 +18,8 @@ class Horarios {
 
     var fecha = LocalDate.now()
 
-    var horarioDesde = LocalDateTime.now()
-    var horarioHasta = LocalDateTime.now()
+    var horarioDesde = 0
+    var horarioHasta = 0
+
 
 }

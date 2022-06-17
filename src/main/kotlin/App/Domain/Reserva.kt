@@ -13,11 +13,10 @@ class Reserva {
     var id: Long = 0
 
     @Column(length=20)
-    var horaInicioReserva: LocalDateTime = LocalDateTime.now()
+    var horaInicioReserva= 0
 
     @Column(length=20)
-    var horaFinReserva: LocalDateTime = LocalDateTime.now()
-
+    var horaFinReserva= 0
     @Column(length=20)
     var fechaReserva: LocalDate = LocalDate.now()
 

@@ -56,12 +56,12 @@ class Rampa {
     }
 
 
-    fun controlarEstadoRampa(hora: LocalDateTime){
+    fun controlarEstadoRampa(hora: Int){
        if(horariosDisponibles.any {horarios -> (horarios.horarioDesde < hora) && (horarios.horarioHasta > hora)})
             {this.estadoRampa =  "Disponible"}
        else if(reservasRealizadas.any {reserva -> (reserva.horaInicioReserva < hora) && (reserva.horaFinReserva > hora)})
                this.estadoRampa = "Alquilada"
-       else this.estadoRampa = "Ocupada"
+       else this.estadoRampa = "No Disponible"
        }
 
 
