@@ -95,7 +95,7 @@ class UsuarioService {
 
     fun traerReservasActivas(idUsuario: Long): List<Reserva> {
         val usuario = this.getUsuario(idUsuario)
-        val horaActual = LocalDateTime.now()
+        val horaActual = LocalDateTime.now().hour
         return usuario.reservasRealizadas.filter{reserva -> reserva.horaFinReserva < horaActual }
 
     }

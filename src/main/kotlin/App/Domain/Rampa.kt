@@ -1,6 +1,7 @@
 package App.Domain
 
 
+import java.time.LocalDate
 import java.time.LocalDateTime
 import javax.persistence.*
 
@@ -85,6 +86,7 @@ class RampaPendienteAprobacion(
     @Column(length=5)
     var nroPartidaInmobiliaria: Int = 0,
 
+
     @Column
     var imagenRampa:String = "",
 
@@ -100,5 +102,8 @@ class RampaPendienteAprobacion(
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
     var id: Long = 0
+    var fechaCarga = LocalDate.now()
+
+    var nombrePropietario = usuarioPropietario.nombre
 }
 
