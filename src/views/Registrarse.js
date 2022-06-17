@@ -245,7 +245,7 @@ const Registrarse = ({ navigation }) => {
                     styles.loginButton,
                     { backgroundColor: theme.colors.secondary },
                   ],
-                  { color: theme.colors.secondaryText },
+                  { color: theme.colors.secondaryText,fontSize:16,fontFamily:'Poppins_500Medium' },
                   "REGISTRAR",
                   handleSubmit,
                   isValid

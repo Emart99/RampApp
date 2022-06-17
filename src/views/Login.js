@@ -111,7 +111,7 @@ const Login = ({ navigation }) => {
               <View style={{ marginTop: 10 }} />
               {GlobalButton(
                 "",
-                { color: theme.colors.text },
+                { color: theme.colors.text,fontSize:15 },
                 "Olvido su contraseña?",
                 olvidoSuContraseniaHelper
               )}
@@ -122,16 +122,16 @@ const Login = ({ navigation }) => {
               {GlobalButton(
                 [
                   styles.loginButton,
-                  { backgroundColor: theme.colors.secondary },
+                  { backgroundColor: theme.colors.secondary, },
                 ],
-                { color: theme.colors.secondaryText },
+                { color: theme.colors.secondaryText,fontSize:16,fontFamily:'Poppins_500Medium'},
                 "INGRESAR",
                 handleSubmit,
                 isValid
               )}
               {GlobalButton(
                 "",
-                { color: theme.colors.text },
+                { color: theme.colors.text,fontSize:15 },
                 "Registrarse",
                 registerNavigation
               )}

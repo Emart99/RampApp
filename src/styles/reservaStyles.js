@@ -2,7 +2,7 @@ import {StyleSheet} from "react-native"
 const reservaStyles = StyleSheet.create({
     titulo: {
       paddingLeft: 15,
-      fontSize: 45,
+      fontSize: 40,
     },
     cardTextLeft: {
       alignItems: 'flex-end',

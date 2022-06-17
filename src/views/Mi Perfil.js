@@ -58,9 +58,9 @@ const MiPerfil = ({navigation}) =>{
                     <Switch value={isThemeDark} onValueChange={onToggleSwitch}/>
                 </View>
 
-                {GlobalButton([styles.perfilButton,{ backgroundColor: theme.colors.secondary,marginTop:20}],{color: theme.colors.secondaryText},"Administrar Rampas",administrarRampaNavigation)}
-                {GlobalButton([styles.perfilButton,{ backgroundColor: theme.colors.secondary,marginTop:10}],{color: theme.colors.secondaryText},"Administrar Vehiculo",administrarVehiculoNavigation)}
-                {GlobalButton([{ backgroundColor: theme.colors.secondary, marginTop:20},styles.perfilButton],{color: theme.colors.secondaryText},"CERRAR SESION",loginNavigation)} 
+                {GlobalButton([styles.perfilButton,{ backgroundColor: theme.colors.secondary,marginTop:20}],{color: theme.colors.secondaryText,fontSize:16},"Administrar Rampas",administrarRampaNavigation)}
+                {GlobalButton([styles.perfilButton,{ backgroundColor: theme.colors.secondary,marginTop:10}],{color: theme.colors.secondaryText,fontSize:16},"Administrar Vehiculo",administrarVehiculoNavigation)}
+                {GlobalButton([{ backgroundColor: theme.colors.secondary, marginTop:20},styles.perfilButton],{color: theme.colors.secondaryText,fontSize:16,fontFamily:'Poppins_500Medium'},"CERRAR SESION",loginNavigation)} 
 
             </View>
         </ScrollView >

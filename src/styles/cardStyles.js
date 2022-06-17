@@ -2,7 +2,7 @@ import {StyleSheet} from 'react-native'
 
 const cardStyles = StyleSheet.create({
     titulo: {
-      paddingLeft: 45,
+      paddingLeft: 20,
       paddingBottom: 10,
       fontSize: 45,
     },

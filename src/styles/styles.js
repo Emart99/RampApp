@@ -14,9 +14,11 @@ export function themeHelper() {
 
 export const LightTheme = {
   ...DefaultTheme,
-  fontFamily: {
-    ...(DefaultTheme.fonts.regular.fontFamily = "Poppins_300Light"),
-  },
+  fontFamily: { ...(DarkTheme.fonts.regular.fontFamily = "Poppins_400Regular") ,
+    ...(DarkTheme.fonts.medium.fontFamily = "Poppins_300Light"),
+    ...(DarkTheme.fonts.light.fontFamily = "Poppins_200ExtraLight"),
+    ...(DarkTheme.fonts.thin.fontFamily = "Poppins_100Thin")
+   },
   colors: {
     modal: "#c2c2c2",
     headerPerfil: "#d9d9d9",
@@ -34,7 +36,11 @@ export const LightTheme = {
 
 export const _DarkTheme = {
   ...DarkTheme,
-  fontFamily: { ...(DarkTheme.fonts.regular.fontFamily = "Poppins_300Light") },
+  fontFamily: { ...(DarkTheme.fonts.regular.fontFamily = "Poppins_400Regular") ,
+    ...(DarkTheme.fonts.medium.fontFamily = "Poppins_300Light"),
+    ...(DarkTheme.fonts.light.fontFamily = "Poppins_200ExtraLight"),
+    ...(DarkTheme.fonts.thin.fontFamily = "Poppins_100Thin")
+   },
   colors: {
     modal: "#404040",
     headerPerfil: "#2A2E34",
@@ -79,7 +85,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   crearText: {
-    fontSize: 26,
+    fontSize: 30,
     marginBottom: 20,
   },
   backIcon: {
@@ -94,7 +100,7 @@ const styles = StyleSheet.create({
   },
   loginButton: {
     width: "85%",
-    borderRadius: 8,
+    borderRadius: 4,
     height: 45,
     alignItems: "center",
     justifyContent: "center",
@@ -131,11 +137,9 @@ const styles = StyleSheet.create({
   },
   perfilHeaderText: {
     fontSize: 30,
-    color: "black",
   },
   perfilText: {
     fontSize: 20,
-    color: "black",
     marginBottom: 10,
   },
   containerPerfil: {
@@ -157,7 +161,7 @@ const styles = StyleSheet.create({
   },
   perfilButton: {
     width: "85%",
-    borderRadius: 8,
+    borderRadius: 4,
     height: 45,
     alignSelf: "center",
     alignItems: "center",

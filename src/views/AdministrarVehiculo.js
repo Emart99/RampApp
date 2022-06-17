@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, TouchableOpacity, Pressable } from 'react-native';
+import { View, TouchableOpacity, Pressable } from 'react-native';
 import { ScrollView } from 'react-native';
-import { IconButton, useTheme } from "react-native-paper";
+import { IconButton, useTheme ,Text} from "react-native-paper";
 
 import CrearVehiculo from "../components/modales/CrearVehiculo";
 import cardStyles from "../styles/cardStyles";

@@ -1,6 +1,6 @@
 import React from 'react';
-import {Text, ScrollView, TouchableOpacity} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import { ScrollView, TouchableOpacity} from 'react-native';
+import {useTheme,Text} from 'react-native-paper';
 
 import cardStyles from '../styles/cardStyles';
 import reservaStyles from './../styles/reservaStyles';

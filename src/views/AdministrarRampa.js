@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
-import { Text, ScrollView, TouchableOpacity } from "react-native";
-import { Snackbar, useTheme } from "react-native-paper";
+import {  ScrollView, TouchableOpacity } from "react-native";
+import { Snackbar, useTheme,Text } from "react-native-paper";
 
 import cardStyles from "./../styles/cardStyles";
 import CardRampa from "../components/cards/CardRampa";

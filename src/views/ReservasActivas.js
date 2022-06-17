@@ -1,6 +1,6 @@
 import React from "react";
-import { Text, ScrollView } from "react-native";
-import { Snackbar, useTheme } from "react-native-paper";
+import {  ScrollView } from "react-native";
+import { Snackbar, useTheme,Text } from "react-native-paper";
 
 import cardStyles from "./../styles/cardStyles";
 import reservaStyles from "../styles/reservaStyles";
