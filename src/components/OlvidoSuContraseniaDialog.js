@@ -30,9 +30,18 @@ const OlvidoSuContrasenia = (props, setProps) => {
           </Paragraph>
         </Dialog.Content>
         <View style={styles.olvidoSuContraseniaModalView}>
+      
           <TextInput
-            mode="outlined"
-            theme={{colors:{placeholder:theme.colors.text,background:theme.colors.input}}}
+            mode="flat"
+            theme={{
+              colors: {
+                placeholder: theme.colors.text,
+                background: theme.colors.background,
+              },
+            }}
+            underlineColor={theme.colors.text}
+          activeUnderlineColor={theme.colors.text}
+          style={{backgroundColor:theme.colors.modal}}
             label="Email"
             onChangeText={(text) => setText(text)}
           />

@@ -12,7 +12,7 @@ const modalStyles = StyleSheet.create({
   modal: {
     alignSelf: "center",
     paddingBottom: 25,
-    paddingTop: 10,
+    paddingTop: 17,
     width: "95%",
     borderRadius: 4,
   },
@@ -21,7 +21,7 @@ const modalStyles = StyleSheet.create({
     marginBottom: 20,
   },
   titulo: {
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: "bold",
     margin: 30,
     marginTop: 0,
@@ -57,6 +57,7 @@ const modalStyles = StyleSheet.create({
     justifyContent: "space-between",
   },
   headerContainer: {
+    paddingTop:12,
     flex: 1,
     flexDirection: "row",
     justifyContent: "space-evenly",

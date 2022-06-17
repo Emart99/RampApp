@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, useTheme, Portal, Modal } from "react-native-paper";
+import { Text, useTheme, Portal, Modal, } from "react-native-paper";
 import { View } from "react-native";
 import { Formik } from "formik";
 
@@ -114,7 +114,7 @@ const PagoReserva = (visible, setVisible) => {
                 {errors.nombre && (
                   <Text style={styles.inputInvalidText}>{errors.nombre}</Text>
                 )}
-                <Text style={{ color: theme.colors.text, fontSize: 16, marginTop:-10 }}>
+                <Text style={{ color: theme.colors.text, fontSize: 16, marginTop:10 }}>
                   Fecha de vencimiento
                 </Text>
                 <View style={modalStyles.fechaContainer}>
