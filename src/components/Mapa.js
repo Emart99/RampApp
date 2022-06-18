@@ -1,15 +1,35 @@
-import React from 'react';
+import React ,{ useState,useRef,useCallback }from 'react';
 import MapView, { Marker } from 'react-native-maps';
 import { Image, View } from 'react-native';
 import { useTheme } from 'react-native-paper';
 import { SheetManager } from 'react-native-actions-sheet';
-
 import RampasSheets from './RampasSheets';
 import {styles} from '../styles/mapSyles';
+import {traerRampas} from "../api/http"
+import { useFocusEffect } from '@react-navigation/native';
+
+
 
 
 const Mapa = () => {
     const theme = useTheme()
+    const [rampas,setRampas] = useState([])
+    const [rampaId,setRampaId] = useState(0)
+    const actionSheetRef = useRef(null);
+    useFocusEffect(useCallback(()=>{
+        const fetchRampas = async () =>{
+            const ramp = await traerRampas()
+            setRampas(ramp)
+        }
+        
+        const interval = setInterval(() => {
+            fetchRampas()
+          }, 5000);
+          return () => clearInterval(interval);
+        
+        console.log(rampas)
+    }
+    ,[]))
     return (
         <>
             <View >
@@ -31,16 +51,25 @@ const Mapa = () => {
                     longitudeDelta: 0.0421,
                 }} style={styles.map} >
                     
-                    <Marker  onPress={() => SheetManager.show('rampas_bottom_sheet')} coordinate={{
-                        latitude: -34.56009155102,
-                        longitude: -58.562973959184
+                   {rampas.map((rampa)=>{
+                    return(
+                     <Marker key={rampa.id}  onPress={() => {
+                        SheetManager.show('rampas_bottom_sheet')
+                        setRampaId(rampa.id)
+                    
+                    }} coordinate={{
+                        latitude: parseFloat(rampa.posx),
+                        longitude: parseFloat(rampa.posy)
                     }} >
                         <Image source={require("../assets/garage.png")} />
                     </Marker>
+                    )
+                   })}
                 </MapView>
-                <RampasSheets/>
+                {RampasSheets(rampaId,theme,actionSheetRef)}
             </View>
         </>
     )
 }
 export default Mapa;
+

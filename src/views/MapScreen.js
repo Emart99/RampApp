@@ -4,7 +4,7 @@ import styles from '../styles/styles'
 import Mapa from '../components/Mapa'
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-const MapScreen = () =>{
+const MapScreen = ({navigation}) =>{
     const insets = useSafeAreaInsets();
 
     return(

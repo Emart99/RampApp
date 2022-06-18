@@ -17,10 +17,8 @@ const imgStyle = StyleSheet.create({
       resizeMode: "cover",
   }
 })
-const RampasSheets = () =>{
+const RampasSheets = (id,theme,actionSheetRef) =>{
 
-    const actionSheetRef = useRef(null);
-    const theme = useTheme()
     return( 
    
 

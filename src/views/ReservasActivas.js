@@ -1,4 +1,4 @@
-import React,{useEffect} from "react";
+import React,{useCallback} from "react";
 import {  ScrollView } from "react-native";
 import { Snackbar, useTheme,Text } from "react-native-paper";
 
@@ -8,6 +8,7 @@ import CardReserva from "../components/cards/CardReserva";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import styles from "../styles/styles";
 import { traerReservasDelUsuario } from "../api/http";
+import { useFocusEffect } from '@react-navigation/native';
 
 const AdministrarReservas = ({ navigation }) => {
   const theme = useTheme();
@@ -16,12 +17,13 @@ const AdministrarReservas = ({ navigation }) => {
   const [visibleToast, setVisibleToast] = React.useState(false);
   const [reservas,setReservas] = React.useState([])
 
-  useEffect(()=>{
+  useFocusEffect(useCallback(()=>{
     const fetchReservas = async () =>{
       const reser = await traerReservasDelUsuario()
       setReservas(reser)
     }
-  },[])
+    fetchReservas()
+  },[]))
   const onDismissSnackBar = () => setVisibleToast(false);
 
   return (
