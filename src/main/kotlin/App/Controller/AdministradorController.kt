@@ -5,6 +5,7 @@ import App.Service.AdministradorService
 import App.Service.UsuarioService
 import io.swagger.v3.oas.annotations.Operation
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.format.annotation.DateTimeFormat
 import org.springframework.web.bind.annotation.*
 import java.time.LocalDate
 
@@ -57,6 +58,6 @@ class AdministradorController {
 
     @GetMapping("/administrador/obtenerBalance/{fechaBusqueda}")
     @Operation(summary ="El admin obtiene el balance del uso de rampas")
-    fun obtenerBalance(@PathVariable fechaBusqueda: LocalDate): List<Rampa> = administradorService.obtenerBalance(fechaBusqueda)
+    fun obtenerBalance(@PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd")fechaBusqueda: LocalDate): List<Rampa> = administradorService.obtenerBalance(fechaBusqueda)
 
 }

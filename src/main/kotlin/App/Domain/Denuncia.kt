@@ -1,6 +1,7 @@
 package App.Domain
 
-import java.time.LocalDateTime
+import java.time.LocalDate
+
 import javax.persistence.*
 
 @Entity
@@ -10,7 +11,7 @@ class Denuncia {
     @GeneratedValue(strategy = GenerationType.TABLE)
     var id: Long = 0
 
-    var fecha: LocalDateTime = LocalDateTime.now()
+    var fecha: LocalDate = LocalDate.now()
     var tipoDenuncia: String = ""
 
     var direccionRampa: String = ""
