@@ -34,8 +34,8 @@ class AdministradorService {
             ResponseStatusException(HttpStatus.UNAUTHORIZED, "El userName o la contraseña son incorrectas")
         }
 
-    fun habilitarRampa(idAdmin: Long, rampaAHabilitar: RampaPendienteAprobacion): Administrador {
-        val admin= repositorioAdministrador.findById(idAdmin).orElseThrow {
+    fun habilitarRampa(idRampa: Long) {
+        val rampaAHabilitar= repositorioRampaPendienteAprobacion.findById(idRampa).orElseThrow {
             ResponseStatusException(HttpStatus.NOT_FOUND, "no existe el administrador son incorrectas") }
         val usuario = rampaAHabilitar.usuarioPropietario
         val rampa = Rampa().apply {
@@ -44,11 +44,14 @@ class AdministradorService {
             calle = rampaAHabilitar.calle
             altura = rampaAHabilitar.altura
             nroPartidaInmobiliaria= rampaAHabilitar.nroPartidaInmobiliaria
+            imagenRampa = rampaAHabilitar.imagenRampa
+            imagenDni = rampaAHabilitar.imagenDni
+            imagenEscritura = rampaAHabilitar.imagenEscritura
+
           }
         usuario.rampasPropias.add(rampa)
         repositorioRampa.save(rampa)
         repositorioRampaPendienteAprobacion.deleteById(rampaAHabilitar.id)
-        return admin
     }
 
     fun traerRampasPendientesAprobacion(): MutableIterable<RampaPendienteAprobacion> {
@@ -86,5 +89,11 @@ class AdministradorService {
     fun obtenerBalance(fechaBusqueda: LocalDate): List<Rampa> {
 
         return repositorioRampa.findAllByReservasRealizadasFechaReservaEquals(fechaBusqueda)
+    }
+
+    fun traerRampaPendientesAprobacionPorId(idRampa: Long): RampaPendienteAprobacion {
+        return this.repositorioRampaPendienteAprobacion.findById(idRampa).orElseThrow{
+            ResponseStatusException(HttpStatus.NOT_FOUND, "no Existe la rampa Pendiente")
+        }
     }
 }

@@ -19,13 +19,18 @@ class AdministradorController {
     @Operation(summary ="Devuelve el admin cuyo username y contraseña coincide con lo que pasamos como parámetro")
     fun buscarLoguearse(@RequestBody admin: Administrador): Administrador = administradorService.buscar(admin)
 
-    @GetMapping("/administrador/habilitarRampa/{idAdmin}")
+    @GetMapping("/administrador/habilitarRampa/{idRampa}")
     @Operation(summary ="El admin habilita una rampa pendiente de aprobacion ")
-    fun habilitarRampa(@PathVariable idAdmin: Long, @RequestBody rampaAHabilitar: RampaPendienteAprobacion): Administrador = administradorService.habilitarRampa(idAdmin,rampaAHabilitar)
+    fun habilitarRampa(@PathVariable idRampa: Long) = administradorService.habilitarRampa(idRampa)
 
     @GetMapping("/administrador/rampasPendientesAprobacion")
     @Operation(summary ="Devuelve todas las rampas que se encuentran pendientes de aprobacion<")
     fun traerTodaLasRampasPendientesDeAprobacion():MutableIterable<RampaPendienteAprobacion> = administradorService.traerRampasPendientesAprobacion()
+
+    @GetMapping("/administrador/rampasPendientesAprobacion/{idRampa}")
+    @Operation(summary ="Devuelve una rampa pendiente")
+    fun traerunRampasPendientesDeAprobacion(@PathVariable idRampa: Long):RampaPendienteAprobacion = administradorService.traerRampaPendientesAprobacionPorId(idRampa)
+
 
     @GetMapping("/administrador/denunciasPendientesAprobacion")
     @Operation(summary ="Devuelve todas las denuncias que se encuentran pendientes de aprobacion<")
@@ -35,7 +40,7 @@ class AdministradorController {
     @Operation(summary ="El admin aprueba una denuncia pendiente")
     fun aprobarUnaDenuncia(@PathVariable idDenuncia: Long): Denuncia = administradorService.aprobarDenuncia(idDenuncia)
 
-    @GetMapping("/administrador/rechazarDenuncia/{idDenuncia}")
+        @GetMapping("/administrador/rechazarDenuncia/{idDenuncia}")
     @Operation(summary ="El admin rechaza una denuncia pendiente")
     fun rechazarUnaDenuncia(@PathVariable idDenuncia: Long): Denuncia = administradorService.rechazarDenuncia(idDenuncia)
 
