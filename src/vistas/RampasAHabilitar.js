@@ -3,9 +3,11 @@ import React from 'react'
 import { useState, useEffect } from "react"
 import { adminService } from '../services/AdminService';
 import { obtenerMensaje } from "../services/obtenerMensaje";
+import { PropTypes } from 'prop-types'
+import { withRouter } from 'react-router-dom'
 
 
-export function RampasAHabilitar(){
+export const RampasAHabilitar= ({history}) =>{
 
     const [rampasAHabilitar, setRampasAHabilitar] = useState([])
     const [errorMessage, SetErrorMessage ] = useState("")
@@ -21,7 +23,6 @@ export function RampasAHabilitar(){
     }
  
      useEffect(() => {
-
         rampaAHabilitar()
      }, [])
 
@@ -46,3 +47,11 @@ export function RampasAHabilitar(){
         </div>
     )
 }
+
+RampasAHabilitar.propTypes = {
+
+    history: PropTypes.object,
+  
+  }
+
+export default withRouter(RampasAHabilitar)

@@ -24,6 +24,30 @@ class AdminService {
         const denunciaJson = await axios.get(`${REST_SERVER_URL}/administrador/denunciasPendientesAprobacion`)
         return denunciaJson.data.map((denuncia) => Denuncia.FromJson(denuncia))  
       }
+
+     async traerRampa(id){
+      const rampa = await axios.get(`${REST_SERVER_URL}/administrador/rampasPendientesAprobacion/${id}`)
+      return RampaPendienteAprobacion.FromJson(rampa.data)
+    }
+
+    async rechazarRampa(id){
+      await axios.get(`${REST_SERVER_URL}/administrador/rechazarDenuncia/${id}`)
+     }
+
+     async aprobarRampa(id){
+      await axios.get(`${REST_SERVER_URL}/administrador/habilitarRampa/${id}`)
+     }
+
+
+    async rechazarDenuncia(id){
+     await axios.get(`${REST_SERVER_URL}/administrador/rechazarDenuncia/${id}`)
+    }
+
+    
+    async aprobarDenuncia(id){
+      await axios.get(`${REST_SERVER_URL}/administrador/aprobarDenuncia/${id}`)
+     }
+
 }
 
 export const adminService = new AdminService()
