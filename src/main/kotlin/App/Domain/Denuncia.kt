@@ -19,6 +19,8 @@ class Denuncia {
 
     var dominio: String= ""
 
+    var motivoDenuncia: String= ""
+
     @OneToOne(fetch= FetchType.EAGER)
     @OrderColumn
     var realizadaPor: Usuario = Usuario()

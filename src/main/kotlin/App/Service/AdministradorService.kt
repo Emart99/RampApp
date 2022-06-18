@@ -54,6 +54,13 @@ class AdministradorService {
         repositorioRampaPendienteAprobacion.deleteById(rampaAHabilitar.id)
     }
 
+    fun rechazarRampa(idRampa: Long){
+        val rampaAHabilitar= repositorioRampaPendienteAprobacion.findById(idRampa).orElseThrow {
+            ResponseStatusException(HttpStatus.NOT_FOUND, "no existe el administrador son incorrectas")}
+        repositorioRampaPendienteAprobacion.deleteById(rampaAHabilitar.id)
+
+    }
+
     fun traerRampasPendientesAprobacion(): MutableIterable<RampaPendienteAprobacion> {
         return this.repositorioRampaPendienteAprobacion.findAll()
     }
@@ -96,4 +103,11 @@ class AdministradorService {
             ResponseStatusException(HttpStatus.NOT_FOUND, "no Existe la rampa Pendiente")
         }
     }
+
+    fun traerUnaDenuncia(idDenuncia: Long): Denuncia {
+        return this.repositorioDenuncias.findById(idDenuncia).orElseThrow{
+            ResponseStatusException(HttpStatus.NOT_FOUND, "no Existe la denuncia con ese id")
+        }
+    }
+
 }
