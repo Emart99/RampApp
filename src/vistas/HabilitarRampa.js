@@ -4,7 +4,8 @@ import { obtenerMensaje } from "../services/obtenerMensaje";
 import { useParams } from 'react-router-dom';
 import { PropTypes } from 'prop-types'
 import { withRouter } from 'react-router-dom'
-
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
 
 export const  HabilitarRampa = ({history}) =>{
     
@@ -12,6 +13,13 @@ export const  HabilitarRampa = ({history}) =>{
     const [errorMessage, SetErrorMessage ] = useState("")
     const {id} = useParams()
 
+    const [show, setShow] = useState(false);
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
+    const [rechazo, setRechazo] = useState(false);
+    const rechazoClose = () => setRechazo(false);
+    const rechazoShow = () => setRechazo(true);
 
     const rampaAHabilitar = async () => {
         try{
@@ -25,7 +33,7 @@ export const  HabilitarRampa = ({history}) =>{
     const rechazarRampa = async() =>{
         try{  
           await adminService.rechazarRampa(id)
-          pushToRampasAVerificar()}
+          rechazoShow()}
           catch (error) {
               const message = obtenerMensaje(error)
               SetErrorMessage(message)
@@ -35,12 +43,18 @@ export const  HabilitarRampa = ({history}) =>{
       const aprobarRampa = async() =>{
         try{  
           await adminService.aprobarRampa(id)
-          pushToRampasAVerificar()}
+          handleShow()}
           catch (error) {
               const message = obtenerMensaje(error)
               SetErrorMessage(message)
           }
       }
+
+      const volverAAprobarRampa = () => {
+        pushToRampasAVerificar()
+        handleClose()
+        rechazoClose()
+      };
 
       const pushToRampasAVerificar = () => history.push('/rampasAHabilitar')
 
@@ -68,6 +82,29 @@ export const  HabilitarRampa = ({history}) =>{
                         <button className='btn btn-primary' onClick={() => aprobarRampa()}>Aceptar</button>
                     </div>
                 </div>
+                <Modal show={show} onHide={handleClose} animation={false}>
+                    <Modal.Header closeButton>
+                    <Modal.Title>Rampa Aprobada</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>La rampa fue aprobada exitosamente!</Modal.Body>
+                    <Modal.Footer>
+                    <Button variant="primary" onClick={volverAAprobarRampa}>
+                        Close
+                    </Button>
+                    </Modal.Footer>
+              </Modal>
+
+              <Modal show={rechazo} onHide={rechazoClose} animation={false}>
+                    <Modal.Header closeButton>
+                    <Modal.Title>Rampa Rechazada</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>La rampa fue rechazada y se notifico al usuario {rampa.nombrePropietario}</Modal.Body>
+                    <Modal.Footer>
+                    <Button variant="primary" onClick={volverAAprobarRampa}>
+                        Close
+                    </Button>
+                    </Modal.Footer>
+              </Modal>
             </div>
         </div>
     )

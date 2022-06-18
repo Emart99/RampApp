@@ -31,13 +31,18 @@ class AdminService {
     }
 
     async rechazarRampa(id){
-      await axios.get(`${REST_SERVER_URL}/administrador/rechazarDenuncia/${id}`)
+      await axios.get(`${REST_SERVER_URL}/administrador/rechazarRampa/${id}`)
      }
 
      async aprobarRampa(id){
       await axios.get(`${REST_SERVER_URL}/administrador/habilitarRampa/${id}`)
      }
 
+
+     async traerDenuncia(id){
+      const denuncia = await axios.get(`${REST_SERVER_URL}/administrador/traerDenuncia/${id}`)
+      return Denuncia.FromJson(denuncia.data)
+    }
 
     async rechazarDenuncia(id){
      await axios.get(`${REST_SERVER_URL}/administrador/rechazarDenuncia/${id}`)
