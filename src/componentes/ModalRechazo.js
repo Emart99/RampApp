@@ -1,4 +1,9 @@
+import { useHistory } from "react-router-dom"
+
 export function ModalRechazo(){
+
+    const history = useHistory()
+    const pushToDenunciaAVerificar = () => history.push('/denunciasAVerificar')
     return(
         <div class="modal fade" id="modalRechazo" tabindex="-1" role="dialog" aria-labelledby="modalRechazoLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
@@ -14,7 +19,7 @@ export function ModalRechazo(){
                         </form>
                         </div>
                         <div class="modal-footer d-flex justify-content-around">
-                            <button type="button" class="btn btn-primary">Enviar</button>
+                            <button type="button" class="btn btn-primary" onClick={() => pushToDenunciaAVerificar()}>Enviar</button>
                         </div>
                     </div>
                 </div>

@@ -9,6 +9,7 @@ export class Denuncia{
        this.dominio = dominio
        this.imagen = imagen
        this.motivoDenuncia = motivoDenuncia
+      
     }
 
     static FromJson(denunciaJson){

@@ -3,6 +3,7 @@ import axios from 'axios'
 import { Administrador } from '../Dominio/Administrador'
 import { Denuncia } from '../Dominio/Denuncia'
 import { RampaPendienteAprobacion } from '../Dominio/RampasPendienteDeAprobacion'
+import { Reserva } from '../Dominio/Reserva'
 import { REST_SERVER_URL } from './constants'
 
 
@@ -51,6 +52,11 @@ class AdminService {
     
     async aprobarDenuncia(id){
       await axios.get(`${REST_SERVER_URL}/administrador/aprobarDenuncia/${id}`)
+     }
+
+     async traerReservasPorFecha(fecha){
+      const reservaJson = await axios.get(`${REST_SERVER_URL}/administrador/obtenerBalance/${fecha}`)
+      return reservaJson.data.map((reserva) => Reserva.FromJson(reserva))  
      }
 
 }

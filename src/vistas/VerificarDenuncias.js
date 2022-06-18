@@ -34,7 +34,7 @@ export const VerificarDenuncias= ({history}) => {
           }
       }
 
-      const aprobarRampa = async() =>{
+      const aprobarDenuncia = async() =>{
         try{  
           await adminService.aprobarDenuncia(id)
           }
@@ -44,9 +44,7 @@ export const VerificarDenuncias= ({history}) => {
           }
       }
 
-      
-      const pushToDenunciaAVerificar = () => history.push('/denunciasAVerificar')
-
+    
     
     useEffect(() => {
         denunciaAJuzgar();
@@ -66,8 +64,8 @@ export const VerificarDenuncias= ({history}) => {
                     <div>Dominio: {denuncia.dominio}</div>
                     <div>Motivo: {denuncia.motivoDenuncia}</div>
                     <div className="d-flex justify-content-around">
-                        <button className='btn btn-danger' data-toggle="modal" data-target="#modalRechazo">Rechazar</button>
-                        <button className='btn btn-primary' data-toggle="modal" data-target="#modalCompensacion">Aceptar</button>
+                        <button className='btn btn-danger' data-toggle="modal" data-target="#modalRechazo"onClick={() => rechazarDenuncia()}>Rechazar</button>
+                        <button className='btn btn-primary' data-toggle="modal" data-target="#modalCompensacion"onClick={() => aprobarDenuncia()}>Aceptar</button>
                     </div>
                 </div>
             </div>
