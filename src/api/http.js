@@ -151,3 +151,7 @@ export async function denunciarInfractor(tipo, imagen, dominio, direccion){
     const response = await axios.put(ENV_DEV_URL + "/realizarDenuncia/"+ await getUsuarioId(),denuncia)
     return response.data
 }
+export async function rampaById(id){
+    const response = await axios.get(ENV_DEV_URL + "/rampaDisponible/"+id)
+    return response.data
+}

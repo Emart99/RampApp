@@ -15,21 +15,21 @@ const Mapa = () => {
     const theme = useTheme()
     const [rampas,setRampas] = useState([])
     const [rampaId,setRampaId] = useState(0)
+    const [isOpen,setIsOpen] = useState(false)
     const actionSheetRef = useRef(null);
     useFocusEffect(useCallback(()=>{
         const fetchRampas = async () =>{
             const ramp = await traerRampas()
             setRampas(ramp)
         }
-        
         const interval = setInterval(() => {
-            fetchRampas()
+            if(!isOpen){
+                fetchRampas()
+            }
           }, 5000);
           return () => clearInterval(interval);
-        
-        console.log(rampas)
     }
-    ,[]))
+    ,[isOpen]))
     return (
         <>
             <View >
@@ -54,7 +54,7 @@ const Mapa = () => {
                    {rampas.map((rampa)=>{
                     return(
                      <Marker key={rampa.id}  onPress={() => {
-                        SheetManager.show('rampas_bottom_sheet')
+                        SheetManager.show('rampas_bottom_sheet',{value:rampa.id})
                         setRampaId(rampa.id)
                     
                     }} coordinate={{
@@ -66,7 +66,7 @@ const Mapa = () => {
                     )
                    })}
                 </MapView>
-                {RampasSheets(rampaId,theme,actionSheetRef)}
+                {RampasSheets(theme,actionSheetRef,setIsOpen)}
             </View>
         </>
     )

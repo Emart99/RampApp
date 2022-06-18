@@ -1,86 +1,183 @@
-import React, { useRef } from 'react';
-import ActionSheet, {SheetManager} from "react-native-actions-sheet";
-import { View, Text, Image, StyleSheet } from 'react-native';
-import { useTheme,Surface } from 'react-native-paper';
-import { TouchableOpacity } from 'react-native';
-import { FlatGrid } from 'react-native-super-grid';
-import GlobalButton from './GlobalButton';
-import styles from '../styles/styles';
-import { ScrollView } from 'react-native';
-
+import React, { useState, useEffect } from "react";
+import ActionSheet from "react-native-actions-sheet";
+import { View, Text, Image, StyleSheet } from "react-native";
+import GlobalButton from "./GlobalButton";
+import styles from "../styles/styles";
+import { Picker } from "@react-native-picker/picker";
+import { rampaById } from "../api/http";
+import _ from "lodash";
+import { useWindowDimensions } from "react-native";
 const imgStyle = StyleSheet.create({
   imgRampa: {
-      margin: 'auto',
-      width: '87%',
-      height: '18.5%',
-      borderRadius: 3,
-      resizeMode: "cover",
-  }
-})
-const RampasSheets = (id,theme,actionSheetRef) =>{
+    margin: "auto",
+    width: "87%",
+    height: "22.5%",
+    borderRadius: 3,
+    resizeMode: "cover",
+  },
+});
 
-    return( 
-   
-
-          <ActionSheet
-            initialOffsetFromBottom={0.4}
-            id='rampas_bottom_sheet'
-            ref={actionSheetRef}
-            statusBarTranslucent
-
-            bounceOnOpen={true}
-            drawUnderStatusBar={true}
-            bounciness={8}
-            gestureEnabled={true}
-            defaultOverlayOpacity={0.3}
-            containerStyle ={{backgroundColor:theme.colors.background}} 
-            indicatorColor={theme.colors.secondary}>
-              
-
-          
-              <View style={{height: '130%',display: "flex", alignItems: "center"}} >
-            <Text style={{ fontWeight: 'bold', fontSize: 25, color: theme.colors.text, margin: 10 }}>
-                AV. JORGE EGGER 223
-            </Text>
-            <Text style={{ fontSize: 20, color: theme.colors.text, marginBottom: 10 }}>
-                Vicente Lopez
-            </Text>
-            <Image
-                style={imgStyle.imgRampa}
-                source={require('../utils/casaBrunillo.png')}
-            />
-            <View style={{ alignSelf: 'flex-start', marginTop: '6%', marginBottom: '2%', marginLeft: '6.5%' }}>
-                <Text style={{ fontSize: 17, color: theme.colors.text }} >Horarios de reserva</Text>
-            </View>
-             <ScrollView nestedScrollEnabled={true}
-              onMomentumScrollEnd={() =>
-                actionSheetRef.current?.handleChildScrollEnd()
-              } contentContainerStyle={{height:'100%'}}>
-                <FlatGrid
-                    style={{ }}
-                    spacing={12}
-                    itemDimension={75}
-                    data={["00:00", "01:00", "02:00", "03:00", "24:00", "23:00", "24:00", "23:00", "24:00", "23:00", "24:00", "23:00", "24:00", "23:00", "24:00", "23:00", "24:00", "23:00", "24:00", "23:00", "24:00", "23:00", "24:00", "23:00"]}
-                    renderItem={({ item }) => (
-                        <TouchableOpacity style={{ elevation: 5, shadowColor: 'black', backgroundColor: theme.colors.headerPerfil, padding: 8, borderRadius: 5 }}>
-                            <Text style={{ fontSize: 19, color: theme.colors.text, textAlign: 'center' }}>{item}</Text>
-                        </TouchableOpacity>
-                    )}
-                />
-                <View style={{display:'flex',flexDirection:'row',justifyContent:'space-evenly'}}>
-                <Text style={{fontSize:20}} >$4000</Text>
-                {GlobalButton([styles.loginButton, { marginTop:-10,backgroundColor: theme.colors.secondary,width:"33%",height:40 }], { color: theme.colors.secondaryText }, "RESERVAR", {})}
-                </View>
-                </ScrollView>
+function procesoDeListas(objetosMultiples) {
+  let lista = [];
+  objetosMultiples.map((objeto) => {
+    lista.push(_.range(objeto.horarioDesde, objeto.horarioHasta + 1));
+  });
+  return lista;
+}
 
 
-                
-        </View>
+const RampasSheets = (theme, actionSheetRef,setIsOpen) => {
+  const { height, width } = useWindowDimensions();
+  const [horarios,setHorarios] = useState([])
+
+  const [rampa, setRampa] = useState();
+  return (
+    <ActionSheet
+      onClose={()=>{setIsOpen(false)}}
+      onBeforeShow={(data) => {
+        const fetchRampa = async () => {
+          const ramp = await rampaById(data.value);
+          setRampa(ramp);
+        };
+        setIsOpen(true);
+        fetchRampa();
+      }}
+      initialOffsetFromBottom={0.35}
+      id="rampas_bottom_sheet"
+      ref={actionSheetRef}
+      statusBarTranslucent
+      bounceOnOpen={true}
+      drawUnderStatusBar={true}
+      bounciness={8}
+      gestureEnabled={true}
+      defaultOverlayOpacity={0.3}
+      containerStyle={{ backgroundColor: theme.colors.background }}
+      indicatorColor={theme.colors.secondary}
+    >
+      <View style={{ height: "100%", display: "flex", alignItems: "center" }}>
+        <Text
+          style={{
+            fontWeight: "bold",
+            fontSize: 25,
+            color: theme.colors.text,
+            margin: 10,
+          }}
+        >
+          {rampa && rampa.calle + " " + rampa.altura}
+        </Text>
+        <Image
+          style={imgStyle.imgRampa}
+          source={{ uri: rampa && rampa.imagenRampa }}
+        />
+        
+          <Text style={{ fontSize: 20, color: theme.colors.text, alignSelf: "flex-start",
+            marginTop: "6%",
+            marginBottom: "10%",
+            marginLeft: "6.5%", }}>
+            Horarios de reserva
+          </Text>
 
         
-          </ActionSheet>
-    
-    );
-  };
+          <View style={{height:"44%"}}>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent:'space-evenly',
+              width:'100%'
+            }}
+          >
+            <Text style={{ width: width / 3, fontSize: 18 }}>Hora Desde</Text>
+            <Text style={{ width: width / 3, fontSize: 18 }}>Hora Hasta</Text>
+          </View>
+          <View style={{display:'flex',flexDirection:'row',width:'100%'}}>
+          <View
+            style={{
+              width:'50%',alignItems:'center'
+            }}
+          >
+            {rampa &&
+                procesoDeListas(rampa.horariosDisponibles).map((horas,numeroDeDatePicker) => {
+                  return (<Picker key={Math.random()} 
+                  onValueChange={(itemValue, itemIndex) =>
+                    {setHorarios(horarios => horarios[numeroDeDatePicker]=[itemValue,null])
+                    console.log(numeroDeDatePicker)
+                    console.log(horarios)
+                  }
+                  }
+                
+                   style={{ width: width / 3 }}>
+                    { 
+                    horas.map((hora)=>{
+                      return(
+                        <Picker.Item
+                          key={hora}
+                          label={hora.toString() + ":00"}
+                          value={hora}
+                        />
+                      )
+                        
+                      
+                    })
+                    }
+                  
+                  </Picker>)
+                })}
+            
+            </View>
+            <View style={{
+              width:'50%',alignItems:'center'
+            }}>
+              {rampa &&
+                procesoDeListas(rampa.horariosDisponibles).map((horas,numeroDeDatePicker) => {
+                  return (<Picker key={Math.random()}
+                   style={{ width: width / 3 }}>
+                    {
+                    horas.map((hora)=>{
+                      return(
+                        <Picker.Item
+                          key={hora}
+                          label={hora.toString() + ":00"}
+                          value={hora}
+                        />
+                      )
+                      ;
+                    })
+                    }
+                  
+                  </Picker>)
+                })}
+          
+          </View>
+          </View>
+          </View>
+
+          <View
+            style={{
+              width:'100%',
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-evenly",
+            }}
+          >
+            <Text style={{ fontSize: 20 }}>$4000</Text>
+            {GlobalButton(
+              [
+                styles.loginButton,
+                {
+                  marginTop: -10,
+                  backgroundColor: theme.colors.secondary,
+                  width: "33%",
+                  height: 40,
+                },
+              ],
+              { color: theme.colors.secondaryText },
+              "RESERVAR",
+              {}
+            )}
+          </View>
+        </View>
+    </ActionSheet>
+  );
+};
 
 export default RampasSheets;
