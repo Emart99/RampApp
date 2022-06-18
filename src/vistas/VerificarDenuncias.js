@@ -1,11 +1,13 @@
-import { ModalRechazo } from './../componentes/ModalRechazo';
-import { ModalGenerarCompensacion } from './../componentes/ModalGenerarCompensacion';
+
 import {useEffect, useState} from 'react';
 import { adminService } from '../services/AdminService';
 import { obtenerMensaje } from "../services/obtenerMensaje";
 import { useParams } from 'react-router-dom';
 import { PropTypes } from 'prop-types'
 import { withRouter } from 'react-router-dom'
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import Modal from 'react-bootstrap/Modal';
 
 
 
@@ -13,7 +15,17 @@ export const VerificarDenuncias= ({history}) => {
     
     const [denuncia,setDenuncia] = useState('')
     const [errorMessage, SetErrorMessage ] = useState("")
+    const [show, setShow] = useState(false);
+    const [showV2, setShowV2] = useState(false);
     const {id} = useParams()
+
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
+    const handleCloseV2 = () => setShowV2(false);
+    const handleShowV2 = () => setShowV2(true);
+
 
     const denunciaAJuzgar = async () => {
         try{
@@ -27,6 +39,7 @@ export const VerificarDenuncias= ({history}) => {
     const rechazarDenuncia = async() =>{
         try{  
           await adminService.rechazarDenuncia(id)
+          handleShowV2()
             }
           catch (error) {
               const message = obtenerMensaje(error)
@@ -37,6 +50,7 @@ export const VerificarDenuncias= ({history}) => {
       const aprobarDenuncia = async() =>{
         try{  
           await adminService.aprobarDenuncia(id)
+          handleShow()
           }
           catch (error) {
               const message = obtenerMensaje(error)
@@ -45,6 +59,7 @@ export const VerificarDenuncias= ({history}) => {
       }
 
     
+      const pushToDenunciaAVerificar = () => history.push('/denunciasAVerificar')
     
     useEffect(() => {
         denunciaAJuzgar();
@@ -67,10 +82,60 @@ export const VerificarDenuncias= ({history}) => {
                         <button className='btn btn-danger' data-toggle="modal" data-target="#modalRechazo"onClick={() => rechazarDenuncia()}>Rechazar</button>
                         <button className='btn btn-primary' data-toggle="modal" data-target="#modalCompensacion"onClick={() => aprobarDenuncia()}>Aceptar</button>
                     </div>
+
+                    
+                    <Modal show={show} onHide={handleClose}>
+                        <Modal.Header closeButton>
+                            <Modal.Title>Generar Compensacion</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <Form>
+                            <Form.Group className="mb-3" >
+                                <Form.Label>Ingrese al usurio a compensar</Form.Label>
+                                <Form.Control
+                                type="Usuario"
+                                placeholder=""
+                                autoFocus
+                                />
+                            </Form.Group>
+                            <Form.Group
+                                className="mb-3"
+                            >
+                                <Form.Label>Motivo</Form.Label>
+                                <Form.Control as="textarea" rows={3} />
+                            </Form.Group>
+                            </Form>
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button variant="primary" onClick={() => pushToDenunciaAVerificar()}>
+                            Generar Compensacion
+                            </Button>
+                        </Modal.Footer>
+                    </Modal>
+
+
+                    <Modal show={showV2} onHide={handleCloseV2}>
+                        <Modal.Header closeButton>
+                            <Modal.Title>Rechazar Denuncia</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <Form>
+                            <Form.Group
+                                className="mb-3"
+                            >
+                                <Form.Label>Motivo del Rechazo</Form.Label>
+                                <Form.Control as="textarea" rows={3} />
+                            </Form.Group>
+                            </Form>
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button variant="primary" onClick={() => pushToDenunciaAVerificar()}>
+                            confirmar Rechazo
+                            </Button>
+                        </Modal.Footer>
+                    </Modal>
                 </div>
             </div>
-            {ModalRechazo()}
-            {ModalGenerarCompensacion()}
         </div>
         
     )

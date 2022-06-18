@@ -3,11 +3,16 @@ import { useHistory } from "react-router-dom"
 export function ModalGenerarCompensacion(){
 
     const history = useHistory()
+
+
+
     const pushToDenunciaAVerificar = () => history.push('/denunciasAVerificar')
 
 
     return(
-        <div class="modal fade" id="modalCompensacion" tabindex="-1" role="dialog" aria-labelledby="modalCompensacionLabel" aria-hidden="true">
+
+       
+       <div class="modal fade" id="modalCompensacion" tabindex="-1" role="dialog" aria-labelledby="modalCompensacionLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header justify-content-around">

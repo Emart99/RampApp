@@ -32,8 +32,6 @@ export function Login() {
         SetErrorMessage("")
       }
 
-
-
     return (
       <section className="vh-100 gradient-custom">
       <div className="container py-5 h-100">
@@ -47,7 +45,7 @@ export function Login() {
                       <InputLogin textoTitulo = "Usuario" type = "Usuario" value={userName} onClick= {()=>limpiarError()} onChange= {(nuevoUsuario) => setUserName(nuevoUsuario)} />
                       <InputLogin textoTitulo = "Contreaseña" type = "password" value={password} onClick= {()=>limpiarError()} onChange= {(nuevaContraseña) => setPassword(nuevaContraseña)} />    
                       <button className="btn btn-primary btn-lg mt-4 px-5"
-                        onClick={() => asignarUsuario()} type="submit">
+                        onClick={() => asignarUsuario()} >
                         Ingresar
                       </button>
                       </form>
