@@ -52,10 +52,10 @@ class RampaService {
         if (rampaARegistrar  === null) {
             val locador = usuarioService.buscarUsuaiorId(idUsuario)
             val rampaPendiente= RampaPendienteAprobacion(rampaNueva.posx
-                ,rampaNueva.posy,rampaNueva.calle,rampaNueva.altura, rampaNueva.nroPartidaInmobiliaria, rampaNueva.imagenDni, rampaNueva.imagenRampa,rampaNueva.imagenEscritura,locador)
+                ,rampaNueva.posy,rampaNueva.calle,rampaNueva.altura, rampaNueva.nroPartidaInmobiliaria, rampaNueva.imagenRampa, rampaNueva.imagenDni, rampaNueva.imagenEscritura,locador)
             repositorioRampaPendienteAprobacion.save(rampaPendiente)
             }else {
-               ResponseStatusException(HttpStatus.NOT_FOUND, "El usuario con dni ${rampaNueva.nroPartidaInmobiliaria} ya se encuentra registrado")
+                throw ResponseStatusException(HttpStatus.NOT_FOUND, "La rampa con partida inmobiliaria ${rampaNueva.nroPartidaInmobiliaria} ya se encuentra registrada")
             }
     }
 
