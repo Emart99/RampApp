@@ -17,6 +17,7 @@ export const VerificarDenuncias= ({history}) => {
     const [errorMessage, SetErrorMessage ] = useState("")
     const [show, setShow] = useState(false);
     const [showV2, setShowV2] = useState(false);
+    const [showV3, setShowV3] = useState(false);
     const {id} = useParams()
 
 
@@ -25,6 +26,12 @@ export const VerificarDenuncias= ({history}) => {
 
     const handleCloseV2 = () => setShowV2(false);
     const handleShowV2 = () => setShowV2(true);
+
+    const handleCloseV3 = () => setShowV3(false);
+    const handleShowV3 = () => {
+        handleCloseV2();
+        handleClose();
+        setShowV3(true)};
 
 
     const denunciaAJuzgar = async () => {
@@ -107,9 +114,22 @@ export const VerificarDenuncias= ({history}) => {
                             </Form>
                         </Modal.Body>
                         <Modal.Footer>
-                            <Button variant="primary" onClick={() => pushToDenunciaAVerificar()}>
+                            <Button variant="primary" onClick={() => handleShowV3()}>
                             Generar Compensacion
                             </Button>
+                        </Modal.Footer>
+                    </Modal>
+
+
+                    <Modal show={showV3} onHide={handleCloseV3}>
+                        <Modal.Header closeButton>
+                            <Modal.Title>Operacion Exitosa</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>La operacion fue realizada con exito y se notifico al usuario</Modal.Body>
+                        <Modal.Footer>
+                        <Button variant="primary" onClick= {() => pushToDenunciaAVerificar()}>
+                            Aceptar
+                        </Button>
                         </Modal.Footer>
                     </Modal>
 
@@ -129,7 +149,7 @@ export const VerificarDenuncias= ({history}) => {
                             </Form>
                         </Modal.Body>
                         <Modal.Footer>
-                            <Button variant="primary" onClick={() => pushToDenunciaAVerificar()}>
+                            <Button variant="primary" onClick={() => handleShowV3()}>
                             confirmar Rechazo
                             </Button>
                         </Modal.Footer>

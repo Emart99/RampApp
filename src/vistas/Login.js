@@ -40,9 +40,8 @@ export function Login() {
                   <div className="card  login-card" style={{ borderRadiu: '1rem' }}>
                       <div className="card-body p-5 text-center">
                       <form className="mb-md-4 mt-md-4 ">
-                      <h1 className="fw-bold text-uppercase">RampApp</h1>
-                        <h4 className="fw-bold mb-5 text-uppercase">Admin Login</h4>
-                      <InputLogin textoTitulo = "Usuario" type = "Usuario" value={userName} onClick= {()=>limpiarError()} onChange= {(nuevoUsuario) => setUserName(nuevoUsuario)} />
+                      <h1 className="fw-bold ">RampApp</h1>
+                      <InputLogin textoTitulo = "Usuario" type = "" value={userName} onClick= {()=>limpiarError()} onChange= {(nuevoUsuario) => setUserName(nuevoUsuario)} />
                       <InputLogin textoTitulo = "Contreaseña" type = "password" value={password} onClick= {()=>limpiarError()} onChange= {(nuevaContraseña) => setPassword(nuevaContraseña)} />    
                       <button className="btn btn-primary btn-lg mt-4 px-5"
                         onClick={() => asignarUsuario()} >

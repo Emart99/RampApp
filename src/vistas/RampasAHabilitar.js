@@ -28,7 +28,7 @@ export const RampasAHabilitar= ({history}) =>{
 
 
     return(
-        <div className='container mt-5'>
+        <div className='container mt-5 '>
             <div className='row text-center'>
                 <p className='col'>Fecha</p>
                 <p className='col'>Direccion</p>
