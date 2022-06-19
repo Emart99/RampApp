@@ -38,11 +38,20 @@ class RampaController {
     @Operation(summary ="permite agregar un horario de disponibilidad de la rampa")
     fun agregarHorarioRampa(@PathVariable idRampa: Long, @RequestBody horarioAAgregar: Horarios): Rampa = rampaService.agregarHorariosRampa(idRampa,horarioAAgregar)
 
-    @PutMapping("/eliminarHorarioRampa/{idRampa}")
+    //Para varios horarios
+//    @PutMapping("/agregarHorarioRampa/{idRampa}")
+//    @Operation(summary ="permite agregar un horario de disponibilidad de la rampa")
+//    fun agregarHorarioRampa(@PathVariable idRampa: Long, @RequestBody horariosAAgregar: List<Horarios>): Rampa = rampaService.agregarHorariosRampa(idRampa,horariosAAgregar)
+
+    @DeleteMapping("/eliminarHorarioRampa/{idRampa}")
     @Operation(summary ="permite eliminar un horario de disponibilidad de la rampa")
-    fun quitarHorarioRampa(@PathVariable idRampa: Long, @RequestBody horarioAQuitar: Horarios): Rampa = rampaService.agregarHorariosRampa(idRampa,horarioAQuitar)
+    fun quitarHorarioRampa(@PathVariable idRampa: Long): Rampa = rampaService.quitarHorariosRampa(idRampa)
+
+//    @PutMapping("/reservarRampa/{idRampa}/{idUsuario}")
+//    @Operation(summary ="permite agregar reservar una rampa")
+//    fun reservarRampa(@PathVariable idRampa: Long, @PathVariable idUsuario: Long, @RequestBody reserva: Reserva): Rampa = rampaService.reservarRampa(idRampa,idUsuario,reserva)
 
     @PutMapping("/reservarRampa/{idRampa}/{idUsuario}")
     @Operation(summary ="permite agregar reservar una rampa")
-    fun reservarRampa(@PathVariable idRampa: Long,idUsuario: Long, @RequestBody reserva: Reserva): Rampa = rampaService.reservarRampa(idRampa,idUsuario,reserva)
+    fun reservarRampa(@PathVariable idRampa: Long, @PathVariable idUsuario: Long, @RequestBody reservas: List<Reserva>): Rampa = rampaService.reservarRampa(idRampa,idUsuario,reservas)
 }

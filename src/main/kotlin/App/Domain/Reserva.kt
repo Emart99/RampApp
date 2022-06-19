@@ -23,5 +23,15 @@ class Reserva {
     @Column(length=15)
     var importePagado: Double = 0.00
 
+    @Column
+    var pagado = false
 
+    @Column(length=150)
+    var calle: String = ""
+
+    @Column(length=5)
+    var altura: Int = 0
+
+    @Column
+    var imagenRampa:String = ""
 }

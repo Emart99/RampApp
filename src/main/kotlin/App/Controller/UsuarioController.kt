@@ -52,4 +52,12 @@ class UsuarioController {
     @Operation(summary = "Devuelve las reservas que realizo un usuario")
     fun traerReservasRealizadas(@PathVariable idUsuario: Long): List<Reserva> = usuarioService.traerReservasActivas(idUsuario)
 
+    @GetMapping("/usuario/carrito/{idUsuario}")
+    @Operation(summary = "Devuelve las reservas (no pagas) que realizo un usuario")
+    fun traerCarrito(@PathVariable idUsuario: Long): List<Reserva> = usuarioService.traerReservasNoPagas(idUsuario)
+
+
+    @PostMapping("/usuario/carrito/{idUsuario}/pagar")
+    @Operation(summary ="Pagar reservas del carrito")
+    fun pagarReservasCarrito(@PathVariable idUsuario: Long) = usuarioService.pagarReservasCarrito(idUsuario)
 }

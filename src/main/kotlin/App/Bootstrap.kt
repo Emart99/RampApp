@@ -87,6 +87,8 @@ class Bootstrap : InitializingBean {
         val rampa3 = Rampa().apply{
             calle = "Santa Fe"
             altura = 4234
+            posx= "-34.6175963"
+            posy= "-58.5579883"
             nroPartidaInmobiliaria = 46032
         }
 

@@ -6,7 +6,7 @@ spring:
   datasource:
     url: jdbc:mysql://localhost/rampapp?createDatabaseIfNotExist=true
     username: root
-    password: Rodo2506
+    password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
 

@@ -59,6 +59,7 @@ class RampaService {
             }
     }
 
+    @Transactional
     fun modificarHorariosRampa(idRampa: Long, rampaModificadora:Rampa): Rampa {
         return repositorioRampa
             .findById(idRampa)
@@ -72,39 +73,72 @@ class RampaService {
             }
     }
 
+//    @Transactional
+//    fun reservarRampa(idRampa: Long,idUsuario: Long, reserva: Reserva): Rampa {
+//        repositorioUsuario
+//            .findById(idUsuario)
+//            .map {
+//                it.reservasRealizadas.add(reserva)
+//                repositorioUsuario.save(it)
+//            }
+//            .orElseThrow {
+//                ResponseStatusException(HttpStatus.NOT_FOUND, "El usuario con identificador $idUsuario no existe")
+//            }
+//        return repositorioRampa
+//            .findById(idRampa)
+//            .map {
+//                it.realizarReserva(reserva)
+//                repositorioRampa.save(it)
+//                it
+//            }
+//            .orElseThrow {
+//                ResponseStatusException(HttpStatus.NOT_FOUND, "La Rampa con identificador $idRampa no existe")
+//            }
+//
+//    }
+
     @Transactional
-    fun reservarRampa(idRampa: Long,idUsuario: Long, reserva: Reserva): Rampa {
+    fun reservarRampa(idRampa: Long,idUsuario: Long, reservas: List<Reserva>): Rampa {
+        val rampa = repositorioRampa.findById(idRampa).orElseThrow {ResponseStatusException(HttpStatus.NOT_FOUND, "La Rampa con identificador $idRampa no existe") }
+        reservas.forEach {
+            it.altura = rampa.altura
+            it.calle = rampa.calle
+            it.imagenRampa = rampa.imagenRampa
+        }
         repositorioUsuario
             .findById(idUsuario)
             .map {
-                it.reservasRealizadas.add(reserva)
+                it.reservasRealizadas.addAll(reservas)
                 repositorioUsuario.save(it)
             }
             .orElseThrow {
                 ResponseStatusException(HttpStatus.NOT_FOUND, "El usuario con identificador $idUsuario no existe")
             }
-        return repositorioRampa
-            .findById(idRampa)
-            .map {
-                it.realizarReserva(reserva)
-                repositorioRampa.save(it)
-                it
-            }
-            .orElseThrow {
-                ResponseStatusException(HttpStatus.NOT_FOUND, "La Rampa con identificador $idRampa no existe")
-            }
-
+        return rampa //no se xq
     }
 
+
+    @Transactional
     fun agregarHorariosRampa(idRampa: Long, horarioAAgregar: Horarios): Rampa {
         val rampa = this.traerRampaPorID(idRampa)
         rampa.horariosDisponibles.add(horarioAAgregar)
         return rampa
     }
 
-    fun quitarHorariosRampa(idRampa: Long, horarioAQuitar: Horarios): Rampa {
+    //si ponemos varios horarios para agregar
+//    @Transactional
+//    fun agregarHorariosRampa(idRampa: Long, horariosAAgregar: List<Horarios>): Rampa {
+//        val rampa = this.traerRampaPorID(idRampa)
+//        horariosAAgregar.forEach {
+//            rampa.horariosDisponibles.add(it)
+//        }
+//        return rampa
+//    }
+
+    @Transactional
+    fun quitarHorariosRampa(idRampa: Long): Rampa {
         val rampa = this.traerRampaPorID(idRampa)
-        rampa.horariosDisponibles.remove( horarioAQuitar)
+        rampa.horariosDisponibles.clear()
         return rampa
     }
 

@@ -52,6 +52,10 @@ class Rampa {
        horariosDisponibles.removeIf { horario }
    }
 
+    fun realizarReservas(reservas:List<Reserva>){
+        reservas.forEach { this.realizarReserva(it) }
+    }
+
     fun agregarHorario(horario1: Horarios) {
         horariosDisponibles.add(horario1)
     }

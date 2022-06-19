@@ -96,7 +96,17 @@ class UsuarioService {
     fun traerReservasActivas(idUsuario: Long): List<Reserva> {
         val usuario = this.getUsuario(idUsuario)
         val horaActual = LocalDateTime.now().hour
-        return usuario.reservasRealizadas.filter{reserva -> reserva.horaFinReserva < horaActual }
+        return usuario.reservasRealizadas.filter{reserva -> reserva.horaFinReserva > horaActual && reserva.pagado }
+    }
 
+    fun traerReservasNoPagas(idUsuario: Long): List<Reserva> {
+        val usuario = this.getUsuario(idUsuario)
+        return usuario.reservasRealizadas.filter{reserva -> !reserva.pagado }
+    }
+
+    fun pagarReservasCarrito(idUsuario: Long){
+        val usuario = this.getUsuario(idUsuario)
+        usuario.reservasRealizadas.filter{reserva -> !reserva.pagado }.forEach { reserva -> reserva.pagado = true }
+        repositorioUsuarios.save(usuario)
     }
 }
