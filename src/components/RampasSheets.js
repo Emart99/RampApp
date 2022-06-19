@@ -28,8 +28,8 @@ function procesoDeListas(objetosMultiples) {
 
 const RampasSheets = (theme, actionSheetRef,setIsOpen) => {
   const { height, width } = useWindowDimensions();
-  const [horarios,setHorarios] = useState([])
-
+  const [horariosIzquierda,setHorariosIzquierda] = useState([])
+  const [horariosDerecha,setHorariosDerecha] = useState([])
   const [rampa, setRampa] = useState();
   return (
     <ActionSheet
@@ -79,29 +79,24 @@ const RampasSheets = (theme, actionSheetRef,setIsOpen) => {
 
         
           <View style={{height:"44%"}}>
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent:'space-evenly',
-              width:'100%'
-            }}
-          >
-            <Text style={{ width: width / 3, fontSize: 18 }}>Hora Desde</Text>
-            <Text style={{ width: width / 3, fontSize: 18 }}>Hora Hasta</Text>
-          </View>
+
           <View style={{display:'flex',flexDirection:'row',width:'100%'}}>
           <View
             style={{
               width:'50%',alignItems:'center'
             }}
           >
+             <Text style={{ marginLeft:'10%', width: width / 3, fontSize: 18,color:theme.colors.text}}>Hora Desde</Text>
             {rampa &&
                 procesoDeListas(rampa.horariosDisponibles).map((horas,numeroDeDatePicker) => {
-                  return (<Picker key={Math.random()} 
+                  return (<Picker 
+                    selectedValue = {horariosIzquierda[numeroDeDatePicker]}
+                    key={Math.random()} 
                   onValueChange={(itemValue, itemIndex) =>
-                    {setHorarios(horarios => horarios[numeroDeDatePicker]=[itemValue,null])
-                    console.log(numeroDeDatePicker)
-                    console.log(horarios)
+                    {
+                      let lista = [...horariosIzquierda]
+                      lista[numeroDeDatePicker] = itemValue
+                      setHorariosIzquierda(lista)
                   }
                   }
                 
@@ -110,6 +105,7 @@ const RampasSheets = (theme, actionSheetRef,setIsOpen) => {
                     horas.map((hora)=>{
                       return(
                         <Picker.Item
+                        style={{color:theme.colors.text}}
                           key={hora}
                           label={hora.toString() + ":00"}
                           value={hora}
@@ -127,14 +123,24 @@ const RampasSheets = (theme, actionSheetRef,setIsOpen) => {
             <View style={{
               width:'50%',alignItems:'center'
             }}>
+              <Text style={{marginLeft:'10%', width: width / 3, fontSize: 18,color:theme.colors.text}}>Hora Hasta</Text>
               {rampa &&
                 procesoDeListas(rampa.horariosDisponibles).map((horas,numeroDeDatePicker) => {
-                  return (<Picker key={Math.random()}
-                   style={{ width: width / 3 }}>
+                  return (<Picker 
+                    selectedValue = {horariosDerecha[numeroDeDatePicker]}
+                    key={Math.random()} 
+                  onValueChange={(itemValue, itemIndex) =>
+                    {
+                      let lista = [...horariosDerecha]
+                      lista[numeroDeDatePicker] = itemValue
+                      setHorariosDerecha(lista)
+                  }
+                  }style={{ width: width / 3 }}>
                     {
                     horas.map((hora)=>{
                       return(
                         <Picker.Item
+                        style={{color:theme.colors.text}}
                           key={hora}
                           label={hora.toString() + ":00"}
                           value={hora}
