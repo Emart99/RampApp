@@ -46,14 +46,6 @@ const AdministrarRampa = () => {
 
   return (
     <>
-      <Text
-        style={[
-          { color: theme.colors.text, paddingTop: insets.top },
-          cardStyles.titulo,
-        ]}
-      >
-        Rampas
-      </Text>
       <ScrollView style={cardStyles.scrolleableContainer}>
         {rampas.map((rampa) =>
           CardRampa(

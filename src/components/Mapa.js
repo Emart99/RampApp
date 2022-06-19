@@ -1,4 +1,4 @@
-import React ,{ useState,useRef,useCallback }from 'react';
+import React ,{ useState,useRef,useCallback,useEffect }from 'react';
 import MapView, { Marker } from 'react-native-maps';
 import { Image, View } from 'react-native';
 import { useTheme } from 'react-native-paper';
@@ -22,14 +22,24 @@ const Mapa = () => {
             const ramp = await traerRampas()
             setRampas(ramp)
         }
+        
         const interval = setInterval(() => {
             if(!isOpen){
                 fetchRampas()
             }
-          }, 5000);
+          }, 6000);
+ // se hace cada vez que se abre el tab, si quisieras que se haga solo en la primera vez, habria que usar un flag
           return () => clearInterval(interval);
     }
     ,[isOpen]))
+    useEffect(()=>{
+        const fetchRampas = async () =>{
+            const ramp = await traerRampas()
+            setRampas(ramp)
+        }
+        fetchRampas()
+    },[])
+
     return (
         <>
             <View >
@@ -61,7 +71,7 @@ const Mapa = () => {
                         latitude: parseFloat(rampa.posx),
                         longitude: parseFloat(rampa.posy)
                     }} >
-                        <Image source={require("../assets/garage.png")} />
+                        <Image source={theme.mapIcon} />
                     </Marker>
                     )
                    })}

@@ -30,10 +30,10 @@ const MiPerfil = ({navigation}) =>{
         navigation.navigate("Login")
     }
     const administrarVehiculoNavigation= () =>{
-        navigation.navigate("AdministrarVehiculo")
+        navigation.navigate("Vehiculos")
     }
     const administrarRampaNavigation= () =>{
-        navigation.navigate("AdministrarRampa")
+        navigation.navigate("Rampas")
     }
 
     return(

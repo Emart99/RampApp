@@ -31,6 +31,7 @@ export const LightTheme = {
     borderTextInput: "#CCD0D5",
     mapTheme: "light",
   },
+  mapIcon:require("../assets/icons/LIGHTMODEICON.png"),
   mapStyles: lightMapStyles,
 };
 
@@ -53,6 +54,7 @@ export const _DarkTheme = {
     borderTextInput: "#777",
     mapTheme: "light",
   },
+  mapIcon:require("../assets/icons/DARKMODEICON.png"),
   mapStyles: darkMapStyles,
 };
 

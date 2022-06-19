@@ -49,7 +49,7 @@ import {
   Poppins_900Black,
   Poppins_900Black_Italic,
 } from '@expo-google-fonts/poppins';
-import AppLoading from 'expo-app-loading';
+
 
 LogBox.ignoreLogs([""]) // codigo hermoso, remplazar en un futuro
 
@@ -145,8 +145,10 @@ export default function App() {
             <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
             <Stack.Screen name="Registrarse" component={Registrarse} options={{ headerShown: false }} />
             <Stack.Screen name="Perfil" component={MiPerfil} options={{ headerShown: false }} />
-            <Stack.Screen name="AdministrarRampa" component={AdministrarRampa} options={{ headerShown: false }} />
-            <Stack.Screen name="AdministrarVehiculo" component={AdministrarVehiculo} options={{ headerShown: false }} />
+            <Stack.Screen name="Rampas" component={AdministrarRampa} options={{ headerShadowVisible:false,
+            headerStyle:{backgroundColor:theme.colors.background},headerTitleStyle:{fontFamily:'Poppins_400Regular',fontSize:34}}} />
+            <Stack.Screen name="Vehiculos" component={AdministrarVehiculo} options={{ headerShadowVisible:false,
+            headerStyle:{backgroundColor:theme.colors.background},headerTitleStyle:{fontFamily:'Poppins_400Regular',fontSize:34}}} />
             <Stack.Screen name="MainScreen" component={MainScreen} initialParams={{ id: 32 }} options={{ headerShown: false }} />
           </Stack.Navigator>
         </NavigationContainer>

@@ -38,7 +38,6 @@ const AdministrarVehiculo = () => {
 
   return (
     <>
-      <Text style={[{ color: theme.colors.text, paddingTop: insets.top }, cardStyles.titulo]}>Vehiculo</Text>
       <ScrollView style={cardStyles.scrolleableContainer}>
         {vehiculos.map(vehiculo => { return(
           <View key={vehiculo.id} style={[{ backgroundColor: theme.colors.headerPerfil }, vehiculoStyles.card, vehiculoStyles.elevation]}>
