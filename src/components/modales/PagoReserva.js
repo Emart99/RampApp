@@ -9,6 +9,7 @@ import styles from "../../styles/styles";
 import modalStyles from "../../styles/modalStyles";
 import AwesomeAlert from "react-native-awesome-alerts";
 import { pagoValidationSchema } from "../../utils/pagoSchema";
+import { pagarCarrito } from "../../api/http";
 
 const PagoReserva = (visible, setVisible) => {
   const theme = useTheme();
@@ -19,6 +20,7 @@ const PagoReserva = (visible, setVisible) => {
     React.useState(false);
 
   const abonarHandler = (values) => {
+    pagarCarrito();
     setShowAlertDatosCorrectos(true);
     hideModal();
   };
@@ -83,6 +85,7 @@ const PagoReserva = (visible, setVisible) => {
             handleSubmit,
             values,
             errors,
+            touched,
             isValid,
           }) => (
             <>
@@ -98,7 +101,7 @@ const PagoReserva = (visible, setVisible) => {
                   false,
                   "number-pad"
                 )}
-                {errors.numero && (
+                {errors.numero && touched.numero && (
                   <Text style={styles.inputInvalidText}>{errors.numero}</Text>
                 )}
                 {GlobalInput(
@@ -111,7 +114,7 @@ const PagoReserva = (visible, setVisible) => {
                   false,
                   "default"
                 )}
-                {errors.nombre && (
+                {errors.nombre &&  touched.nombre && (
                   <Text style={styles.inputInvalidText}>{errors.nombre}</Text>
                 )}
                 <Text style={{ color: theme.colors.text, fontSize: 16, marginTop:10 }}>
@@ -139,7 +142,7 @@ const PagoReserva = (visible, setVisible) => {
                     "number-pad"
                   )}
                 </View>
-                {errors.mes && (
+                {errors.mes &&  touched.mes && (
                     <Text style={styles.inputInvalidText}>{errors.mes}</Text>
                   )}
                 {GlobalInput(
@@ -152,7 +155,7 @@ const PagoReserva = (visible, setVisible) => {
                   false,
                   "number-pad"
                 )}
-                {errors.cvv && (
+                {errors.cvv &&  touched.cvv && (
                   <Text style={styles.inputInvalidText}>{errors.cvv}</Text>
                 )}
 
@@ -166,7 +169,7 @@ const PagoReserva = (visible, setVisible) => {
                   false,
                   "number-pad"
                 )}
-                {errors.dni && (
+                {errors.dni &&  touched.dni && (
                   <Text style={styles.inputInvalidText}>{errors.dni}</Text>
                 )}
               </View>

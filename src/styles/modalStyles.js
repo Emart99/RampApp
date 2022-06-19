@@ -57,8 +57,6 @@ const modalStyles = StyleSheet.create({
     justifyContent: "space-between",
   },
   headerContainer: {
-    paddingTop:12,
-    flex: 1,
     flexDirection: "row",
     justifyContent: "space-evenly",
   },
@@ -67,30 +65,26 @@ const modalStyles = StyleSheet.create({
     fontWeight: "bold",
   },
   gralContainer: {
-    flex: 3,
+    flex: 1,
     justifyContent: "center",
     alignContent: "center",
   },
   switchContainer: {
-    flex: 1,
     flexDirection: "row",
     alignSelf: "center",
-    marginBottom:20
+    marginVertical:'3%'
   },
   switch: {
     marginLeft: 10,
-    marginBottom: -4
+    marginTop: -10,
   },
   textHorarios: {
     fontSize: 18,
     alignSelf: "center",
-    marginBottom: 20,
   },
   horariosContainer: {
-    flex: 2,
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-evenly",
   },
 });
 export default modalStyles;

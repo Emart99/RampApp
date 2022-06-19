@@ -3,8 +3,7 @@ import {
   Card,
   Paragraph,
   Avatar,
-  IconButton,
-  Snackbar
+  IconButton
 } from 'react-native-paper';
 import {View} from 'react-native';
 import * as ImagePicker from "expo-image-picker";
@@ -72,6 +71,7 @@ const CardReserva = (reserva, theme, showAlertDenuncia, setShowAlertDenuncia, vi
       <Card.Cover
         style={newCardStyles.img}
         source={require('../../utils/casaBrunillo.png')}
+        // source={{ uri: reserva && reserva.imagenRampa }}
       />
       <Card.Content style={newCardStyles.container}>
         <View style={newCardStyles.innerContainer}>
@@ -81,9 +81,9 @@ const CardReserva = (reserva, theme, showAlertDenuncia, setShowAlertDenuncia, vi
             color={theme.colors.text}
             style={{marginLeft: 5, marginRight: 5}}
           />
-          <Paragraph style={newCardStyles.font}>Desde: {reserva.horaInicioReserva}</Paragraph>
+          <Paragraph style={newCardStyles.font}>Desde: {reserva.horaInicioReserva}:00</Paragraph>
           <Paragraph style={[newCardStyles.font, {marginLeft: 15}]}>
-            Hasta: {reserva.horaFinReserva}
+            Hasta: {reserva.horaFinReserva}:00
           </Paragraph>
         </View>
       </Card.Content>

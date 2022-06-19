@@ -33,6 +33,7 @@ const CardCarrito = (reserva, theme) => {
       <Card.Cover
         style={newCardStyles.img}
         source={require('../../utils/casaBrunillo.png')}
+        // source={{ uri: reserva && reserva.imagenRampa }}
       />
       <Card.Content style={newCardStyles.container}>
         <View style={newCardStyles.innerContainer}>
@@ -42,15 +43,15 @@ const CardCarrito = (reserva, theme) => {
             color={theme.colors.text}
             style={{marginLeft: 5, marginRight: 5}}
           />
-          <Paragraph style={newCardStyles.font}>Desde: {reserva.desde}</Paragraph>
+          <Paragraph style={newCardStyles.font}>Desde: {reserva.horaInicioReserva}:00</Paragraph>
           <Paragraph style={[newCardStyles.font, {marginLeft: 10}]}>
-            Hasta: {reserva.hasta}
+            Hasta: {reserva.horaFinReserva}:00
           </Paragraph>
         </View>
         <View style={newCardStyles.innerContainer}>
           <Avatar.Icon size={50} icon="cash" color={theme.colors.text} />
           <Paragraph style={newCardStyles.font}>
-            Precio: ${reserva.precio}
+            Precio: ${reserva.importePagado}
           </Paragraph>
         </View>
       </Card.Content>

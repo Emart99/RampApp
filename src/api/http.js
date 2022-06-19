@@ -1,7 +1,7 @@
 import axios from "axios";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 //axios.defaults.baseURL = "http://localhost:9000";
-const IP_DEV = "192.168.56.1"
+const IP_DEV = "192.168.1.2"
 const ENV_DEV_URL = 'http://' + IP_DEV + ':9000'
 const ENV_IMGUR_CLIENT_ID = "bd34bd7d458c396"
 
@@ -121,25 +121,6 @@ export async function traerReservasDelUsuario(){
     return response.data;
 }
 
-export async function modificarRampa(rampa,horaDesde,horaHasta,isSwitchOn){
-    // const rampaJSON = {
-    //     id:rampa.id,
-    //     posx:rampa.posx,
-    //     posy:rampa.posy,
-    //     calle:rampa.calle,
-    //     altura:rampa.altura,
-    //     imagenRampa:rampa.imagenRampa,
-    //     imagenDni:rampa.imagenDni,
-    //     imagenEscritura:rampa.imagenEscritura,
-    //     nroPartidaInmobiliaria:rampa.nroPartidaInmobiliaria,
-    //     estadoRampa:isSwitchOn? "Disponible":"Ocupada",
-    //     horariosDisponibles:[{horarioDesde: newDate.setHours(1),horarioHasta: newDate.setHours(2)}],
-    //     reservasRealizadas:rampa.reservasRealizadas
-    // }
-    // const response = await axios.put(ENV_DEV_URL+"/modificarHorarioRampa/"+rampa.id, rampaJSON)
-    // return response.data
-}
-
 export async function denunciarInfractor(tipo, imagen, dominio, direccion){
     const denuncia = {
         tipoDenuncia: tipo,
@@ -151,7 +132,33 @@ export async function denunciarInfractor(tipo, imagen, dominio, direccion){
     const response = await axios.put(ENV_DEV_URL + "/realizarDenuncia/"+ await getUsuarioId(),denuncia)
     return response.data
 }
+
 export async function rampaById(id){
     const response = await axios.get(ENV_DEV_URL + "/rampaDisponible/"+id)
+    return response.data
+}
+
+export async function reservarRampa(reservas, idRampa){
+    const response = await axios.put(ENV_DEV_URL + `/reservarRampa/${idRampa}/`+ await getUsuarioId(),reservas)
+    return response.data
+}
+
+export async function traeCarrito(){
+    const response = await axios.get(ENV_DEV_URL + "/usuario/carrito/"+ await getUsuarioId())
+    return response.data
+}
+
+export async function pagarCarrito(){
+    const response = await axios.post(ENV_DEV_URL + "/usuario/carrito/"+ await getUsuarioId()+"/pagar")
+    return response.data
+}
+
+export async function deshabilitarRampa(idRampa){
+    const response = await axios.post(ENV_DEV_URL + "/eliminarHorarioRampa/"+idRampa)
+    return response.data
+}
+
+export async function habilitarRampa(idRampa){
+    const response = await axios.post(ENV_DEV_URL + "/agregarHorarioRampa/"+idRampa,{})
     return response.data
 }

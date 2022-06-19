@@ -1,17 +1,28 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import { ScrollView, TouchableOpacity} from 'react-native';
 import {useTheme,Text} from 'react-native-paper';
+import { useFocusEffect } from '@react-navigation/native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import cardStyles from '../styles/cardStyles';
 import reservaStyles from './../styles/reservaStyles';
 import CardCarrito from '../components/cards/CardCarrito';
 import PagoReserva from '../components/modales/PagoReserva';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { traeCarrito } from '../api/http';
 
 const Carrito = () => {
   const theme = useTheme();
   const insets = useSafeAreaInsets();
-  const [visible, setVisible] = React.useState(false);
+  const [visible, setVisible] = useState(false);
+  const [carrito,setCarrito] = useState([]);
+
+  useFocusEffect(useCallback(()=>{
+    const fetchCarrito = async () =>{
+      const reser = await traeCarrito()
+      setCarrito(reser)
+    }
+    fetchCarrito()
+  },[visible]))
 
   const showModal = () => setVisible(true);
   
@@ -21,7 +32,7 @@ const Carrito = () => {
         Carrito
       </Text>
       <ScrollView style={cardStyles.scrolleableContainer}>
-        {reservas.map(reserva => CardCarrito(reserva, theme))}
+        {carrito.map(reserva => CardCarrito(reserva, theme))}
       </ScrollView>
       <TouchableOpacity
         style={[

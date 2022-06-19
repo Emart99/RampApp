@@ -1,12 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import ActionSheet from "react-native-actions-sheet";
 import { View, Text, Image, StyleSheet } from "react-native";
-import GlobalButton from "./GlobalButton";
-import styles from "../styles/styles";
 import { Picker } from "@react-native-picker/picker";
-import { rampaById } from "../api/http";
 import _ from "lodash";
 import { useWindowDimensions } from "react-native";
+
+import GlobalButton from "./GlobalButton";
+import styles from "../styles/styles";
+import { rampaById, reservarRampa } from "../api/http";
+
 const imgStyle = StyleSheet.create({
   imgRampa: {
     margin: "auto",
@@ -17,6 +19,8 @@ const imgStyle = StyleSheet.create({
   },
 });
 
+const IMPORTE_BASE = 200;
+
 function procesoDeListas(objetosMultiples) {
   let lista = [];
   objetosMultiples.map((objeto) => {
@@ -25,15 +29,31 @@ function procesoDeListas(objetosMultiples) {
   return lista;
 }
 
-
-const RampasSheets = (theme, actionSheetRef,setIsOpen) => {
+const RampasSheets = (theme, actionSheetRef, setIsOpen) => {
   const { height, width } = useWindowDimensions();
-  const [horariosIzquierda,setHorariosIzquierda] = useState([])
-  const [horariosDerecha,setHorariosDerecha] = useState([])
+  const [horariosIzquierda, setHorariosIzquierda] = useState([]);
+  const [horariosDerecha, setHorariosDerecha] = useState([]);
   const [rampa, setRampa] = useState();
+
+  const reservar = async () => {
+    let reservas = [];
+    for (let i = 0; i < horariosIzquierda.length; i++) {
+      const reserva = {
+        horaInicioReserva: horariosIzquierda[i],
+        horaFinReserva: horariosDerecha[i],
+        importePagado:
+          IMPORTE_BASE * (horariosDerecha[i] - horariosIzquierda[i]),
+      };
+      reservas.push(reserva);
+    }
+    reservarRampa(reservas, rampa.id);
+  };
+
   return (
     <ActionSheet
-      onClose={()=>{setIsOpen(false)}}
+      onClose={() => {
+        setIsOpen(false);
+      }}
       onBeforeShow={(data) => {
         const fetchRampa = async () => {
           const ramp = await rampaById(data.value);
@@ -69,119 +89,142 @@ const RampasSheets = (theme, actionSheetRef,setIsOpen) => {
           style={imgStyle.imgRampa}
           source={{ uri: rampa && rampa.imagenRampa }}
         />
-        
-          <Text style={{ fontSize: 20, color: theme.colors.text, alignSelf: "flex-start",
+
+        <Text
+          style={{
+            fontSize: 20,
+            color: theme.colors.text,
+            alignSelf: "flex-start",
             marginTop: "6%",
             marginBottom: "10%",
-            marginLeft: "6.5%", }}>
-            Horarios de reserva
-          </Text>
+            marginLeft: "6.5%",
+          }}
+        >
+          Horarios de reserva
+        </Text>
 
-        
-          <View style={{height:"44%"}}>
-
-          <View style={{display:'flex',flexDirection:'row',width:'100%'}}>
+        <View style={{ height: "44%" }}>
           <View
-            style={{
-              width:'50%',alignItems:'center'
-            }}
+            style={{ display: "flex", flexDirection: "row", width: "100%" }}
           >
-             <Text style={{ marginLeft:'10%', width: width / 3, fontSize: 18,color:theme.colors.text}}>Hora Desde</Text>
-            {rampa &&
-                procesoDeListas(rampa.horariosDisponibles).map((horas,numeroDeDatePicker) => {
-                  return (<Picker 
-                    selectedValue = {horariosIzquierda[numeroDeDatePicker]}
-                    key={Math.random()} 
-                  onValueChange={(itemValue, itemIndex) =>
-                    {
-                      let lista = [...horariosIzquierda]
-                      lista[numeroDeDatePicker] = itemValue
-                      setHorariosIzquierda(lista)
-                  }
-                  }
-                
-                   style={{ width: width / 3 }}>
-                    { 
-                    horas.map((hora)=>{
-                      return(
-                        <Picker.Item
-                        style={{color:theme.colors.text}}
-                          key={hora}
-                          label={hora.toString() + ":00"}
-                          value={hora}
-                        />
-                      )
-                        
-                      
-                    })
-                    }
-                  
-                  </Picker>)
-                })}
-            
-            </View>
-            <View style={{
-              width:'50%',alignItems:'center'
-            }}>
-              <Text style={{marginLeft:'10%', width: width / 3, fontSize: 18,color:theme.colors.text}}>Hora Hasta</Text>
+            <View
+              style={{
+                width: "50%",
+                alignItems: "center",
+              }}
+            >
+              <Text
+                style={{
+                  marginLeft: "10%",
+                  width: width / 3,
+                  fontSize: 18,
+                  color: theme.colors.text,
+                }}
+              >
+                Hora Desde
+              </Text>
               {rampa &&
-                procesoDeListas(rampa.horariosDisponibles).map((horas,numeroDeDatePicker) => {
-                  return (<Picker 
-                    selectedValue = {horariosDerecha[numeroDeDatePicker]}
-                    key={Math.random()} 
-                  onValueChange={(itemValue, itemIndex) =>
-                    {
-                      let lista = [...horariosDerecha]
-                      lista[numeroDeDatePicker] = itemValue
-                      setHorariosDerecha(lista)
+                procesoDeListas(rampa.horariosDisponibles).map(
+                  (horas, numeroDeDatePicker) => {
+                    return (
+                      <Picker
+                        selectedValue={horariosIzquierda[numeroDeDatePicker]}
+                        key={Math.random()}
+                        onValueChange={(itemValue, itemIndex) => {
+                          let lista = [...horariosIzquierda];
+                          lista[numeroDeDatePicker] = itemValue;
+                          setHorariosIzquierda(lista);
+                        }}
+                        style={{ width: width / 3 }}
+                      >
+                        {horas.map((hora) => {
+                          return (
+                            <Picker.Item
+                              style={{ color: theme.colors.text }}
+                              key={hora}
+                              label={hora.toString() + ":00"}
+                              value={hora}
+                            />
+                          );
+                        })}
+                      </Picker>
+                    );
                   }
-                  }style={{ width: width / 3 }}>
-                    {
-                    horas.map((hora)=>{
-                      return(
-                        <Picker.Item
-                        style={{color:theme.colors.text}}
-                          key={hora}
-                          label={hora.toString() + ":00"}
-                          value={hora}
-                        />
-                      )
-                      ;
-                    })
-                    }
-                  
-                  </Picker>)
-                })}
-          
-          </View>
-          </View>
-          </View>
-
-          <View
-            style={{
-              width:'100%',
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "space-evenly",
-            }}
-          >
-            <Text style={{ fontSize: 20 }}>$4000</Text>
-            {GlobalButton(
-              [
-                styles.loginButton,
-                {
-                  marginTop: -10,
-                  backgroundColor: theme.colors.secondary,
-                  width: "33%",
-                  height: 40,
-                },
-              ],
-              { color: theme.colors.secondaryText },
-              "RESERVAR",
-              {}
-            )}
+                )}
+            </View>
+            <View
+              style={{
+                width: "50%",
+                alignItems: "center",
+              }}
+            >
+              <Text
+                style={{
+                  marginLeft: "10%",
+                  width: width / 3,
+                  fontSize: 18,
+                  color: theme.colors.text,
+                }}
+              >
+                Hora Hasta
+              </Text>
+              {rampa &&
+                procesoDeListas(rampa.horariosDisponibles).map(
+                  (horas, numeroDeDatePicker) => {
+                    return (
+                      <Picker
+                        selectedValue={horariosDerecha[numeroDeDatePicker]}
+                        key={Math.random()}
+                        onValueChange={(itemValue, itemIndex) => {
+                          let lista = [...horariosDerecha];
+                          lista[numeroDeDatePicker] = itemValue;
+                          setHorariosDerecha(lista);
+                        }}
+                        style={{ width: width / 3 }}
+                      >
+                        {horas.map((hora) => {
+                          return (
+                            <Picker.Item
+                              style={{ color: theme.colors.text }}
+                              key={hora}
+                              label={hora.toString() + ":00"}
+                              value={hora}
+                            />
+                          );
+                        })}
+                      </Picker>
+                    );
+                  }
+                )}
+            </View>
           </View>
         </View>
+
+        <View
+          style={{
+            width: "100%",
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-evenly",
+          }}
+        >
+          <Text style={{ fontSize: 20 }}>$4000</Text>
+          {GlobalButton(
+            [
+              styles.loginButton,
+              {
+                marginTop: -10,
+                backgroundColor: theme.colors.secondary,
+                width: "33%",
+                height: 40,
+              },
+            ],
+            { color: theme.colors.secondaryText },
+            "RESERVAR",
+            reservar
+          )}
+        </View>
+      </View>
     </ActionSheet>
   );
 };
