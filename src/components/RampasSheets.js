@@ -128,6 +128,7 @@ const RampasSheets = (theme, actionSheetRef, setIsOpen) => {
                   (horas, numeroDeDatePicker) => {
                     return (
                       <Picker
+                      indicatorColor={theme.colors.text}
                         selectedValue={horariosIzquierda[numeroDeDatePicker]}
                         key={Math.random()}
                         onValueChange={(itemValue, itemIndex) => {
@@ -140,7 +141,7 @@ const RampasSheets = (theme, actionSheetRef, setIsOpen) => {
                         {horas.map((hora) => {
                           return (
                             <Picker.Item
-                              style={{ color: theme.colors.text }}
+                              style={{ color: theme.colors.text,backgroundColor:theme.colors.background }}
                               key={hora}
                               label={hora.toString() + ":00"}
                               value={hora}
@@ -173,6 +174,7 @@ const RampasSheets = (theme, actionSheetRef, setIsOpen) => {
                   (horas, numeroDeDatePicker) => {
                     return (
                       <Picker
+                      indicatorColor={theme.colors.text}
                         selectedValue={horariosDerecha[numeroDeDatePicker]}
                         key={Math.random()}
                         onValueChange={(itemValue, itemIndex) => {
@@ -185,7 +187,7 @@ const RampasSheets = (theme, actionSheetRef, setIsOpen) => {
                         {horas.map((hora) => {
                           return (
                             <Picker.Item
-                              style={{ color: theme.colors.text }}
+                              style={{ color: theme.colors.text,backgroundColor:theme.colors.background }}
                               key={hora}
                               label={hora.toString() + ":00"}
                               value={hora}

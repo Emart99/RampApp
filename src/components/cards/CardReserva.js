@@ -49,7 +49,7 @@ const CardReserva = (reserva, theme, showAlertDenuncia, setShowAlertDenuncia, vi
             textAlign: "center",
             color: theme.colors.text,
           }}
-          contentContainerStyle={{ backgroundColor: theme.colors.background }}
+          contentContainerStyle={{ backgroundColor: theme.colors.modal }}
           confirmButtonTextStyle={{ color: theme.colors.secondaryText }}
           show={showAlertDenuncia}
           showProgress={enviandoDenuncia}
@@ -75,7 +75,7 @@ const CardReserva = (reserva, theme, showAlertDenuncia, setShowAlertDenuncia, vi
           }}
           closeOnTouchOutside={false}
           customView={
-            <View style={{width: "85%",
+            <View style={{width: "100%",
             height: 20,
             marginTop:25,
             marginBottom: 20,
