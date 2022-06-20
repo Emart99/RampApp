@@ -30,18 +30,22 @@ class RampaController {
     @Operation(summary ="crea una rampa y se la agrega al usuario")
     fun registrarRampa(@PathVariable idUsuario: Long, @RequestBody rampaNueva : Rampa) = rampaService.registrarNuevaRampa(idUsuario,rampaNueva)
 
-    @PutMapping("/modificarHorarioRampa/{idRampa}")
-    @Operation(summary ="permite agregar o quitar un horario de disponibilidad de la rampa")
-    fun modifiarHorarioRampa(@PathVariable idRampa: Long, @RequestBody rampaModificadora: Rampa): Rampa = rampaService.modificarHorariosRampa(idRampa,rampaModificadora)
+    @PutMapping("/verificarPropiedadRampa/{idUsuario}")
+    @Operation(summary ="crea una rampa ya registrada y se la agrega al usuario")
+    fun verificarPropiedadRampa(@PathVariable idUsuario: Long, @RequestBody rampaNueva : Rampa) = rampaService.verificarPropiedadRampa(idUsuario,rampaNueva)
 
-    @PutMapping("/agregarHorarioRampa/{idRampa}")
-    @Operation(summary ="permite agregar un horario de disponibilidad de la rampa")
-    fun agregarHorarioRampa(@PathVariable idRampa: Long, @RequestBody horarioAAgregar: Horarios): Rampa = rampaService.agregarHorariosRampa(idRampa,horarioAAgregar)
+//    @PutMapping("/modificarHorarioRampa/{idRampa}")
+//    @Operation(summary ="permite agregar o quitar un horario de disponibilidad de la rampa")
+//    fun modifiarHorarioRampa(@PathVariable idRampa: Long, @RequestBody rampaModificadora: Rampa): Rampa = rampaService.modificarHorariosRampa(idRampa,rampaModificadora)
 
-    //Para varios horarios
 //    @PutMapping("/agregarHorarioRampa/{idRampa}")
 //    @Operation(summary ="permite agregar un horario de disponibilidad de la rampa")
-//    fun agregarHorarioRampa(@PathVariable idRampa: Long, @RequestBody horariosAAgregar: List<Horarios>): Rampa = rampaService.agregarHorariosRampa(idRampa,horariosAAgregar)
+//    fun agregarHorarioRampa(@PathVariable idRampa: Long, @RequestBody horarioAAgregar: Horarios): Rampa = rampaService.agregarHorariosRampa(idRampa,horarioAAgregar)
+
+    //Para varios horarios
+    @PutMapping("/agregarHorarioRampa/{idRampa}")
+    @Operation(summary ="permite agregar un horario de disponibilidad de la rampa")
+    fun agregarHorarioRampa(@PathVariable idRampa: Long, @RequestBody horariosAAgregar: List<Horarios>): Rampa = rampaService.agregarHorariosRampa(idRampa,horariosAAgregar)
 
     @DeleteMapping("/eliminarHorarioRampa/{idRampa}")
     @Operation(summary ="permite eliminar un horario de disponibilidad de la rampa")

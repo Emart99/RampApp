@@ -50,7 +50,7 @@ class UsuarioService {
            throw ResponseStatusException(HttpStatus.NOT_FOUND, "El usuario con dni ${usuario.dni} ya se encuentra registrado")
       }
     }
-
+    @Transactional
    fun agregarVehiculo(idUsuario: Long, vehiculoNuevo: Vehiculo){
        val vehiculoARegistrar = repositorioVehiculo.findByDominio(vehiculoNuevo.dominio)
        if (vehiculoARegistrar === null) {
@@ -61,7 +61,7 @@ class UsuarioService {
          throw ResponseStatusException(HttpStatus.NOT_FOUND, "El vehiculo con dominio ${vehiculoNuevo.dominio} ya se encuentra registrado")
        }
     }
-
+    @Transactional
     fun eliminarVehiculoPorId(idUsuario: Long, idVehiculo: Long){
         val usuario = this.buscarUsuaiorId(idUsuario)
         val vehiculo: Vehiculo= repositorioVehiculo.findById(idVehiculo).orElseThrow {
@@ -70,7 +70,7 @@ class UsuarioService {
         usuario.vehiculos.remove(vehiculo)
         repositorioVehiculo.delete(vehiculo)
 }
-
+    @Transactional
     fun realizarDenuncia(idUsuario: Long, denuncia: Denuncia):Denuncia {
         val usuario = this.getUsuario(idUsuario)
         val nuevaDenuncia = Denuncia().apply {
@@ -82,31 +82,40 @@ class UsuarioService {
         }
         return repositorioDenuncia.save(nuevaDenuncia)
     }
-
+    @Transactional(readOnly = true)
     fun traerRampasPropias(idUsuario: Long): List<Rampa> {
         val usuario = this.getUsuario(idUsuario)
         return usuario.rampasPropias
     }
-
+    @Transactional(readOnly = true)
     fun traerVehiculosPropios(idUsuario: Long): List<Vehiculo> {
         val usuario = this.getUsuario(idUsuario)
         return usuario.vehiculos
     }
-
+    @Transactional(readOnly = true)
     fun traerReservasActivas(idUsuario: Long): List<Reserva> {
         val usuario = this.getUsuario(idUsuario)
         val horaActual = LocalDateTime.now().hour
         return usuario.reservasRealizadas.filter{reserva -> reserva.horaFinReserva > horaActual && reserva.pagado }
     }
-
+    @Transactional(readOnly = true)
     fun traerReservasNoPagas(idUsuario: Long): List<Reserva> {
         val usuario = this.getUsuario(idUsuario)
-        return usuario.reservasRealizadas.filter{reserva -> !reserva.pagado }
+        val horaActual = LocalDateTime.now().hour
+        return usuario.reservasRealizadas.filter{reserva -> reserva.horaFinReserva > horaActual &&  !reserva.pagado }
     }
-
+    @Transactional()
     fun pagarReservasCarrito(idUsuario: Long){
         val usuario = this.getUsuario(idUsuario)
-        usuario.reservasRealizadas.filter{reserva -> !reserva.pagado }.forEach { reserva -> reserva.pagado = true }
+        val horaActual = LocalDateTime.now().hour
+        usuario.reservasRealizadas.filter{reserva -> reserva.horaFinReserva > horaActual && !reserva.pagado }.forEach { reserva -> reserva.pagado = true }
+        repositorioUsuarios.save(usuario)
+    }
+    @Transactional()
+    fun eliminarReservaCarritoById(idUsuario: Long, idReserva:Long){
+        val usuario = this.getUsuario(idUsuario)
+        val reserva = usuario.reservasRealizadas.find{reserva -> reserva.id == idReserva }
+        usuario.reservasRealizadas.remove(reserva)
         repositorioUsuarios.save(usuario)
     }
 }

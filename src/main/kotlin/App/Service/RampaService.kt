@@ -59,6 +59,14 @@ class RampaService {
             }
     }
 
+    @Transactional(readOnly = false)
+    fun verificarPropiedadRampa(idUsuario: Long, rampaNueva: Rampa){
+        val locador = usuarioService.buscarUsuaiorId(idUsuario)
+        val rampaPendiente= RampaPendienteAprobacion(rampaNueva.posx
+            ,rampaNueva.posy,rampaNueva.calle,rampaNueva.altura, rampaNueva.nroPartidaInmobiliaria, rampaNueva.imagenRampa, rampaNueva.imagenDni, rampaNueva.imagenEscritura,locador)
+        repositorioRampaPendienteAprobacion.save(rampaPendiente)
+    }
+
     @Transactional
     fun modificarHorariosRampa(idRampa: Long, rampaModificadora:Rampa): Rampa {
         return repositorioRampa
@@ -118,22 +126,22 @@ class RampaService {
     }
 
 
-    @Transactional
-    fun agregarHorariosRampa(idRampa: Long, horarioAAgregar: Horarios): Rampa {
-        val rampa = this.traerRampaPorID(idRampa)
-        rampa.horariosDisponibles.add(horarioAAgregar)
-        return rampa
-    }
-
-    //si ponemos varios horarios para agregar
 //    @Transactional
-//    fun agregarHorariosRampa(idRampa: Long, horariosAAgregar: List<Horarios>): Rampa {
+//    fun agregarHorariosRampa(idRampa: Long, horarioAAgregar: Horarios): Rampa {
 //        val rampa = this.traerRampaPorID(idRampa)
-//        horariosAAgregar.forEach {
-//            rampa.horariosDisponibles.add(it)
-//        }
+//        rampa.horariosDisponibles.add(horarioAAgregar)
 //        return rampa
 //    }
+
+    //si ponemos varios horarios para agregar
+    @Transactional
+    fun agregarHorariosRampa(idRampa: Long, horariosAAgregar: List<Horarios>): Rampa {
+        val rampa = this.traerRampaPorID(idRampa)
+        horariosAAgregar.forEach {
+            rampa.horariosDisponibles.add(it)
+        }
+        return rampa
+    }
 
     @Transactional
     fun quitarHorariosRampa(idRampa: Long): Rampa {
