@@ -74,6 +74,7 @@ class UsuarioService {
     fun realizarDenuncia(idUsuario: Long, denuncia: Denuncia):Denuncia {
         val usuario = this.getUsuario(idUsuario)
         val nuevaDenuncia = Denuncia().apply {
+            motivoDenuncia = denuncia.motivoDenuncia
             tipoDenuncia = denuncia.tipoDenuncia
             dominio = denuncia.dominio
             direccionRampa = denuncia.direccionRampa

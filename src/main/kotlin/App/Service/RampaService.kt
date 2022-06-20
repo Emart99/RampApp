@@ -1,10 +1,7 @@
 package App.Service
 
 import App.Domain.*
-import App.Repository.RepositorioAdministrador
-import App.Repository.RepositorioRampas
-import App.Repository.RepositorioRampasPendienteAprobacion
-import App.Repository.RepositorioUsuario
+import App.Repository.*
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
@@ -21,12 +18,13 @@ class RampaService {
     lateinit var repositorioRampaPendienteAprobacion: RepositorioRampasPendienteAprobacion
     @Autowired
     lateinit var repositorioHorarios: RepositorioAdministrador
-
     @Autowired
     lateinit var repositorioUsuario: RepositorioUsuario
-
     @Autowired
     lateinit var usuarioService:UsuarioService
+    @Autowired
+    lateinit var vehiculoRepository:RepositorioVehiculos
+
 
     @Transactional
     fun traerRampasParaRamapasDisponibles(): List<Rampa> {
@@ -51,8 +49,8 @@ class RampaService {
         var rampaARegistrar: Rampa? = this.repositorioRampa.findByNroPartidaInmobiliaria(rampaNueva.nroPartidaInmobiliaria)
         if (rampaARegistrar  === null) {
             val locador = usuarioService.buscarUsuaiorId(idUsuario)
-            val rampaPendiente= RampaPendienteAprobacion(rampaNueva.posx
-                ,rampaNueva.posy,rampaNueva.calle,rampaNueva.altura, rampaNueva.nroPartidaInmobiliaria, rampaNueva.imagenRampa, rampaNueva.imagenDni, rampaNueva.imagenEscritura,locador)
+            val rampaPendiente= RampaPendienteAprobacion(rampaNueva.posx.take(11)
+                ,rampaNueva.posy.take(11),rampaNueva.calle,rampaNueva.altura, rampaNueva.nroPartidaInmobiliaria, rampaNueva.imagenRampa, rampaNueva.imagenDni, rampaNueva.imagenEscritura,locador)
             repositorioRampaPendienteAprobacion.save(rampaPendiente)
             }else {
                 throw ResponseStatusException(HttpStatus.NOT_FOUND, "La rampa con partida inmobiliaria ${rampaNueva.nroPartidaInmobiliaria} ya se encuentra registrada")
@@ -106,7 +104,7 @@ class RampaService {
 //    }
 
     @Transactional
-    fun reservarRampa(idRampa: Long,idUsuario: Long, reservas: List<Reserva>): Rampa {
+    fun reservarRampa(idRampa: Long,idUsuario: Long, reservas: List<Reserva>,dominio:String): Rampa {
         val rampa = repositorioRampa.findById(idRampa).orElseThrow {ResponseStatusException(HttpStatus.NOT_FOUND, "La Rampa con identificador $idRampa no existe") }
         reservas.forEach {
             it.altura = rampa.altura
@@ -122,6 +120,11 @@ class RampaService {
             .orElseThrow {
                 ResponseStatusException(HttpStatus.NOT_FOUND, "El usuario con identificador $idUsuario no existe")
             }
+
+        if(vehiculoRepository.findByDominio(dominio) == null ){
+            throw ResponseStatusException(HttpStatus.NOT_FOUND, "El vehiculo enviado es invalido")
+        }
+
         return rampa //no se xq
     }
 

@@ -55,7 +55,7 @@ class RampaController {
 //    @Operation(summary ="permite agregar reservar una rampa")
 //    fun reservarRampa(@PathVariable idRampa: Long, @PathVariable idUsuario: Long, @RequestBody reserva: Reserva): Rampa = rampaService.reservarRampa(idRampa,idUsuario,reserva)
 
-    @PutMapping("/reservarRampa/{idRampa}/{idUsuario}")
+    @PutMapping("/reservarRampa/{idRampa}/{idUsuario}/{dominioVehiculo}")
     @Operation(summary ="permite agregar reservar una rampa")
-    fun reservarRampa(@PathVariable idRampa: Long, @PathVariable idUsuario: Long, @RequestBody reservas: List<Reserva>): Rampa = rampaService.reservarRampa(idRampa,idUsuario,reservas)
+    fun reservarRampa(@PathVariable idRampa: Long, @PathVariable idUsuario: Long, @RequestBody reservas: List<Reserva>,@PathVariable dominioVehiculo:String ): Rampa = rampaService.reservarRampa(idRampa,idUsuario,reservas,dominioVehiculo)
 }
