@@ -13,8 +13,9 @@ export function Header() {
                  <Navbar.Brand href="#home">RampApp</Navbar.Brand>
             </Nav>
             <Nav>
-              <Nav.Link href='/denunciasAVerificar'>Verificar denuncias</Nav.Link>
-              <Nav.Link href='/rampasAHabilitar'>Habilitar rampas</Nav.Link>
+              <Nav.Link href='/denunciasAVerificar'>Verificar denuncias </Nav.Link>
+              <Nav.Link href='/rampasAHabilitar'>Habilitar rampas </Nav.Link>
+              <Nav.Link href='/balance'>Balance </Nav.Link>
               <Nav.Link href='/login' ><BiLogOut/></Nav.Link>
             </Nav>
           </Navbar.Collapse>
