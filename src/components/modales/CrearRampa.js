@@ -85,6 +85,7 @@ const CrearRampa = (
     const geoJson = await geocoder({
       altura: values.altura,
       calle: values.calle,
+      localidad: values.localidad,
       partido: values.partido,
       codigopostal: values.cp,
     });
@@ -94,8 +95,8 @@ const CrearRampa = (
       return setShowAlertDatosInvalidos(true);
     }
     const rampaJSON = {
-      posx: geoJson[0].lon,
-      posy: geoJson[0].lat,
+      posy: geoJson[0].lon,
+      posx: geoJson[0].lat,
       calle: values.calle,
       altura: values.altura,
       nroPartidaInmobiliaria: values.nroPartida,
@@ -103,13 +104,12 @@ const CrearRampa = (
       imagenDni: imagenDNI.data.link,
       imagenEscritura: imagenEscritura.data.link,
     };
-    creacionDeRampa(rampaJSON).catch((err) => {
+    creacionDeRampa(rampaJSON).then(()=>setShowAlertDatosCorrectos(true)).catch((err) => {
       setJsonRampaRegistrada(rampaJSON);
       setShowAlertRampaRegistrada(true);
     });
 
     setVisibleLoading(false);
-    setShowAlertDatosCorrectos(true);
   };
 
   const verificarRampa = async () => {
@@ -202,6 +202,7 @@ const CrearRampa = (
               initialValues={{
                 calle: "",
                 altura: "",
+                localidad:"",
                 partido: "",
                 cp: "",
                 nroPartida: "",
@@ -256,6 +257,21 @@ const CrearRampa = (
                     {errors.altura && touched.altura && (
                       <Text style={styles.inputInvalidText}>
                         {errors.altura}
+                      </Text>
+                    )}
+                    {GlobalInput(
+                      "Localidad",
+                      values.localidad,
+                      handleChange("localidad"),
+                      handleBlur("localidad"),
+                      styles.inputView,
+                      theme.colors.modal,
+                      false,
+                      "number-pad"
+                    )}
+                    {errors.localidad && touched.localidad && (
+                      <Text style={styles.inputInvalidText}>
+                        {errors.localidad}
                       </Text>
                     )}
                     {GlobalInput(

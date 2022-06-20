@@ -1,13 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ActionSheet from "react-native-actions-sheet";
 import { View, Text, Image, StyleSheet } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import _ from "lodash";
-import { useWindowDimensions } from "react-native";
-
+import { useWindowDimensions, ToastAndroid } from "react-native";
+import { Snackbar } from "react-native-paper";
 import GlobalButton from "./GlobalButton";
 import styles from "../styles/styles";
-import { rampaById, reservarRampa } from "../api/http";
+import {
+  rampaById,
+  reservarRampa,
+  traerVehiculosDelUsuario,
+} from "../api/http";
 
 const imgStyle = StyleSheet.create({
   imgRampa: {
@@ -34,6 +38,21 @@ const RampasSheets = (theme, actionSheetRef, setIsOpen) => {
   const [horariosIzquierda, setHorariosIzquierda] = useState([]);
   const [horariosDerecha, setHorariosDerecha] = useState([]);
   const [rampa, setRampa] = useState();
+  const [visibleToast, setVisibleToast] = useState(false);
+  const [messageFeedback, setMessageFeedback] = useState("");
+  const [autos, setAutos] = useState();
+  const [dominio, setDominio] = useState();
+
+  const calculoDePrecio = () => {
+    let precio = 0;
+    for (let i = 0; i < horariosIzquierda.length; i++) {
+      precio += IMPORTE_BASE * (horariosDerecha[i] - horariosIzquierda[i]);
+    }
+    if (isNaN(precio)) {
+      return 0;
+    }
+    return precio;
+  };
 
   const reservar = async () => {
     let reservas = [];
@@ -44,23 +63,54 @@ const RampasSheets = (theme, actionSheetRef, setIsOpen) => {
         importePagado:
           IMPORTE_BASE * (horariosDerecha[i] - horariosIzquierda[i]),
       };
+
       reservas.push(reserva);
     }
-    reservarRampa(reservas, rampa.id);
+    console.log(dominio);
+    reservarRampa(reservas, rampa.id, dominio)
+      .then(() => {
+        setMessageFeedback("La reserva se ha realizado correctamente");
+        setVisibleToast(true);
+      })
+      .catch((error) => {
+        setMessageFeedback("Error, revise los datos introducidos");
+        setVisibleToast(true);
+      });
   };
+
+  const Toast = (visible, message) => {
+    if (visible) {
+      ToastAndroid.showWithGravity(
+        message,
+        ToastAndroid.LONG,
+        ToastAndroid.BOTTOM
+      );
+      return null;
+    }
+    return null;
+  };
+  useEffect(() => setVisibleToast(false), [visibleToast]);
 
   return (
     <ActionSheet
+      ExtraOverlayComponent={Toast(visibleToast, messageFeedback)}
       onClose={() => {
         setIsOpen(false);
+        setVisibleToast(false);
       }}
       onBeforeShow={(data) => {
+        const fetchAutosUsuario = async () => {
+          const autitos = await traerVehiculosDelUsuario();
+          setAutos(autitos);
+        };
         const fetchRampa = async () => {
           const ramp = await rampaById(data.value);
           setRampa(ramp);
         };
         setIsOpen(true);
         fetchRampa();
+        fetchAutosUsuario();
+        setVisibleToast(false);
       }}
       initialOffsetFromBottom={0.35}
       id="rampas_bottom_sheet"
@@ -103,7 +153,7 @@ const RampasSheets = (theme, actionSheetRef, setIsOpen) => {
           Horarios de reserva
         </Text>
 
-        <View style={{ height: "44%" }}>
+        <View style={{ height: "37%" }}>
           <View
             style={{ display: "flex", flexDirection: "row", width: "100%" }}
           >
@@ -128,7 +178,7 @@ const RampasSheets = (theme, actionSheetRef, setIsOpen) => {
                   (horas, numeroDeDatePicker) => {
                     return (
                       <Picker
-                      indicatorColor={theme.colors.text}
+                        dropdownIconColor={theme.colors.text}
                         selectedValue={horariosIzquierda[numeroDeDatePicker]}
                         key={Math.random()}
                         onValueChange={(itemValue, itemIndex) => {
@@ -141,7 +191,10 @@ const RampasSheets = (theme, actionSheetRef, setIsOpen) => {
                         {horas.map((hora) => {
                           return (
                             <Picker.Item
-                              style={{ color: theme.colors.text,backgroundColor:theme.colors.background }}
+                              style={{
+                                color: theme.colors.text,
+                                backgroundColor: theme.colors.background,
+                              }}
                               key={hora}
                               label={hora.toString() + ":00"}
                               value={hora}
@@ -174,7 +227,7 @@ const RampasSheets = (theme, actionSheetRef, setIsOpen) => {
                   (horas, numeroDeDatePicker) => {
                     return (
                       <Picker
-                      indicatorColor={theme.colors.text}
+                        dropdownIconColor={theme.colors.text}
                         selectedValue={horariosDerecha[numeroDeDatePicker]}
                         key={Math.random()}
                         onValueChange={(itemValue, itemIndex) => {
@@ -187,7 +240,10 @@ const RampasSheets = (theme, actionSheetRef, setIsOpen) => {
                         {horas.map((hora) => {
                           return (
                             <Picker.Item
-                              style={{ color: theme.colors.text,backgroundColor:theme.colors.background }}
+                              style={{
+                                color: theme.colors.text,
+                                backgroundColor: theme.colors.background,
+                              }}
                               key={hora}
                               label={hora.toString() + ":00"}
                               value={hora}
@@ -201,16 +257,62 @@ const RampasSheets = (theme, actionSheetRef, setIsOpen) => {
             </View>
           </View>
         </View>
-
+        {autos && autos.length == 0 && (
+          <View style={{ marginBottom: 20 }}>
+            <Text style={{ fontSize: 16, color: theme.colors.text }}>
+              Vaya a crear vehiculos burro
+            </Text>
+          </View>
+        )}
+        {autos && autos.length != 0 && (
+          <View>
+            <Picker
+              style={{ width: width / 1.5, alignSelf: "center" }}
+              selectedValue={dominio}
+              onValueChange={(value) => {
+                setDominio(value);
+              }}
+              dropdownIconColor={theme.colors.text}
+              key={Math.random()}
+            >
+              <Picker.Item
+                style={{
+                  color: theme.colors.text,
+                  backgroundColor: theme.colors.background,
+                }}
+                key={Math.random()}
+                label={"Seleccione el dominio..."}
+                value={undefined}
+              />
+              {autos &&
+                autos.map((auto) => {
+                  return (
+                    <Picker.Item
+                      style={{
+                        color: theme.colors.text,
+                        backgroundColor: theme.colors.background,
+                      }}
+                      key={auto.id}
+                      label={auto.dominio.toString()}
+                      value={auto.dominio}
+                    />
+                  );
+                })}
+            </Picker>
+          </View>
+        )}
         <View
           style={{
             width: "100%",
             display: "flex",
             flexDirection: "row",
             justifyContent: "space-evenly",
+            marginTop: 10,
           }}
         >
-          <Text style={{ fontSize: 20 }}>$4000</Text>
+          <Text style={{ fontSize: 20, color: theme.colors.text }}>
+            ${calculoDePrecio()}
+          </Text>
           {GlobalButton(
             [
               styles.loginButton,

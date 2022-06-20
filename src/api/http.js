@@ -55,7 +55,7 @@ export async function logear(_usuario) {
 }
 
 export async function geocoder(datosDireccion) {
-    const response = await axios.get("https://nominatim.openstreetmap.org/search?" + `q=${datosDireccion.altura}%2C+${datosDireccion.calle}%2C+Partido de ${datosDireccion.partido}%2C+Buenos+Aires%2C+B${datosDireccion.codigopostal}%2C+Argentina+&format=json`)
+    const response = await axios.get("https://nominatim.openstreetmap.org/search?" + `q=${datosDireccion.altura}%2C+${datosDireccion.calle}%2C+${datosDireccion.localidad}%2C+Partido de ${datosDireccion.partido}%2C+Buenos+Aires%2C+B${datosDireccion.codigopostal}%2C+Argentina+&format=json`)
     return response.data
 }
 
@@ -80,10 +80,6 @@ export async function crearVehiculo (vehiculoJSON){
     return response.data
 }
 
-export async function traerVehiculo() {
-    const response = await axios.get(ENV_DEV_URL + '/vehiculo/7')
-    return response.data
-}
 
 export async function modificarVehiculo(idVehiculo,marca,modelo,dominio) {
     const vehiculoJSON = {
@@ -131,8 +127,8 @@ export async function rampaById(id){
     return response.data
 }
 
-export async function reservarRampa(reservas, idRampa){
-    const response = await axios.put(ENV_DEV_URL + `/reservarRampa/${idRampa}/`+ await getUsuarioId(),reservas)
+export async function reservarRampa(reservas, idRampa,dominio){
+    const response = await axios.put(ENV_DEV_URL + `/reservarRampa/${idRampa}/`+ await getUsuarioId()+"/"+dominio,reservas)
     return response.data
 }
 

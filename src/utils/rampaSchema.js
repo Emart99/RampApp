@@ -6,6 +6,7 @@ export const rampaValidationSchema = yup.object().shape({
     .string()
     .max(5, "Ingrese un número de calle válido")
     .required("Ingrese el numero del domicilio"),
+  localidad: yup.string().required("Ingrese la localidad"),
   partido: yup.string().required("Ingrese el partido"),
   cp: yup.string().required("Ingrese el código postal"),
   nroPartida: yup
