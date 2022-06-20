@@ -15,6 +15,7 @@ const Carrito = () => {
   const insets = useSafeAreaInsets();
   const [visible, setVisible] = useState(false);
   const [carrito,setCarrito] = useState([]);
+  const [onPressRefresh, setOnPressRefresh] = useState(false);
 
   useFocusEffect(useCallback(()=>{
     const fetchCarrito = async () =>{
@@ -24,6 +25,14 @@ const Carrito = () => {
     fetchCarrito()
   },[visible]))
 
+  useFocusEffect(useCallback(()=>{
+    const fetchCarrito = async () =>{
+      const reser = await traeCarrito()
+      setCarrito(reser)
+    }
+    fetchCarrito()
+  },[onPressRefresh]))
+
   const showModal = () => setVisible(true);
   
   return (
@@ -32,7 +41,7 @@ const Carrito = () => {
         Carrito
       </Text>
       <ScrollView style={cardStyles.scrolleableContainer}>
-        {carrito.map(reserva => CardCarrito(reserva, theme))}
+        {carrito.map(reserva => CardCarrito(reserva, theme, setOnPressRefresh,onPressRefresh))}
       </ScrollView>
       <TouchableOpacity
         style={[

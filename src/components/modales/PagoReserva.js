@@ -20,9 +20,10 @@ const PagoReserva = (visible, setVisible) => {
     React.useState(false);
 
   const abonarHandler = (values) => {
-    pagarCarrito();
-    setShowAlertDatosCorrectos(true);
-    hideModal();
+    pagarCarrito().then(data => {
+      setShowAlertDatosCorrectos(true);
+      hideModal();
+    })
   };
   return (
     <Portal theme={{ colors: { backdrop: "rgba(0, 0, 0, 0.35)" } }}>

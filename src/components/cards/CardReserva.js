@@ -3,7 +3,8 @@ import {
   Card,
   Paragraph,
   Avatar,
-  IconButton
+  IconButton,
+  TextInput
 } from 'react-native-paper';
 import {View} from 'react-native';
 import * as ImagePicker from "expo-image-picker";
@@ -12,7 +13,10 @@ import  AwesomeAlert  from 'react-native-awesome-alerts';
 import newCardStyles from '../../styles/newCardStyles';
 import { denunciarInfractor, subirImagen } from '../../api/http';
 
-const CardReserva = (reserva, theme, showAlertDenuncia, setShowAlertDenuncia, visibleToast, setVisibleToast) => {
+const CardReserva = (reserva, theme, showAlertDenuncia, setShowAlertDenuncia, visibleToast, setVisibleToast,dominioDenunciado,
+  setDominioDenunciado,
+  enviandoDenuncia, 
+  setEnviandoDenuncia) => {
 
   const enviarDenuncia = async () => {
     // Ask the user for the permission to access the camera
@@ -24,10 +28,13 @@ const CardReserva = (reserva, theme, showAlertDenuncia, setShowAlertDenuncia, vi
     const result = await ImagePicker.launchCameraAsync({
       base64: true,
     });
+    setEnviandoDenuncia(true);
     if (!result.cancelled) {
       const imagen = await subirImagen(result.base64).catch((err) => {});
-      await denunciarInfractor("Estacionamiento ocupado", imagen.data.link,"",`${reserva.calle} ${reserva.altura}`).then(data => {onToggleSnackBar()})
+      await denunciarInfractor("Estacionamiento ocupado", imagen.data.link,dominioDenunciado,`${reserva.calle} ${reserva.altura}`)
+      .then(data => {onToggleSnackBar()})
     }
+    setDominioDenunciado("");
   }
 
   const onToggleSnackBar = () => setVisibleToast(!visibleToast);
@@ -37,22 +44,61 @@ const CardReserva = (reserva, theme, showAlertDenuncia, setShowAlertDenuncia, vi
       key={reserva.id} style={[newCardStyles.card, {backgroundColor: theme.colors.headerPerfil}]}
       elevation={10}>     
         <AwesomeAlert
-            titleStyle={{ width: "100%",textAlign:'center', color: theme.colors.text }}
-            contentContainerStyle={{ backgroundColor: theme.colors.background }}
-            confirmButtonTextStyle={{color:theme.colors.secondaryText}}
-            show={showAlertDenuncia}
-            showProgress={false}
-            title="Denunciar infractor"
-            closeOnHardwareBackPress={false}
-            showConfirmButton={true}
-            confirmText="Sacar foto"
-            confirmButtonColor={theme.colors.secondary}
-            closeOnTouchOutside={false}
-            onConfirmPressed={() => {
-              enviarDenuncia();
+          titleStyle={{
+            width: "100%",
+            textAlign: "center",
+            color: theme.colors.text,
+          }}
+          contentContainerStyle={{ backgroundColor: theme.colors.background }}
+          confirmButtonTextStyle={{ color: theme.colors.secondaryText }}
+          show={showAlertDenuncia}
+          showProgress={enviandoDenuncia}
+          title="Denunciar infractor"
+          message={enviandoDenuncia?"Por favor, espere...":"Ingrese el dominio del infractor y luego saque una foto de la infracción"}
+          closeOnHardwareBackPress={false}
+          showConfirmButton={true}
+          confirmText="Sacar foto"
+          confirmButtonColor={theme.colors.secondary}
+          onConfirmPressed={() => {
+            enviarDenuncia().then(() => {
+              setEnviandoDenuncia(false);
               setShowAlertDenuncia(false);
-            }}
-          />
+              onToggleSnackBar();
+            })
+          }}
+          showCancelButton={true}
+          cancelText="Cancelar"
+          cancelButtonTextStyle={{ color: theme.colors.text }}
+          cancelButtonStyle={{ borderColor: theme.colors.secondary, borderWidth:1, borderStyle: "solid" }}
+          onCancelPressed={() => {
+            setShowAlertDenuncia(false);
+          }}
+          closeOnTouchOutside={false}
+          customView={
+            <View style={{width: "85%",
+            height: 20,
+            marginTop:25,
+            marginBottom: 20,
+            justifyContent: "center",}}>
+              <TextInput
+                theme={{
+                  colors: {
+                    placeholder: theme.colors.text,
+                    background: theme.colors.background,
+                  },
+                }}
+                underlineColor={theme.colors.text}
+                activeUnderlineColor={theme.colors.text}
+                style={{ backgroundColor: theme.colors.modal, fontSize:12 }}
+                mode="flat"
+                label="Dominio a denunciar"
+                value={dominioDenunciado}
+                disabled={enviandoDenuncia}
+                onChangeText={(value) => setDominioDenunciado(value)}
+              />
+            </View>
+          }
+        />
       <Card.Title
         style={{marginTop: 10}}
         title={`${reserva.calle} ${reserva.altura}`}

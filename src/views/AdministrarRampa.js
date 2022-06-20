@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
-import {  ScrollView, TouchableOpacity } from "react-native";
-import { Snackbar, useTheme,Text } from "react-native-paper";
+import { ScrollView, TouchableOpacity } from "react-native";
+import { Snackbar, useTheme, Text } from "react-native-paper";
 
 import cardStyles from "./../styles/cardStyles";
 import CardRampa from "../components/cards/CardRampa";
@@ -22,13 +22,26 @@ const AdministrarRampa = () => {
   const [showAlertDenuncia, setShowAlertDenuncia] = React.useState(false);
   const [onPressRefresh, setOnPressRefresh] = React.useState(false);
   const [isSwitchOn, setIsSwitchOn] = React.useState(true);
-  const [horaDesde, setHoraDesde] = React.useState(0);
-  const [horaHasta, setHoraHasta] = React.useState(0);
-  const [visibleTimePickerD, setVisibleTimePickerD] = React.useState(false);
-  const [visibleTimePickerH, setVisibleTimePickerH] = React.useState(false);
+  const [horaDesde, setHoraDesde] = React.useState([]);
+  const [horaHasta, setHoraHasta] = React.useState([]);
+  const [visibleTimePickerD, setVisibleTimePickerD] = React.useState([
+    false,
+    false,
+    false,
+  ]);
+  const [visibleTimePickerH, setVisibleTimePickerH] = React.useState([
+    false,
+    false,
+    false,
+  ]);
   const [visibleLoading, setVisibleLoading] = React.useState(false);
   const [visibleToast, setVisibleToast] = React.useState(false);
   const [camaraDisbabled, setCamaraDisbabled] = React.useState(false);
+  const [dominioDenunciado, setDominioDenunciado] = React.useState("");
+  const [enviandoDenuncia, setEnviandoDenuncia] = React.useState(false);
+  const [showAlertRampaRegistrada, setShowAlertRampaRegistrada] =
+    React.useState(false);
+  const [jsonRampaRegistrada, setJsonRampaRegistrada] = React.useState({});
 
   const showModalCrear = () => setVisibleModalCrear(true);
 
@@ -68,7 +81,11 @@ const AdministrarRampa = () => {
             showAlertDenuncia,
             setShowAlertDenuncia,
             visibleToast,
-            setVisibleToast
+            setVisibleToast,
+            dominioDenunciado,
+            setDominioDenunciado,
+            enviandoDenuncia,
+            setEnviandoDenuncia,
           )
         )}
       </ScrollView>
@@ -95,7 +112,10 @@ const AdministrarRampa = () => {
         duration={2500}
         style={styles.toastDenuncia}
         wrapperStyle={styles.toastDenunciaWrapper}
-      ><Text style={{ color: theme.colors.text,fontSize:17}}>Denuncia realizada con éxito</Text>
+      >
+        <Text style={{ color: theme.colors.text, fontSize: 17 }}>
+          Denuncia realizada con éxito
+        </Text>
       </Snackbar>
       {CrearRampa(
         visibleModalCrear,
@@ -107,8 +127,12 @@ const AdministrarRampa = () => {
         setShowAlertDatosInvalidos,
         visibleLoading,
         setVisibleLoading,
-        camaraDisbabled, 
-        setCamaraDisbabled
+        camaraDisbabled,
+        setCamaraDisbabled,
+        showAlertRampaRegistrada,
+        setShowAlertRampaRegistrada,
+        jsonRampaRegistrada,
+        setJsonRampaRegistrada
       )}
     </>
   );

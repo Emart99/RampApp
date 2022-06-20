@@ -1,7 +1,7 @@
 import axios from "axios";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 //axios.defaults.baseURL = "http://localhost:9000";
-const IP_DEV = "192.168.56.1"
+const IP_DEV = "192.168.1.5"
 const ENV_DEV_URL = 'http://' + IP_DEV + ':9000'
 const ENV_IMGUR_CLIENT_ID = "bd34bd7d458c396"
 
@@ -33,12 +33,6 @@ export const cerrarSesion = async () =>{
 
     }
 }
-
-
-// export async function traerVehiculos(){
-//     let response = await axios.get("/vehiculos");
-//     return response.data;
-// }
 
 export async function traerRampas() {
     let response = await axios.get(ENV_DEV_URL + "/rampasDisponibles");
@@ -121,14 +115,13 @@ export async function traerReservasDelUsuario(){
     return response.data;
 }
 
-export async function denunciarInfractor(tipo, imagen, dominio, direccion){
+export async function denunciarInfractor(motivo, imagen, dominio, direccion){
     const denuncia = {
-        tipoDenuncia: tipo,
+        motivoDenuncia: motivo,
         dominio: dominio,
         direccionRampa: direccion,
         imagen: imagen
     }
-    console.log(denuncia)
     const response = await axios.put(ENV_DEV_URL + "/realizarDenuncia/"+ await getUsuarioId(),denuncia)
     return response.data
 }
@@ -153,12 +146,23 @@ export async function pagarCarrito(){
     return response.data
 }
 
-export async function deshabilitarRampa(idRampa){
-    const response = await axios.post(ENV_DEV_URL + "/eliminarHorarioRampa/"+idRampa)
+export async function borrarDelCarrito(idReserva){
+    console.log(idReserva)
+    const response = await axios.delete(ENV_DEV_URL + "/usuario/carrito/"+ await getUsuarioId()+"/borrar/"+idReserva)
     return response.data
 }
 
-export async function habilitarRampa(idRampa){
-    const response = await axios.post(ENV_DEV_URL + "/agregarHorarioRampa/"+idRampa,{})
+export async function deshabilitarRampa(idRampa){
+    const response = await axios.delete(ENV_DEV_URL + "/eliminarHorarioRampa/"+idRampa)
+    return response.data
+}
+
+export async function habilitarRampa(idRampa,horarios){
+    const response = await axios.put(ENV_DEV_URL + "/agregarHorarioRampa/"+idRampa,horarios)
+    return response.data
+}
+
+export async function verificarPropiedadRampa(rampaJSON){
+    const response = await axios.put(ENV_DEV_URL + "/verificarPropiedadRampa/"+ await getUsuarioId(), rampaJSON)
     return response.data
 }

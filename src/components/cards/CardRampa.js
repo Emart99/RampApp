@@ -26,6 +26,10 @@ const CardRampa = (
   setShowAlertDenuncia,
   visibleToast,
   setVisibleToast,
+  dominioDenunciado,
+  setDominioDenunciado,
+  enviandoDenuncia, 
+  setEnviandoDenuncia,
 ) => {
   const touchHandler = () => {
     setVisibleModalAdmin(true);
@@ -92,6 +96,10 @@ const CardRampa = (
         setShowAlertDenuncia,
         visibleToast,
         setVisibleToast,
+        dominioDenunciado,
+        setDominioDenunciado,
+        enviandoDenuncia, 
+        setEnviandoDenuncia,
       )}
     </Pressable>
   );

@@ -83,7 +83,6 @@ const modalStyles = StyleSheet.create({
     alignSelf: "center",
   },
   horariosContainer: {
-    flexDirection: "row",
     alignItems: "center",
   },
 });

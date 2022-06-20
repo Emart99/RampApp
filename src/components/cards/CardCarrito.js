@@ -8,8 +8,14 @@ import {
 import {View} from 'react-native';
 
 import newCardStyles from '../../styles/newCardStyles';
+import { borrarDelCarrito } from '../../api/http';
 
-const CardCarrito = (reserva, theme) => {
+const CardCarrito = (reserva, theme,setOnPressRefresh, onPressRefresh) => {
+
+  const eliminarReserva = async () => {
+    await borrarDelCarrito(reserva.id).then(data => setOnPressRefresh(!onPressRefresh));
+  }
+
   return (
     <Card
       key={reserva.id}
@@ -25,7 +31,7 @@ const CardCarrito = (reserva, theme) => {
           <IconButton
             icon="close"
             color={theme.colors.text}
-            onPress={() => console.log('zz')}
+            onPress={eliminarReserva}
           />
         )}
         titleNumberOfLines={2}

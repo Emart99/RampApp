@@ -16,6 +16,8 @@ const AdministrarReservas = ({ navigation }) => {
   const [showAlertDenuncia, setShowAlertDenuncia] = React.useState(false);
   const [visibleToast, setVisibleToast] = React.useState(false);
   const [reservas,setReservas] = React.useState([])
+  const [dominioDenunciado, setDominioDenunciado] = React.useState("");
+  const [enviandoDenuncia, setEnviandoDenuncia] = React.useState(false);
 
   useFocusEffect(useCallback(()=>{
     const fetchReservas = async () =>{
@@ -44,7 +46,11 @@ const AdministrarReservas = ({ navigation }) => {
             showAlertDenuncia,
             setShowAlertDenuncia,
             visibleToast,
-            setVisibleToast
+            setVisibleToast,
+            dominioDenunciado,
+            setDominioDenunciado,
+            enviandoDenuncia, 
+            setEnviandoDenuncia
           )
         )}
       </ScrollView>

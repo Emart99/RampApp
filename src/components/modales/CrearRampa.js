@@ -17,7 +17,7 @@ import GlobalInput from "../GlobalInput";
 import GlobalButton from "../GlobalButton";
 import styles from "../../styles/styles";
 import modalStyles from "../../styles/modalStyles";
-import { creacionDeRampa, geocoder, subirImagen } from "../../api/http";
+import { creacionDeRampa, geocoder, subirImagen, verificarPropiedadRampa } from "../../api/http";
 import { rampaValidationSchema } from "../../utils/rampaSchema";
 
 const CrearRampa = (
@@ -30,8 +30,12 @@ const CrearRampa = (
   setShowAlertDatosInvalidos,
   visibleLoading,
   setVisibleLoading,
-  camaraDisabled, 
-  setCamaraDisabled
+  camaraDisabled,
+  setCamaraDisabled,
+  showAlertRampaRegistrada,
+  setShowAlertRampaRegistrada,
+  jsonRampaRegistrada,
+  setJsonRampaRegistrada
 ) => {
   const pickImage = async (setFieldValue, setFieldTouched, imgValue) => {
     setCamaraDisabled(true);
@@ -100,11 +104,19 @@ const CrearRampa = (
       imagenEscritura: imagenEscritura.data.link,
     };
     creacionDeRampa(rampaJSON).catch((err) => {
-      console.log(err);
+      setJsonRampaRegistrada(rampaJSON);
+      setShowAlertRampaRegistrada(true);
     });
+
     setVisibleLoading(false);
     setShowAlertDatosCorrectos(true);
   };
+
+  const verificarRampa = async () => {
+    await verificarPropiedadRampa(jsonRampaRegistrada).then((res) => {
+      
+    });
+  }
 
   return (
     <Portal theme={{ colors: { backdrop: "rgba(0, 0, 0, 0.35)" } }}>
@@ -130,14 +142,47 @@ const CrearRampa = (
         contentContainerStyle={{ backgroundColor: theme.colors.background }}
         show={showAlertDatosInvalidos}
         showProgress={false}
-        title="Error la direccion no fue encontrada!"
+        title="La direccion no fue encontrada!"
+        message="Por favor, verifique que los datos ingresados sean correctos y vuelva a intentarlo"
         closeOnHardwareBackPress={false}
         showConfirmButton={true}
-        confirmText="Volver a registrarse"
+        confirmText="Volver a intentar"
         confirmButtonColor="#DD6B55"
         closeOnTouchOutside={false}
         onConfirmPressed={() => {
           setShowAlertDatosInvalidos(false);
+        }}
+      />
+      {/* ALERT DE PARTIDA YA REGISTRADA */}
+      <AwesomeAlert
+        titleStyle={{ width: "100%", color: theme.colors.text }}
+        contentContainerStyle={{ backgroundColor: theme.colors.background }}
+        show={showAlertRampaRegistrada}
+        showProgress={false}
+        title="La rampa ya se encuentra registrada"
+        message="Desea que verifiquemos la propiedad de la rampa?"
+        closeOnHardwareBackPress={false}
+        showConfirmButton={true}
+        confirmText="Aceptar"
+        cancelText="Cancelar"
+        confirmButtonTextStyle={{ color: theme.colors.secondaryText }}
+        confirmButtonColor={theme.colors.secondary}
+        closeOnTouchOutside={false}
+        onConfirmPressed={() => {
+          verificarRampa();
+          setShowAlertRampaRegistrada(false);
+          setJsonRampaRegistrada({});
+          setShowAlertDatosCorrectos(true);
+        }}
+        cancelButtonTextStyle={{ color: theme.colors.text }}
+        cancelButtonStyle={{
+          borderColor: theme.colors.secondary,
+          borderWidth: 1,
+          borderStyle: "solid",
+        }}
+        showCancelButton={true}
+        onCancelPressed={() => {
+          setShowAlertRampaRegistrada(false);
         }}
       />
 
@@ -166,7 +211,7 @@ const CrearRampa = (
               }}
               onSubmit={(values) => {
                 setVisibleLoading(true);
-                agregarRampa(values).then();
+                agregarRampa(values);
               }}
             >
               {({
@@ -276,21 +321,25 @@ const CrearRampa = (
                         errors.imgEscritura}
                     </Text>
                   </View>
-                  <View  style={{
+                  <View
+                    style={{
                       flex: 1,
                       flexDirection: "row",
                       justifyContent: "space-evenly",
-                    }}>
-                  <Text style={styles.inputImgSubida}>
-                      {(values.imgRampa && !errors.imgRampa) && "Rampa subida"}
+                    }}
+                  >
+                    <Text style={styles.inputImgSubida}>
+                      {values.imgRampa && !errors.imgRampa && "Rampa subida"}
                     </Text>
-                  <Text style={styles.inputImgSubida}>
-                      {(values.imgDNI && !errors.imgDNI) && "DNI subido"}
+                    <Text style={styles.inputImgSubida}>
+                      {values.imgDNI && !errors.imgDNI && "DNI subido"}
                     </Text>
-                  <Text style={styles.inputImgSubida}>
-                      {(values.imgEscritura && !errors.imgEscritura) && "Escritura subida"}
+                    <Text style={styles.inputImgSubida}>
+                      {values.imgEscritura &&
+                        !errors.imgEscritura &&
+                        "Escritura subida"}
                     </Text>
-                    </View>
+                  </View>
                   <View style={modalStyles.imgInputsContainer}>
                     <View style={[modalStyles.imgContainer]}>
                       <Text style={modalStyles.textStyle}>Foto Rampa</Text>
@@ -300,7 +349,7 @@ const CrearRampa = (
                     <View style={modalStyles.imgContainer}>
                       <View style={modalStyles.ctn}>
                         <IconButton
-                        disabled={camaraDisabled}
+                          disabled={camaraDisabled}
                           icon="image-plus"
                           color={theme.colors.text}
                           onPress={() =>
@@ -314,7 +363,7 @@ const CrearRampa = (
                           size={27}
                         />
                         <IconButton
-                        disabled={camaraDisabled}
+                          disabled={camaraDisabled}
                           icon="camera"
                           color={theme.colors.text}
                           onPress={() =>
@@ -330,7 +379,7 @@ const CrearRampa = (
                       </View>
                       <View style={modalStyles.ctn}>
                         <IconButton
-                        disabled={camaraDisabled}
+                          disabled={camaraDisabled}
                           icon="image-plus"
                           color={theme.colors.text}
                           onPress={() =>
@@ -340,7 +389,7 @@ const CrearRampa = (
                           size={27}
                         />
                         <IconButton
-                        disabled={camaraDisabled}
+                          disabled={camaraDisabled}
                           icon="camera"
                           color={theme.colors.text}
                           onPress={() =>
@@ -352,7 +401,7 @@ const CrearRampa = (
                       </View>
                       <View style={modalStyles.ctn}>
                         <IconButton
-                        disabled={camaraDisabled}
+                          disabled={camaraDisabled}
                           icon="image-plus"
                           color={theme.colors.text}
                           onPress={() =>
@@ -366,7 +415,7 @@ const CrearRampa = (
                           size={27}
                         />
                         <IconButton
-                        disabled={camaraDisabled}
+                          disabled={camaraDisabled}
                           icon="camera"
                           color={theme.colors.text}
                           onPress={() =>
@@ -388,7 +437,11 @@ const CrearRampa = (
                         { borderColor: theme.colors.secondary },
                         modalStyles.button,
                       ],
-                      { color: theme.colors.text, textAlign: "center" ,fontSize:18,},
+                      {
+                        color: theme.colors.text,
+                        textAlign: "center",
+                        fontSize: 18,
+                      },
                       "Cancelar",
                       hideModal
                     )}
@@ -409,7 +462,7 @@ const CrearRampa = (
                       {
                         color: theme.colors.secondaryText,
                         textAlign: "center",
-                        fontSize:18,
+                        fontSize: 18,
                       },
                       "Agregar",
                       handleSubmit,
