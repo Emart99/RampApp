@@ -76,7 +76,7 @@ export const  HabilitarRampa = ({history}) =>{
                     <div>Foto DNI:</div>
                     <img  src={rampa.imagenDni} alt='...' />
                     <div>Fecha: {rampa.fechaCarga} </div>
-                    <div>Direccion: {rampa.calle}</div>
+                    <div>Direccion: {rampa.calle} {rampa.altura}</div>
                     <div className="d-flex justify-content-around">
                         <button className='btn btn-danger' onClick={() => rechazarRampa()}>Rechazar</button>
                         <button className='btn btn-primary' onClick={() => aprobarRampa()}>Aceptar</button>
