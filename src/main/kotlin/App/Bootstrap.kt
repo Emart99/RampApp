@@ -72,6 +72,8 @@ class Bootstrap : InitializingBean {
         val rampa1 = Rampa().apply{
             calle = "corrientes"
             altura = 132
+            posx= "-34.6175963"
+            posy= "-58.5579883"
             nroPartidaInmobiliaria = 24124
         }
 
@@ -109,7 +111,7 @@ class Bootstrap : InitializingBean {
         usuario1.rampasPropias.add(rampa1)
         usuario2.rampasPropias.add(rampa3)
         usuario2.rampasPropias.add(rampa2)
-        usuario3.vehiculos.add(vehiculo1)
+        usuario1.vehiculos.add(vehiculo1)
         usuario4.vehiculos.add(vehiculo2)
 
         repositorioUsuarios.save(usuario1)

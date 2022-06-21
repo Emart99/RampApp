@@ -24,13 +24,15 @@ class RampaService {
     lateinit var usuarioService:UsuarioService
     @Autowired
     lateinit var vehiculoRepository:RepositorioVehiculos
+    @Autowired
+    lateinit var reservasRepository: RepositorioReservas
 
 
     @Transactional
     fun traerRampasParaRamapasDisponibles(): List<Rampa> {
         val horaActual = LocalDateTime.now().hour
         val todasLasRampas = repositorioRampa.findAll()
-        todasLasRampas.forEach {rampa -> rampa.controlarEstadoRampa(horaActual)}
+        todasLasRampas.forEach {rampa -> rampa.controlarHorarios(horaActual)}
        repositorioRampa.saveAll(todasLasRampas)
         val estadoABuscar= EstadoRampa().apply{
             nombreDeEstado = "Disponible"
@@ -39,10 +41,13 @@ class RampaService {
     }
 
     @Transactional(readOnly = true)
-    fun traerRampaPorID(id: Long): Rampa =
-        repositorioRampa.findById(id).orElseThrow {
-        ResponseStatusException(HttpStatus.NOT_FOUND, "La rampa con identificador $id no existe")
+    fun traerRampaPorID(id: Long): Rampa {
+        val rampa = repositorioRampa.findById(id).orElseThrow { ResponseStatusException(HttpStatus.NOT_FOUND, "La rampa con identificador $id no existe") }
+        rampa.controlarEstadoRampa(LocalDateTime.now().hour)
+        return rampa
     }
+
+
 
     @Transactional(readOnly = false)
     fun registrarNuevaRampa(idUsuario: Long, rampaNueva: Rampa){
@@ -114,6 +119,7 @@ class RampaService {
         repositorioUsuario
             .findById(idUsuario)
             .map {
+                reservasRepository.saveAll(reservas)
                 it.reservasRealizadas.addAll(reservas)
                 repositorioUsuario.save(it)
             }
@@ -124,7 +130,8 @@ class RampaService {
         if(vehiculoRepository.findByDominio(dominio) == null ){
             throw ResponseStatusException(HttpStatus.NOT_FOUND, "El vehiculo enviado es invalido")
         }
-
+        rampa.realizarReservas(reservas)
+        repositorioRampa.save(rampa)
         return rampa //no se xq
     }
 

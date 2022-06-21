@@ -42,14 +42,42 @@ class Rampa {
     var horariosDisponibles = mutableListOf<Horarios>()
 
 
-    @OneToMany(fetch= FetchType.EAGER, cascade= [CascadeType.ALL])
+    @OneToMany(fetch= FetchType.EAGER)
     var reservasRealizadas: MutableCollection<Reserva> =mutableListOf()
 
 
    fun realizarReserva(unaReserva: Reserva){
        reservasRealizadas.add(unaReserva)
-       val horario= horariosDisponibles.any {horarios -> (horarios.horarioDesde <= unaReserva.horaInicioReserva) && (horarios.horarioHasta >= unaReserva.horaInicioReserva)}
-       horariosDisponibles.removeIf { horario }
+       var horarioAAgregar = mutableListOf<Horarios>()
+       var horasABorrar = mutableListOf<Horarios>()
+       loop@ for (horario in horariosDisponibles){
+           if (unaReserva.horaFinReserva < horario.horarioDesde || unaReserva.horaInicioReserva > horario.horarioHasta ){
+               continue@loop
+           }
+           if(unaReserva.horaInicioReserva > horario.horarioDesde){
+               horarioAAgregar.add(Horarios().apply {
+                   horarioDesde= horario.horarioDesde
+                   horarioHasta= unaReserva.horaInicioReserva
+               })
+               if (unaReserva.horaFinReserva < horario.horarioHasta){
+                   horarioAAgregar.add(Horarios().apply {
+                       horarioDesde= unaReserva.horaFinReserva
+                       horarioHasta= horario.horarioHasta
+                   })
+               }
+           }
+           else{
+               if (unaReserva.horaFinReserva < horario.horarioHasta){
+                   horarioAAgregar.add(Horarios().apply {
+                       horarioDesde= unaReserva.horaFinReserva
+                       horarioHasta= horario.horarioHasta
+                   })
+               }
+           }
+           horasABorrar.add(horario)
+       }
+       horariosDisponibles.removeAll(horasABorrar)
+       horariosDisponibles.addAll(horarioAAgregar)
    }
 
     fun realizarReservas(reservas:List<Reserva>){
@@ -60,16 +88,36 @@ class Rampa {
         horariosDisponibles.add(horario1)
     }
 
+    fun controlarHorarios(hora: Int){
+        var horasABorrar = mutableListOf<Horarios>()
+        for (horario in horariosDisponibles){
+            if (hora > horario.horarioDesde){
+                if (hora >= horario.horarioHasta){
+                    horasABorrar.add(horario)
+                }else{
+                    horario.horarioDesde = hora
+                }
+            }
+        }
+        if (horasABorrar.isNotEmpty()){
+            horariosDisponibles.removeAll(horasABorrar)
+        }
+        controlarEstadoRampa(hora)
+    }
+
 
     fun controlarEstadoRampa(hora: Int){
-       if(horariosDisponibles.any {horarios -> (horarios.horarioDesde < hora) && (horarios.horarioHasta > hora)})
-            {this.estadoRampa =  "Disponible"}
-       else if(reservasRealizadas.any {reserva -> (reserva.horaInicioReserva < hora) && (reserva.horaFinReserva > hora)})
-               this.estadoRampa = "Alquilada"
-       else this.estadoRampa = "No Disponible"
-       }
-
-
+        if (horariosDisponibles.isNotEmpty()){
+            this.estadoRampa =  "Disponible"
+        }else{
+            if(reservasRealizadas.any { reserva -> reserva.horaInicioReserva == hora }) {
+                this.estadoRampa = "Alquilada"
+            }
+            else {
+                this.estadoRampa = "No Disponible"
+            }
+        }
+    }
 }
 
 @Entity
