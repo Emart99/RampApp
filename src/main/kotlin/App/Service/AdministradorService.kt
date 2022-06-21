@@ -93,9 +93,11 @@ class AdministradorService {
         }
     }
 
-    fun obtenerBalance(fechaBusqueda: LocalDate): List<Rampa> {
-
-        return repositorioRampa.findAllByReservasRealizadasFechaReservaEquals(fechaBusqueda)
+    fun obtenerBalance(fechaBusqueda: LocalDate): MutableCollection<Reserva> {
+        val rampas = this.repositorioRampa.findAll()
+        val listaReserva: MutableCollection<Reserva> = mutableListOf()
+        rampas.forEach{rampa -> listaReserva.addAll(rampa.reservasRealizadas)}
+        return listaReserva
     }
 
     fun traerRampaPendientesAprobacionPorId(idRampa: Long): RampaPendienteAprobacion {
