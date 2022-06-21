@@ -1,5 +1,6 @@
 {
   "expo": {
+    "userInterfaceStyle": "automatic",
     "name": "RampApp",
     "slug": "RampApp",
     "version": "1.0.0",

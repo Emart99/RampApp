@@ -48,7 +48,11 @@ const AdminRampa = (
   enviandoDenuncia,
   setEnviandoDenuncia,
 ) => {
-  const hideModal = () => setVisible(false);
+  const hideModal = () => {
+    setHoraDesde([])
+    setHoraHasta([])
+    setVisible(false)
+  };
 
   const editRampa = async () => {
     if (isSwitchOn) {
@@ -68,17 +72,18 @@ const AdminRampa = (
   };
 
   const onConfirmD = (date, index) => {
+    setPickerDState(false, index);
     let lista = [...horaDesde];
     lista[index] = date.getHours();
     setHoraDesde(lista);
-    setPickerDState(false, index);
   };
 
   const onConfirmH = (date, index) => {
+    setPickerHState(false, index);
     let lista = [...horaHasta];
     lista[index] = date.getHours();
     setHoraHasta(lista);
-    setPickerHState(false, index);
+    
   };
 
   const setPickerDState = (state, index) => {
@@ -252,7 +257,7 @@ const AdminRampa = (
                     {/* PICKER DESDE ... */}
                     <View style={{ marginRight: "5%" }}>
                       <Text style={{ fontSize: 18, color: theme.colors.text }}>
-                        Desde: {horaDesde[index]} hs
+                        Desde: {horaDesde[index]}{horaDesde[index] == undefined && <Text>{"   "}</Text> } hs
                       </Text>
                       <IconButton
                         icon="clock-outline"
@@ -284,7 +289,7 @@ const AdminRampa = (
                     {/* PICKER HASTA ... */}
                     <View style={{ marginLeft: "5%" }}>
                       <Text style={{ fontSize: 18, color: theme.colors.text }}>
-                        Hasta: {horaHasta[index]} hs
+                        Hasta: {horaHasta[index]}{horaHasta[index] == undefined && <Text>{"   "}</Text> } hs 
                       </Text>
                       <IconButton
                         icon="clock-outline"
