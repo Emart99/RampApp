@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import ActionSheet from "react-native-actions-sheet";
 import { View, Text, Image, StyleSheet } from "react-native";
-import { Picker } from "@react-native-picker/picker";
 import _ from "lodash";
 import { useWindowDimensions, ToastAndroid } from "react-native";
 import { Snackbar } from "react-native-paper";
 import GlobalButton from "./GlobalButton";
 import styles from "../styles/styles";
+import RNPickerSelect from 'react-native-picker-select';
+
+
 import {
   rampaById,
   reservarRampa,
@@ -33,6 +35,26 @@ function procesoDeListas(objetosMultiples) {
   return lista;
 }
 
+function mapAutos(autos){
+  let JSON = []
+  autos.map((auto)=>{
+    const cosa = {label:auto.dominio,value:auto.dominio}
+    JSON.push(cosa)
+  })
+  return JSON
+
+}
+
+function mapHoras(horas){
+  let JSON = []
+  horas.map((hora)=>{
+    const cosa = {label:hora.toString()+":00",value:hora}
+    JSON.push(cosa)
+  })
+  return JSON
+
+}
+
 const RampasSheets = (theme, actionSheetRef, setIsOpen) => {
   const { height, width } = useWindowDimensions();
   const [horariosIzquierda, setHorariosIzquierda] = useState([]);
@@ -42,6 +64,21 @@ const RampasSheets = (theme, actionSheetRef, setIsOpen) => {
   const [messageFeedback, setMessageFeedback] = useState("");
   const [autos, setAutos] = useState();
   const [dominio, setDominio] = useState();
+
+  
+
+const selectBoxStyle = {
+inputIOS: {
+color:theme.colors.text,
+},
+placeholder: {
+color: theme.colors.text,
+},
+inputAndroid: {
+color:theme.colors.text,
+}
+}
+
 
   const calculoDePrecio = () => {
     let precio = 0;
@@ -158,8 +195,9 @@ const RampasSheets = (theme, actionSheetRef, setIsOpen) => {
           >
             <View
               style={{
-                width: "50%",
+                width: "30%",
                 alignItems: "center",
+                marginRight:20,
               }}
             >
               <Text
@@ -172,42 +210,26 @@ const RampasSheets = (theme, actionSheetRef, setIsOpen) => {
               >
                 Hora Desde
               </Text>
-              {rampa &&
-                procesoDeListas(rampa.horariosDisponibles).map(
-                  (horas, numeroDeDatePicker) => {
-                    return (
-                      <Picker
-                        dropdownIconColor={theme.colors.text}
-                        selectedValue={horariosIzquierda[numeroDeDatePicker]}
-                        key={Math.random()}
-                        onValueChange={(itemValue, itemIndex) => {
-                          let lista = [...horariosIzquierda];
-                          lista[numeroDeDatePicker] = itemValue;
-                          setHorariosIzquierda(lista);
-                        }}
-                        style={{ width: width / 3 }}
-                      >
-                        {horas.map((hora) => {
-                          return (
-                            <Picker.Item
-                              style={{
-                                color: theme.colors.text,
-                                backgroundColor: theme.colors.background,
-                              }}
-                              key={hora}
-                              label={hora.toString() + ":00"}
-                              value={hora}
-                            />
-                          );
-                        })}
-                      </Picker>
-                    );
-                  }
-                )}
+              {
+                rampa && procesoDeListas(rampa.horariosDisponibles).map(
+                  (horas,numeroDeDatePicker) => {
+                    return (<RNPickerSelect
+                      key={numeroDeDatePicker}
+                      style={selectBoxStyle}
+                      placeholder={{label:"Hora...",value:null}}
+                      items={mapHoras(horas)}
+                      onValueChange={(itemValue, itemIndex) => {
+                        let lista = [...horariosIzquierda];
+                        lista[numeroDeDatePicker] = itemValue;
+                        setHorariosIzquierda(lista);
+                      }}
+                    />)})
+              }
             </View>
             <View
               style={{
-                width: "50%",
+                marginLeft:20,
+                width: "30%",
                 alignItems: "center",
               }}
             >
@@ -221,38 +243,21 @@ const RampasSheets = (theme, actionSheetRef, setIsOpen) => {
               >
                 Hora Hasta
               </Text>
-              {rampa &&
-                procesoDeListas(rampa.horariosDisponibles).map(
-                  (horas, numeroDeDatePicker) => {
-                    return (
-                      <Picker
-                        dropdownIconColor={theme.colors.text}
-                        selectedValue={horariosDerecha[numeroDeDatePicker]}
-                        key={Math.random()}
-                        onValueChange={(itemValue, itemIndex) => {
-                          let lista = [...horariosDerecha];
-                          lista[numeroDeDatePicker] = itemValue;
-                          setHorariosDerecha(lista);
-                        }}
-                        style={{ width: width / 3 }}
-                      >
-                        {horas.map((hora) => {
-                          return (
-                            <Picker.Item
-                              style={{
-                                color: theme.colors.text,
-                                backgroundColor: theme.colors.background,
-                              }}
-                              key={hora}
-                              label={hora.toString() + ":00"}
-                              value={hora}
-                            />
-                          );
-                        })}
-                      </Picker>
-                    );
-                  }
-                )}
+              {
+                rampa && procesoDeListas(rampa.horariosDisponibles).map(
+                  (horas,numeroDeDatePicker) => {
+                    return (<RNPickerSelect
+                      key={numeroDeDatePicker}
+                      style={selectBoxStyle}
+                      placeholder={{label:"Hora...",value:null}}
+                      items={mapHoras(horas)}
+                      onValueChange={(itemValue, itemIndex) => {
+                        let lista = [...horariosDerecha];
+                        lista[numeroDeDatePicker] = itemValue;
+                        setHorariosDerecha(lista);
+                      }}
+                    />)})
+              }
             </View>
           </View>
         </View>
@@ -264,40 +269,13 @@ const RampasSheets = (theme, actionSheetRef, setIsOpen) => {
           </View>
         )}
         {autos && autos.length != 0 && (
-          <View>
-            <Picker
-              style={{ width: width / 1.5, alignSelf: "center" }}
-              selectedValue={dominio}
-              onValueChange={(value) => {
-                setDominio(value);
-              }}
-              dropdownIconColor={theme.colors.text}
-              key={Math.random()}
-            >
-              <Picker.Item
-                style={{
-                  color: theme.colors.text,
-                  backgroundColor: theme.colors.background,
-                }}
-                key={Math.random()}
-                label={"Seleccione el dominio..."}
-                value={undefined}
-              />
-              {autos &&
-                autos.map((auto) => {
-                  return (
-                    <Picker.Item
-                      style={{
-                        color: theme.colors.text,
-                        backgroundColor: theme.colors.background,
-                      }}
-                      key={auto.id}
-                      label={auto.dominio.toString()}
-                      value={auto.dominio}
-                    />
-                  );
-                })}
-            </Picker>
+          <View style={{width:width/1.5}}>
+            <RNPickerSelect
+            style={selectBoxStyle}
+            placeholder={{label:"Seleccione un dominio",value:null}}
+            onValueChange={(value) => setDominio(value)}
+            items={mapAutos(autos)}
+        />
           </View>
         )}
         <View
@@ -333,3 +311,5 @@ const RampasSheets = (theme, actionSheetRef, setIsOpen) => {
 };
 
 export default RampasSheets;
+
+
