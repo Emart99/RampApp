@@ -116,8 +116,7 @@ const CardReserva = (reserva, theme, showAlertDenuncia, setShowAlertDenuncia, vi
       />
       <Card.Cover
         style={newCardStyles.img}
-        source={require('../../utils/casaBrunillo.png')}
-        // source={{ uri: reserva && reserva.imagenRampa }}
+        source={{ uri: reserva && reserva.imagenRampa }}
       />
       <Card.Content style={newCardStyles.container}>
         <View style={newCardStyles.innerContainer}>

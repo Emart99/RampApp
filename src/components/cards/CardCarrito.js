@@ -38,8 +38,7 @@ const CardCarrito = (reserva, theme,setOnPressRefresh, onPressRefresh) => {
       />
       <Card.Cover
         style={newCardStyles.img}
-        source={require('../../utils/casaBrunillo.png')}
-        // source={{ uri: reserva && reserva.imagenRampa }}
+        source={{ uri: reserva && reserva.imagenRampa }}
       />
       <Card.Content style={newCardStyles.container}>
         <View style={newCardStyles.innerContainer}>

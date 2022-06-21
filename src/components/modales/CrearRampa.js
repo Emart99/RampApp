@@ -267,7 +267,7 @@ const CrearRampa = (
                       styles.inputView,
                       theme.colors.modal,
                       false,
-                      "number-pad"
+                      "default"
                     )}
                     {errors.localidad && touched.localidad && (
                       <Text style={styles.inputInvalidText}>

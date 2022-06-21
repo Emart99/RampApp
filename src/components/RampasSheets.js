@@ -260,7 +260,7 @@ const RampasSheets = (theme, actionSheetRef, setIsOpen) => {
         {autos && autos.length == 0 && (
           <View style={{ marginBottom: 20 }}>
             <Text style={{ fontSize: 16, color: theme.colors.text }}>
-              Vaya a crear vehiculos burro
+              Primero debe registrar su vehículo
             </Text>
           </View>
         )}
