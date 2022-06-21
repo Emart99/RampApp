@@ -36,6 +36,7 @@ const CardRampa = (
   };
 
   return (
+    
     <Pressable key={rampa.id} onPress={touchHandler}>
       <Card
         style={[
@@ -58,7 +59,7 @@ const CardRampa = (
         />
         <Card.Cover
           style={newCardStyles.img}
-          source={{ uri: reserva && reserva.imagenRampa }}
+          source={{ uri: rampa && rampa.imagenRampa }}
         />
         <Card.Content style={newCardStyles.container}>
           <View style={newCardStyles.innerContainer}>

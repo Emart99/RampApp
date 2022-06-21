@@ -214,9 +214,9 @@ const Registrarse = ({ navigation }) => {
                     editable={false}
                     outlineColor="transparent"
                     style={{backgroundColor:theme.colors.background}}
-                    underlineColor={theme.colors.text}
-                    activeUnderlineColor={theme.colors.text}
-                    
+                    underlineColor={theme.colors.secondary}
+                    activeUnderlineColor={theme.colors.secondary}
+                    theme={{colors:{text:theme.colors.secondary}}}
                   >
                     {"Fecha de nacimiento: " +
                       `${fechaNacimiento.getDate()}/${fechaNacimiento.getMonth()}/${fechaNacimiento.getFullYear()}`}

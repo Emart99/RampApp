@@ -66,7 +66,6 @@ const RampasSheets = (theme, actionSheetRef, setIsOpen) => {
 
       reservas.push(reserva);
     }
-    console.log(dominio);
     reservarRampa(reservas, rampa.id, dominio)
       .then(() => {
         setMessageFeedback("La reserva se ha realizado correctamente");

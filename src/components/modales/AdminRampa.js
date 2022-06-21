@@ -11,7 +11,6 @@ import { View } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import AwesomeAlert from "react-native-awesome-alerts";
-import { Formik } from "formik";
 
 import modalStyles from "../../styles/modalStyles";
 import GlobalButton from "../GlobalButton";
@@ -21,8 +20,7 @@ import {
   habilitarRampa,
   subirImagen,
 } from "../../api/http";
-import GlobalInput from "../GlobalInput";
-import styles from "../../styles/styles";
+
 
 const AdminRampa = (
   rampa,
@@ -62,11 +60,10 @@ const AdminRampa = (
         };
         horarios.push(hora);
       }
-       await habilitarRampa(rampa.id, horarios);
+       await habilitarRampa(rampa.id, horarios).then(()=> setOnPressRefresh(!onPressRefresh));
     } else {
-        await deshabilitarRampa(rampa.id);
+        await deshabilitarRampa(rampa.id).then(()=> setOnPressRefresh(!onPressRefresh));
     }
-    setOnPressRefresh(!onPressRefresh);
     hideModal();
   };
 
@@ -361,217 +358,3 @@ const AdminRampa = (
 };
 export default AdminRampa;
 
-const init = {
-  horaDesde1: 0,
-  horaHasta1: 0,
-  visible1: false,
-  horaDesde2: 0,
-  horaHasta2: 0,
-  visible2: false,
-  horaDesde3: 0,
-  horaHasta3: 0,
-  visible3: false,
-};
-
-const FormHorarios = ({
-  theme,
-  setVisibleTimePickerD,
-  visibleTimePickerD,
-  setVisibleTimePickerH,
-  visibleTimePickerH,
-}) => {
-  return (
-    <View style={[modalStyles.horariosContainer]}>
-      <Formik initialValues={init} onSubmit={(values) => console.log(values)}>
-        {({
-          handleChange,
-          handleSubmit,
-          setFieldValue,
-          setValues,
-          resetForm,
-          setFieldTouched,
-          values,
-          errors,
-          isValid,
-          touched,
-        }) => (
-          <>
-            {/* PICKER DESDE ... */}
-            <View style={{ flex: 1, flexDirection: "row" }}>
-              <View style={{ marginRight: "5%" }}>
-                <Text style={{ fontSize: 18, color: theme.colors.text }}>
-                  Desde: {values.horaDesde1} hs
-                </Text>
-                <IconButton
-                  icon="clock-outline"
-                  color={theme.colors.text}
-                  onPress={() => {
-                    setFieldValue("visible1", true);
-                  }}
-                  size={40}
-                  style={{
-                    padding: 0,
-                    marginTop: -10,
-                    alignSelf: "center",
-                  }}
-                />
-                <DateTimePickerModal
-                  isVisible={values.visible1}
-                  mode="time"
-                  onConfirm={(date) => {
-                    resetForm();
-                    // setValues(init);
-                    setFieldValue("horaDesde1", date.getHours());
-                    console.log(values.visible1);
-                  }}
-                  onCancel={() => {
-                    resetForm();
-                    console.log(values.visible1);
-                  }}
-                  date={new Date()}
-                  minuteInterval={30}
-                />
-              </View>
-              {/* ... PICKER DESDE*/}
-              {/* PICKER HASTA ... */}
-              <View style={{ marginLeft: "5%" }}>
-                <Text style={{ fontSize: 18, color: theme.colors.text }}>
-                  Hasta: hs
-                </Text>
-                <IconButton
-                  icon="clock-outline"
-                  color={theme.colors.text}
-                  onPress={() => setVisibleTimePickerH(true)}
-                  size={40}
-                  style={{
-                    padding: 0,
-                    alignSelf: "center",
-                    marginTop: -10,
-                  }}
-                />
-                <DateTimePickerModal
-                  isVisible={visibleTimePickerH}
-                  mode="time"
-                  // onConfirm={(date) => onConfirm(date, setHoraHasta)}
-                  onCancel={() => setVisibleTimePickerH(false)}
-                  date={new Date()}
-                  minuteInterval={30}
-                />
-              </View>
-            </View>
-            {/* ... PICKER HASTA*/}
-
-            {/* PICKER DESDE ... */}
-            <View style={{ flex: 1, flexDirection: "row" }}>
-              <View style={{ marginRight: "5%" }}>
-                <Text style={{ fontSize: 18, color: theme.colors.text }}>
-                  Desde: hs
-                </Text>
-                <IconButton
-                  icon="clock-outline"
-                  color={theme.colors.text}
-                  onPress={() => setVisibleTimePickerD(true)}
-                  size={40}
-                  style={{
-                    padding: 0,
-                    marginTop: -10,
-                    alignSelf: "center",
-                  }}
-                />
-                <DateTimePickerModal
-                  isVisible={visibleTimePickerD}
-                  mode="time"
-                  // onConfirm={(date) => onConfirm(date, setHoraDesde)}
-                  onCancel={() => setVisibleTimePickerD(false)}
-                  date={new Date()}
-                  minuteInterval={30}
-                />
-              </View>
-              {/* ... PICKER DESDE*/}
-              {/* PICKER HASTA ... */}
-              <View style={{ marginLeft: "5%" }}>
-                <Text style={{ fontSize: 18, color: theme.colors.text }}>
-                  Hasta: hs
-                </Text>
-                <IconButton
-                  icon="clock-outline"
-                  color={theme.colors.text}
-                  onPress={() => setVisibleTimePickerH(true)}
-                  size={40}
-                  style={{
-                    padding: 0,
-                    alignSelf: "center",
-                    marginTop: -10,
-                  }}
-                />
-                <DateTimePickerModal
-                  isVisible={visibleTimePickerH}
-                  mode="time"
-                  // onConfirm={(date) => onConfirm(date, setHoraHasta)}
-                  onCancel={() => setVisibleTimePickerH(false)}
-                  date={new Date()}
-                  minuteInterval={30}
-                />
-              </View>
-            </View>
-            {/* ... PICKER HASTA*/}
-            {/* PICKER DESDE ... */}
-            <View style={{ flex: 1, flexDirection: "row" }}>
-              <View style={{ marginRight: "5%" }}>
-                <Text style={{ fontSize: 18, color: theme.colors.text }}>
-                  Desde: hs
-                </Text>
-                <IconButton
-                  icon="clock-outline"
-                  color={theme.colors.text}
-                  onPress={() => setVisibleTimePickerD(true)}
-                  size={40}
-                  style={{
-                    padding: 0,
-                    marginTop: -10,
-                    alignSelf: "center",
-                  }}
-                />
-                <DateTimePickerModal
-                  isVisible={visibleTimePickerD}
-                  mode="time"
-                  // onConfirm={(date) => onConfirm(date, setHoraDesde)}
-                  onCancel={() => setVisibleTimePickerD(false)}
-                  date={new Date()}
-                  minuteInterval={30}
-                />
-              </View>
-              {/* ... PICKER DESDE*/}
-              {/* PICKER HASTA ... */}
-              <View style={{ marginLeft: "5%" }}>
-                <Text style={{ fontSize: 18, color: theme.colors.text }}>
-                  Hasta: hs
-                </Text>
-                <IconButton
-                  icon="clock-outline"
-                  color={theme.colors.text}
-                  onPress={() => setVisibleTimePickerH(true)}
-                  size={40}
-                  style={{
-                    padding: 0,
-                    alignSelf: "center",
-                    marginTop: -10,
-                  }}
-                />
-                <DateTimePickerModal
-                  isVisible={visibleTimePickerH}
-                  mode="time"
-                  // onConfirm={(date) => onConfirm(date, setHoraHasta)}
-                  onCancel={() => setVisibleTimePickerH(false)}
-                  date={new Date()}
-                  minuteInterval={30}
-                />
-              </View>
-            </View>
-            {/* ... PICKER HASTA*/}
-          </>
-        )}
-      </Formik>
-    </View>
-  );
-};
