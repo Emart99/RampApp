@@ -219,7 +219,7 @@ const Registrarse = ({ navigation }) => {
                     theme={{colors:{text:theme.colors.secondary}}}
                   >
                     {"Fecha de nacimiento: " +
-                      `${fechaNacimiento.getDate()}/${fechaNacimiento.getMonth()}/${fechaNacimiento.getFullYear()}`}
+                      `${fechaNacimiento.getDate()}/${fechaNacimiento.getMonth()+1}/${fechaNacimiento.getFullYear()}`}
                   </TextInput>
                 </TouchableOpacity>
 
