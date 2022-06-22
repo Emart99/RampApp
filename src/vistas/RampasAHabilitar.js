@@ -39,7 +39,7 @@ export const RampasAHabilitar= ({history}) =>{
         <div className="card pt-2 pb-2 mt-3 bg-dark text-white ">
             <div className='row text-center'>
                 <div className='col'>{data.fechaCarga}</div>
-                <div className='col'>{data.calle}</div>
+                <div className='col'>{data.calle} {data.altura}</div>
                 <div className='col'>{data.nombrePropietario}</div>
             </div>
             </div>
