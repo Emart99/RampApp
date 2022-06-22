@@ -58,10 +58,18 @@ const AdminRampa = (
     if (isSwitchOn) {
       let horarios = [];
       for (let i = 0; i < horaDesde.length; i++) {
-        const hora = {
-          horarioDesde: horaDesde[i],
-          horarioHasta: horaHasta[i],
-        };
+        let hora
+        if(horaHasta[i] != 0){
+          hora = {
+            horarioDesde: horaDesde[i],
+            horarioHasta: horaHasta[i],
+          };
+        }else{
+          hora = {
+            horarioDesde: horaDesde[i],
+            horarioHasta: 24,
+          };
+        }
         horarios.push(hora);
       }
        await habilitarRampa(rampa.id, horarios).then(()=> setOnPressRefresh(!onPressRefresh));
