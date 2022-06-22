@@ -89,8 +89,9 @@ class UsuarioService {
     }
     @Transactional(readOnly = true)
     fun traerRampasPropias(idUsuario: Long): List<Rampa> {
-        val usuario = this.getUsuario(idUsuario)
-        return usuario.rampasPropias
+        val rampas = this.getUsuario(idUsuario).rampasPropias
+        rampas.forEach {rampa -> rampa.controlarHorarios(LocalDateTime.now().hour) }
+        return rampas
     }
     @Transactional(readOnly = true)
     fun traerVehiculosPropios(idUsuario: Long): List<Vehiculo> {
