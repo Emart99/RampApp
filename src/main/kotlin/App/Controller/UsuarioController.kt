@@ -16,7 +16,6 @@ class UsuarioController {
 
     @PostMapping("/usuario/login")
     @Operation(summary = "Devuelve el usuario cuyo username y contraseña coincide con lo que pasamos como parámetro")
-
     fun buscarLoguearse(@RequestBody usuario: Usuario): Usuario = usuarioService.buscar(usuario)
 
     @GetMapping("/usuario/{id}")

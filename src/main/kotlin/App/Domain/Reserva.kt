@@ -34,4 +34,7 @@ class Reserva {
 
     @Column
     var imagenRampa:String = ""
+
+    @Column
+    var rampaNroPartida:Int = 0
 }

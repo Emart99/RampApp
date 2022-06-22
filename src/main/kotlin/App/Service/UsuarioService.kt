@@ -2,6 +2,7 @@ package App.Service
 
 import App.Domain.*
 import App.Repository.RepositorioDenuncias
+import App.Repository.RepositorioRampas
 import App.Repository.RepositorioUsuario
 import App.Repository.RepositorioVehiculos
 import org.apache.el.parser.AstFalse
@@ -23,6 +24,9 @@ class UsuarioService {
 
     @Autowired
     lateinit var repositorioDenuncia: RepositorioDenuncias
+
+    @Autowired
+    lateinit var repositorioRampas: RepositorioRampas
 
     @Transactional(readOnly = true)
     fun buscar(usuario: Usuario): Usuario =
@@ -110,6 +114,15 @@ class UsuarioService {
         val usuario = this.getUsuario(idUsuario)
         val horaActual = LocalDateTime.now().hour
         usuario.reservasRealizadas.filter{reserva -> reserva.horaFinReserva > horaActual && !reserva.pagado }.forEach { reserva -> reserva.pagado = true }
+        for (reserva in usuario.reservasRealizadas){
+            if (reserva.pagado){
+                val rampa = repositorioRampas.findByNroPartidaInmobiliaria(reserva.rampaNroPartida)
+                if (rampa != null) {
+                    rampa.realizarReserva(reserva)
+                    repositorioRampas.save(rampa)
+                }
+            }
+        }
         repositorioUsuarios.save(usuario)
     }
     @Transactional()

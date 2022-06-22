@@ -70,43 +70,6 @@ class RampaService {
         repositorioRampaPendienteAprobacion.save(rampaPendiente)
     }
 
-    @Transactional
-    fun modificarHorariosRampa(idRampa: Long, rampaModificadora:Rampa): Rampa {
-        return repositorioRampa
-            .findById(idRampa)
-            .map {
-                it.horariosDisponibles= rampaModificadora.horariosDisponibles
-                repositorioRampa.save(it)
-                it
-            }
-            .orElseThrow {
-                ResponseStatusException(HttpStatus.NOT_FOUND, "La Rampa con identificador $idRampa no existe")
-            }
-    }
-
-//    @Transactional
-//    fun reservarRampa(idRampa: Long,idUsuario: Long, reserva: Reserva): Rampa {
-//        repositorioUsuario
-//            .findById(idUsuario)
-//            .map {
-//                it.reservasRealizadas.add(reserva)
-//                repositorioUsuario.save(it)
-//            }
-//            .orElseThrow {
-//                ResponseStatusException(HttpStatus.NOT_FOUND, "El usuario con identificador $idUsuario no existe")
-//            }
-//        return repositorioRampa
-//            .findById(idRampa)
-//            .map {
-//                it.realizarReserva(reserva)
-//                repositorioRampa.save(it)
-//                it
-//            }
-//            .orElseThrow {
-//                ResponseStatusException(HttpStatus.NOT_FOUND, "La Rampa con identificador $idRampa no existe")
-//            }
-//
-//    }
 
     @Transactional
     fun reservarRampa(idRampa: Long,idUsuario: Long, reservas: List<Reserva>,dominio:String): Rampa {
@@ -115,6 +78,7 @@ class RampaService {
             it.altura = rampa.altura
             it.calle = rampa.calle
             it.imagenRampa = rampa.imagenRampa
+            it.rampaNroPartida = rampa.nroPartidaInmobiliaria
         }
         repositorioUsuario
             .findById(idUsuario)
@@ -130,20 +94,11 @@ class RampaService {
         if(vehiculoRepository.findByDominio(dominio) == null ){
             throw ResponseStatusException(HttpStatus.NOT_FOUND, "El vehiculo enviado es invalido")
         }
-        rampa.realizarReservas(reservas)
-        repositorioRampa.save(rampa)
-        return rampa //no se xq
+
+        return rampa
     }
 
 
-//    @Transactional
-//    fun agregarHorariosRampa(idRampa: Long, horarioAAgregar: Horarios): Rampa {
-//        val rampa = this.traerRampaPorID(idRampa)
-//        rampa.horariosDisponibles.add(horarioAAgregar)
-//        return rampa
-//    }
-
-    //si ponemos varios horarios para agregar
     @Transactional
     fun agregarHorariosRampa(idRampa: Long, horariosAAgregar: List<Horarios>): Rampa {
         val rampa = this.traerRampaPorID(idRampa)

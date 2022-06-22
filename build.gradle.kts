@@ -7,6 +7,7 @@ plugins {
     kotlin("plugin.spring") version "1.6.10"
     kotlin("plugin.jpa") version "1.6.10"
     jacoco
+    application
 }
 
 group = "ar.edu.proyectos"
@@ -36,6 +37,12 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test:$springVersion")
     runtimeOnly("mysql:mysql-connector-java:8.0.28")
 }
+
+
+application {
+    mainClass.set("App.RamAppKt")
+}
+
 
 tasks.withType<KotlinCompile> {
     kotlinOptions {
