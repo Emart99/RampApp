@@ -100,7 +100,7 @@ const EditarVehiculo = (
                   theme.colors.modal,
                   false,
                   "default"
-                )}{" "}
+                )}
                 {errors.dominio && touched.dominio && (
                   <Text style={styles.inputInvalidText}>{errors.dominio}</Text>
                 )}

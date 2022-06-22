@@ -27,7 +27,7 @@ const Mapa = () => {
             if(!isOpen){
                 fetchRampas()
             }
-          }, 6000);
+          }, 3000);
  // se hace cada vez que se abre el tab, si quisieras que se haga solo en la primera vez, habria que usar un flag
           return () => clearInterval(interval);
     }
