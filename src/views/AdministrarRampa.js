@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import { ScrollView, TouchableOpacity } from "react-native";
 import { Snackbar, useTheme, Text } from "react-native-paper";
 
@@ -22,18 +22,12 @@ const AdministrarRampa = () => {
   const [showAlertDenuncia, setShowAlertDenuncia] = React.useState(false);
   const [onPressRefresh, setOnPressRefresh] = React.useState(false);
   const [isSwitchOn, setIsSwitchOn] = React.useState(true);
-  const [horaDesde, setHoraDesde] = React.useState([]);
-  const [horaHasta, setHoraHasta] = React.useState([]);
-  const [visibleTimePickerD, setVisibleTimePickerD] = React.useState([
-    false,
-    false,
-    false,
-  ]);
-  const [visibleTimePickerH, setVisibleTimePickerH] = React.useState([
-    false,
-    false,
-    false,
-  ]);
+  const [visibleTimePicker, setVisibleTimePicker] = React.useState({
+    desde: false,
+    hasta: false,
+  });
+  const [horarios, setHorarios] = React.useState([]);
+  const [horario, setHorario] = React.useState({ horarioDesde: 0, horarioHasta: 0 });
   const [visibleLoading, setVisibleLoading] = React.useState(false);
   const [visibleToast, setVisibleToast] = React.useState(false);
   const [camaraDisbabled, setCamaraDisbabled] = React.useState(false);
@@ -44,6 +38,17 @@ const AdministrarRampa = () => {
   const [jsonRampaRegistrada, setJsonRampaRegistrada] = React.useState({});
 
   const showModalCrear = () => setVisibleModalCrear(true);
+
+  const agregarDisabled = useMemo(() => {
+    if (horario.horarioHasta > 0 && horario.horarioDesde > 0) {
+      return false;
+    }
+    return true;
+  }, [horario]);
+
+  const limitTime = useMemo(() => {
+    return horarios.length > 5;
+  }, [horarios]);
 
   useEffect(() => {
     async function fetchRampas() {
@@ -70,14 +75,12 @@ const AdministrarRampa = () => {
             setOnPressRefresh,
             isSwitchOn,
             setIsSwitchOn,
-            horaDesde,
-            setHoraDesde,
-            horaHasta,
-            setHoraHasta,
-            visibleTimePickerD,
-            setVisibleTimePickerD,
-            visibleTimePickerH,
-            setVisibleTimePickerH,
+            visibleTimePicker,
+            setVisibleTimePicker,
+            horarios,
+            setHorarios,
+            horario,
+            setHorario,
             showAlertDenuncia,
             setShowAlertDenuncia,
             visibleToast,
@@ -86,6 +89,8 @@ const AdministrarRampa = () => {
             setDominioDenunciado,
             enviandoDenuncia,
             setEnviandoDenuncia,
+            agregarDisabled,
+            limitTime
           )
         )}
       </ScrollView>

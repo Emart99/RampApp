@@ -14,29 +14,28 @@ const CardRampa = (
   setOnPressRefresh,
   isSwitchOn,
   setIsSwitchOn,
-  horaDesde,
-  setHoraDesde,
-  horaHasta,
-  setHoraHasta,
-  visibleTimePickerD,
-  setVisibleTimePickerD,
-  visibleTimePickerH,
-  setVisibleTimePickerH,
+  visibleTimePicker,
+  setVisibleTimePicker,
+  horarios,
+  setHorarios,
+  horario,
+  setHorario,
   showAlertDenuncia,
   setShowAlertDenuncia,
   visibleToast,
   setVisibleToast,
   dominioDenunciado,
   setDominioDenunciado,
-  enviandoDenuncia, 
+  enviandoDenuncia,
   setEnviandoDenuncia,
+  agregarDisabled,
+  limitTime
 ) => {
   const touchHandler = () => {
     setVisibleModalAdmin(true);
   };
 
   return (
-    
     <Pressable key={rampa.id} onPress={touchHandler}>
       <Card
         style={[
@@ -82,14 +81,12 @@ const CardRampa = (
         theme,
         isSwitchOn,
         setIsSwitchOn,
-        horaDesde,
-        setHoraDesde,
-        horaHasta,
-        setHoraHasta,
-        visibleTimePickerD,
-        setVisibleTimePickerD,
-        visibleTimePickerH,
-        setVisibleTimePickerH,
+        visibleTimePicker,
+        setVisibleTimePicker,
+        horarios,
+        setHorarios,
+        horario,
+        setHorario,
         onPressRefresh,
         setOnPressRefresh,
         showAlertDenuncia,
@@ -98,8 +95,10 @@ const CardRampa = (
         setVisibleToast,
         dominioDenunciado,
         setDominioDenunciado,
-        enviandoDenuncia, 
+        enviandoDenuncia,
         setEnviandoDenuncia,
+        agregarDisabled,
+        limitTime
       )}
     </Pressable>
   );

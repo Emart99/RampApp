@@ -30,7 +30,7 @@ const modalStyles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-evenly",
     flexDirection: "row",
-    marginTop: 10,
+    marginTop: 20,
   },
   textStyle: {
     marginLeft: 10,
