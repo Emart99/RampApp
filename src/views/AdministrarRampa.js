@@ -27,7 +27,6 @@ const AdministrarRampa = () => {
     hasta: false,
   });
   const [horarios, setHorarios] = React.useState([]);
-  const [horario, setHorario] = React.useState({ horarioDesde: 0, horarioHasta: 0 });
   const [visibleLoading, setVisibleLoading] = React.useState(false);
   const [visibleToast, setVisibleToast] = React.useState(false);
   const [camaraDisbabled, setCamaraDisbabled] = React.useState(false);
@@ -39,12 +38,6 @@ const AdministrarRampa = () => {
 
   const showModalCrear = () => setVisibleModalCrear(true);
 
-  const agregarDisabled = useMemo(() => {
-    if (horario.horarioHasta > 0 && horario.horarioDesde > 0) {
-      return false;
-    }
-    return true;
-  }, [horario]);
 
   const limitTime = useMemo(() => {
     return horarios.length > 5;
@@ -79,8 +72,6 @@ const AdministrarRampa = () => {
             setVisibleTimePicker,
             horarios,
             setHorarios,
-            horario,
-            setHorario,
             showAlertDenuncia,
             setShowAlertDenuncia,
             visibleToast,
@@ -89,8 +80,7 @@ const AdministrarRampa = () => {
             setDominioDenunciado,
             enviandoDenuncia,
             setEnviandoDenuncia,
-            agregarDisabled,
-            limitTime
+            limitTime,
           )
         )}
       </ScrollView>

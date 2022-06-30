@@ -7,7 +7,7 @@ import {
   Switch,
   TextInput,
 } from "react-native-paper";
-import { Button, View } from "react-native";
+import { Alert, Button, View } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import AwesomeAlert from "react-native-awesome-alerts";
@@ -21,6 +21,9 @@ import {
   habilitarRampa,
   subirImagen,
 } from "../../api/http";
+import { Formik } from "formik";
+import styles from "../../styles/styles";
+import { horarioValidationSchema } from "../../utils/horarioSchema";
 
 const AdminRampa = (
   rampa,
@@ -33,8 +36,6 @@ const AdminRampa = (
   setVisibleTimePicker,
   horarios,
   setHorarios,
-  horario,
-  setHorario,
   onPressRefresh,
   setOnPressRefresh,
   showAlertDenuncia,
@@ -45,20 +46,24 @@ const AdminRampa = (
   setDominioDenunciado,
   enviandoDenuncia,
   setEnviandoDenuncia,
-  agregarDisabled,
   limitTime
 ) => {
   const hideModal = () => {
     setVisible(false);
-    resetHorario();
     setHorarios([]);
+    setOnPressRefresh(!onPressRefresh);
   };
 
   const editRampa = async () => {
     if (isSwitchOn) {
-      await habilitarRampa(rampa.id, horarios).then(() =>
-        setOnPressRefresh(!onPressRefresh)
-      );
+      if (horarios.length <= 0) {
+        Alert.alert("", "Debe primero ingresar un horario");
+        return;
+      } else {
+        await habilitarRampa(rampa.id, horarios).then(() =>
+          setOnPressRefresh(!onPressRefresh)
+        );
+      }
     } else {
       await deshabilitarRampa(rampa.id).then(() =>
         setOnPressRefresh(!onPressRefresh)
@@ -116,24 +121,9 @@ const AdminRampa = (
     return hora;
   };
 
-  const timeSetterDesde = (time) => {
-    onTogglePickerDesde();
-    const hora = check24h(time);
-    setHorario({ ...horario, horarioDesde: hora });
-  };
-
-  const timeSetterHasta = (time) => {
-    onTogglePickerHasta();
-    const hora = check24h(time);
-    setHorario({ ...horario, horarioHasta: hora });
-  };
-
-  const resetHorario = () => setHorario({ horarioDesde: 0, horarioHasta: 0 });
-
-  const agregarHorario = () => {
-    if (horario.horarioDesde > 0 && horario.horarioHasta > 0) {
-      setHorarios([...horarios, horario]);
-      resetHorario();
+  const agregarHorario = (values) => {
+    if (values.horarioDesde > 0 && values.horarioHasta > 0) {
+      setHorarios([...horarios, values]);
     }
   };
 
@@ -252,91 +242,142 @@ const AdminRampa = (
 
           {isSwitchOn ? (
             <>
+              {limitTime && (
+                <Text
+                  style={{ color: "red", alignSelf: "center", marginTop: -20 }}
+                >
+                  Limite de horarios alcanzado
+                </Text>
+              )}
               <Text
                 style={[{ color: theme.colors.text }, modalStyles.textHorarios]}
               >
                 Seleccionar horario para el día de hoy
               </Text>
-              <View
-                style={{
-                  flex: 1,
-                  alignSelf: "center",
+              <Formik
+                initialValues={{ horarioDesde: 0, horarioHasta: 0 }}
+                validationSchema={horarioValidationSchema}
+                onSubmit={(values, { resetForm }) => {
+                  agregarHorario(values);
+                  resetForm({ horarioDesde: 0, horarioHasta: 0 });
                 }}
               >
-                <View style={[modalStyles.horariosContainer]}></View>
-                <View style={{ flex: 1, flexDirection: "row" }}>
-                  {/* PICKER DESDE ... */}
-                  <View style={{ marginRight: "5%" }}>
-                    <Text style={{ fontSize: 18, color: theme.colors.text }}>
-                      Desde: {horario.horarioDesde}:00 hs
-                    </Text>
-                    <IconButton
-                      icon="clock-outline"
-                      color={theme.colors.text}
-                      onPress={onTogglePickerDesde}
-                      size={40}
+                {({
+                  handleSubmit,
+                  setFieldValue,
+                  setFieldTouched,
+                  values,
+                  errors,
+                  isValid,
+                  touched,
+                }) => (
+                  <>
+                    <View
                       style={{
-                        padding: 0,
-                        marginTop: -10,
+                        flex: 1,
                         alignSelf: "center",
                       }}
-                      disabled={limitTime}
-                    />
-                    <DateTimePickerModal
-                      isVisible={visibleTimePicker.desde}
-                      mode="time"
-                      onConfirm={(date) => {
-                        timeSetterDesde(date);
-                      }}
-                      onCancel={onTogglePickerDesde}
-                      date={new Date()}
-                      minuteInterval={30}
-                    />
-                  </View>
-                  {/* ... PICKER DESDE*/}
-                  {/* PICKER HASTA ... */}
-                  <View style={{ marginLeft: "5%" }}>
-                    <Text style={{ fontSize: 18, color: theme.colors.text }}>
-                      Hasta: {horario.horarioHasta}:00 hs
-                    </Text>
+                    >
+                      <View style={[modalStyles.horariosContainer]}></View>
+                      <View style={{ flex: 1, flexDirection: "row" }}>
+                        {/* PICKER DESDE ... */}
+                        <View style={{ marginRight: "5%" }}>
+                          <Text
+                            style={{ fontSize: 18, color: theme.colors.text }}
+                          >
+                            Desde: {values.horarioDesde}:00 hs
+                          </Text>
+                          <IconButton
+                            icon="clock-outline"
+                            color={theme.colors.text}
+                            onPress={onTogglePickerDesde}
+                            size={40}
+                            style={{
+                              padding: 0,
+                              marginTop: -10,
+                              alignSelf: "center",
+                            }}
+                            disabled={limitTime}
+                          />
+                          <DateTimePickerModal
+                            isVisible={visibleTimePicker.desde}
+                            mode="time"
+                            onConfirm={(date) => {
+                              onTogglePickerDesde();
+                              const time = check24h(date);
+                              setFieldValue("horarioDesde", time);
+                              setFieldTouched("horarioDesde", true);
+                            }}
+                            onCancel={onTogglePickerDesde}
+                            date={new Date()}
+                            minuteInterval={30}
+                          />
+                        </View>
+                        {/* ... PICKER DESDE*/}
+                        {/* PICKER HASTA ... */}
+                        <View style={{ marginLeft: "5%" }}>
+                          <Text
+                            style={{ fontSize: 18, color: theme.colors.text }}
+                          >
+                            Hasta: {values.horarioHasta}:00 hs
+                          </Text>
+                          <IconButton
+                            icon="clock-outline"
+                            color={theme.colors.text}
+                            onPress={onTogglePickerHasta}
+                            size={40}
+                            style={{
+                              padding: 0,
+                              marginTop: -10,
+                              alignSelf: "center",
+                            }}
+                            disabled={limitTime}
+                          />
+                          <DateTimePickerModal
+                            isVisible={visibleTimePicker.hasta}
+                            mode="time"
+                            onConfirm={(date) => {
+                              onTogglePickerHasta();
+                              const time = check24h(date);
+                              setFieldValue("horarioHasta", time);
+                              setFieldTouched("horarioHasta", true);
+                            }}
+                            onCancel={onTogglePickerHasta}
+                            date={new Date()}
+                            minuteInterval={30}
+                          />
+                        </View>
+                        {/* ... PICKER HASTA*/}
+                      </View>
+                    </View>
+                    {errors.horarioHasta && touched.horarioHasta && (
+                      <Text
+                        style={{
+                          marginTop: -10,
+                          width: "60%",
+                          textAlign: "center",
+                          color: "red",
+                          alignSelf: "center",
+                        }}
+                      >
+                        {errors.horarioHasta}
+                      </Text>
+                    )}
                     <IconButton
-                      icon="clock-outline"
+                      icon="clock-plus-outline"
                       color={theme.colors.text}
-                      onPress={onTogglePickerHasta}
-                      size={40}
+                      onPress={handleSubmit}
+                      size={30}
                       style={{
+                        marginTop: -50,
                         padding: 0,
-                        marginTop: -10,
-                        alignSelf: "center",
+                        alignSelf: "flex-end",
                       }}
-                      disabled={limitTime}
+                      disabled={!isValid || limitTime}
                     />
-                    <DateTimePickerModal
-                      isVisible={visibleTimePicker.hasta}
-                      mode="time"
-                      onConfirm={(date) => {
-                        timeSetterHasta(date);
-                      }}
-                      onCancel={onTogglePickerHasta}
-                      date={new Date()}
-                      minuteInterval={30}
-                    />
-                  </View>
-                  {/* ... PICKER HASTA*/}
-                </View>
-              </View>
-              <IconButton
-                icon="clock-plus-outline"
-                color={theme.colors.text}
-                onPress={agregarHorario}
-                size={30}
-                style={{
-                  marginTop: -60,
-                  padding: 0,
-                  alignSelf: "flex-end",
-                }}
-                disabled={agregarDisabled}
-              />
+                  </>
+                )}
+              </Formik>
               <View
                 style={{
                   flex: 1,
@@ -346,8 +387,16 @@ const AdminRampa = (
                 }}
               >
                 {horarios.length > 0 && (
-                  <Text style={modalStyles.textHorarios}>
-                    Horarios seleccionados
+                  <Text
+                    style={{
+                      fontSize: 16,
+                      textAlign: "center",
+                      alignSelf: "center",
+                      color: theme.colors.text,
+                      // width: "80%",
+                    }}
+                  >
+                    Horarios agregados, acepte para guardar cambios
                   </Text>
                 )}
                 <View

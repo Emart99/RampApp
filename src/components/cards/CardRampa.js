@@ -18,8 +18,6 @@ const CardRampa = (
   setVisibleTimePicker,
   horarios,
   setHorarios,
-  horario,
-  setHorario,
   showAlertDenuncia,
   setShowAlertDenuncia,
   visibleToast,
@@ -28,10 +26,10 @@ const CardRampa = (
   setDominioDenunciado,
   enviandoDenuncia,
   setEnviandoDenuncia,
-  agregarDisabled,
-  limitTime
+  limitTime,
 ) => {
   const touchHandler = () => {
+    setHorarios(rampa.horariosDisponibles);
     setVisibleModalAdmin(true);
   };
 
@@ -85,8 +83,6 @@ const CardRampa = (
         setVisibleTimePicker,
         horarios,
         setHorarios,
-        horario,
-        setHorario,
         onPressRefresh,
         setOnPressRefresh,
         showAlertDenuncia,
@@ -97,8 +93,7 @@ const CardRampa = (
         setDominioDenunciado,
         enviandoDenuncia,
         setEnviandoDenuncia,
-        agregarDisabled,
-        limitTime
+        limitTime,
       )}
     </Pressable>
   );
