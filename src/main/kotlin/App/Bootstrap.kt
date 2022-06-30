@@ -74,6 +74,7 @@ class Bootstrap : InitializingBean {
             altura = 132
             posx= "-34.6175963"
             posy= "-58.5579883"
+            imagenRampa = "https://imgur.com/gallery/kgDiYpo"
             nroPartidaInmobiliaria = 24124
         }
 
@@ -81,9 +82,6 @@ class Bootstrap : InitializingBean {
             calle = "Borges"
             altura = 5215
             nroPartidaInmobiliaria = 26434
-        }
-
-        val horario1 = Horarios().apply {
         }
 
         val rampa3 = Rampa().apply{
@@ -119,7 +117,6 @@ class Bootstrap : InitializingBean {
         repositorioUsuarios.save(usuario3)
         repositorioUsuarios.save(usuario4)
 
-        rampa3.agregarHorario(horario1)
         repositorioVehiculo.save(vehiculo1)
         repositorioVehiculo.save(vehiculo2)
         repositorioRampas.save(rampa1)
