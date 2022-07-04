@@ -6,28 +6,24 @@
  * @flow strict-local
  */
 
-import React, { useEffect } from 'react';
-import * as Location from 'expo-location';
-import {
-  NavigationContainer,
-} from '@react-navigation/native';
-import * as SplashScreen from 'expo-splash-screen';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import React, { useEffect } from "react";
+import * as Location from "expo-location";
+import { NavigationContainer } from "@react-navigation/native";
+import * as SplashScreen from "expo-splash-screen";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { LogBox } from "react-native";
-import {
-  Provider as PaperProvider,
-} from 'react-native-paper';
-import { PreferencesContext } from './src/themeContext';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { Provider as PaperProvider } from "react-native-paper";
+import { PreferencesContext } from "./src/themeContext";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
-import AdministrarVehiculo from './src/views/AdministrarVehiculo';
-import AdministrarRampa from './src/views/AdministrarRampa'
-import MiPerfil from './src/views/Mi Perfil';
-import MainScreen from './src/views/MainScreen'
-import Registrarse from "./src/views/Registrarse"
-import Login from './src/views/Login'
-import { LightTheme } from './src/styles/styles';
-import { _DarkTheme } from './src/styles/styles';
+import AdministrarVehiculo from "./src/views/AdministrarVehiculo";
+import AdministrarRampa from "./src/views/AdministrarRampa";
+import MiPerfil from "./src/views/Mi Perfil";
+import MainScreen from "./src/views/MainScreen";
+import Registrarse from "./src/views/Registrarse";
+import Login from "./src/views/Login";
+import { LightTheme } from "./src/styles/styles";
+import { _DarkTheme } from "./src/styles/styles";
 import {
   useFonts,
   Poppins_100Thin,
@@ -48,11 +44,9 @@ import {
   Poppins_800ExtraBold_Italic,
   Poppins_900Black,
   Poppins_900Black_Italic,
-} from '@expo-google-fonts/poppins';
+} from "@expo-google-fonts/poppins";
 
-
-LogBox.ignoreLogs([""]) // codigo hermoso, remplazar en un futuro
-
+LogBox.ignoreLogs([""]); // codigo hermoso, remplazar en un futuro
 
 const CombinedDefaultTheme = {
   ...LightTheme,
@@ -75,7 +69,7 @@ const Stack = createNativeStackNavigator();
 
 export default function App() {
   const [appIsReady, setAppIsReady] = React.useState(false);
-  let { status } =  Location.requestForegroundPermissionsAsync();
+  let { status } = Location.requestForegroundPermissionsAsync();
   const [isThemeDark, setIsThemeDark] = React.useState(false);
   let theme = isThemeDark ? CombinedDarkTheme : CombinedDefaultTheme;
   let [fontsLoaded] = useFonts({
@@ -96,9 +90,8 @@ export default function App() {
     Poppins_800ExtraBold,
     Poppins_800ExtraBold_Italic,
     Poppins_900Black,
-    Poppins_900Black_Italic
+    Poppins_900Black_Italic,
   });
-
 
   const toggleTheme = React.useCallback(() => {
     return setIsThemeDark(!isThemeDark);
@@ -119,7 +112,7 @@ export default function App() {
         // Pre-load fonts, make any API calls you need to do here
         // Artificially delay for two seconds to simulate a slow loading
         // experience. Please remove this if you copy and paste the code!
-        await new Promise(resolve => setTimeout(resolve, 2000));
+        await new Promise((resolve) => setTimeout(resolve, 2000));
       } catch (e) {
         console.warn(e);
       } finally {
@@ -138,22 +131,59 @@ export default function App() {
 
   return (
     <SafeAreaProvider>
-    <PreferencesContext.Provider value={preferences}>
-      <PaperProvider theme={theme}>
-        <NavigationContainer theme={theme}>
-          <Stack.Navigator initialRouteName="Login">
-            <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
-            <Stack.Screen name="Registrarse" component={Registrarse} options={{ headerShown: false }} />
-            <Stack.Screen name="Perfil" component={MiPerfil} options={{ headerShown: false }} />
-            <Stack.Screen name="Rampas" component={AdministrarRampa} options={{ headerShadowVisible:false,
-            headerStyle:{backgroundColor:theme.colors.background},headerTitleStyle:{fontFamily:'Poppins_400Regular',fontSize:34}}} />
-            <Stack.Screen name="Vehiculos" component={AdministrarVehiculo} options={{ headerShadowVisible:false,
-            headerStyle:{backgroundColor:theme.colors.background},headerTitleStyle:{fontFamily:'Poppins_400Regular',fontSize:34}}} />
-            <Stack.Screen name="MainScreen" component={MainScreen} initialParams={{ id: 32 }} options={{ headerShown: false }} />
-          </Stack.Navigator>
-        </NavigationContainer>
-      </PaperProvider>
-    </PreferencesContext.Provider>
+      <PreferencesContext.Provider value={preferences}>
+        <PaperProvider theme={theme}>
+          <NavigationContainer theme={theme}>
+            <Stack.Navigator initialRouteName="Login">
+              <Stack.Screen
+                name="Login"
+                component={Login}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="Registrarse"
+                component={Registrarse}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="Perfil"
+                component={MiPerfil}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="Rampas"
+                component={AdministrarRampa}
+                options={{
+                  headerShadowVisible: false,
+                  headerStyle: { backgroundColor: theme.colors.background },
+                  headerTitleStyle: {
+                    fontFamily: "Poppins_400Regular",
+                    fontSize: 34,
+                  },
+                }}
+              />
+              <Stack.Screen
+                name="Vehiculos"
+                component={AdministrarVehiculo}
+                options={{
+                  headerShadowVisible: false,
+                  headerStyle: { backgroundColor: theme.colors.background },
+                  headerTitleStyle: {
+                    fontFamily: "Poppins_400Regular",
+                    fontSize: 34,
+                  },
+                }}
+              />
+              <Stack.Screen
+                name="MainScreen"
+                component={MainScreen}
+                initialParams={{ id: 32 }}
+                options={{ headerShown: false }}
+              />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </PaperProvider>
+      </PreferencesContext.Provider>
     </SafeAreaProvider>
   );
 }

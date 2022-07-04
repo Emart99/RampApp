@@ -1,13 +1,13 @@
 import React from "react";
-import { Text, useTheme, Portal, Modal, } from "react-native-paper";
+import { Text, useTheme, Portal, Modal } from "react-native-paper";
 import { View } from "react-native";
 import { Formik } from "formik";
+import AwesomeAlert from "react-native-awesome-alerts";
 
 import GlobalInput from "../GlobalInput";
 import GlobalButton from "../GlobalButton";
 import styles from "../../styles/styles";
 import modalStyles from "../../styles/modalStyles";
-import AwesomeAlert from "react-native-awesome-alerts";
 import { pagoValidationSchema } from "../../utils/pagoSchema";
 import { pagarCarrito } from "../../api/http";
 
@@ -20,10 +20,10 @@ const PagoReserva = (visible, setVisible) => {
     React.useState(false);
 
   const abonarHandler = (values) => {
-    pagarCarrito().then(data => {
+    pagarCarrito().then((data) => {
       setShowAlertDatosCorrectos(true);
       hideModal();
-    })
+    });
   };
   return (
     <Portal theme={{ colors: { backdrop: "rgba(0, 0, 0, 0.35)" } }}>
@@ -115,10 +115,16 @@ const PagoReserva = (visible, setVisible) => {
                   false,
                   "default"
                 )}
-                {errors.nombre &&  touched.nombre && (
+                {errors.nombre && touched.nombre && (
                   <Text style={styles.inputInvalidText}>{errors.nombre}</Text>
                 )}
-                <Text style={{ color: theme.colors.text, fontSize: 16, marginTop:10 }}>
+                <Text
+                  style={{
+                    color: theme.colors.text,
+                    fontSize: 16,
+                    marginTop: 10,
+                  }}
+                >
                   Fecha de vencimiento
                 </Text>
                 <View style={modalStyles.fechaContainer}>
@@ -143,9 +149,9 @@ const PagoReserva = (visible, setVisible) => {
                     "number-pad"
                   )}
                 </View>
-                {errors.mes &&  touched.mes && (
-                    <Text style={styles.inputInvalidText}>{errors.mes}</Text>
-                  )}
+                {errors.mes && touched.mes && (
+                  <Text style={styles.inputInvalidText}>{errors.mes}</Text>
+                )}
                 {GlobalInput(
                   "Código de seguridad",
                   values.cvv,
@@ -156,7 +162,7 @@ const PagoReserva = (visible, setVisible) => {
                   false,
                   "number-pad"
                 )}
-                {errors.cvv &&  touched.cvv && (
+                {errors.cvv && touched.cvv && (
                   <Text style={styles.inputInvalidText}>{errors.cvv}</Text>
                 )}
 
@@ -170,7 +176,7 @@ const PagoReserva = (visible, setVisible) => {
                   false,
                   "number-pad"
                 )}
-                {errors.dni &&  touched.dni && (
+                {errors.dni && touched.dni && (
                   <Text style={styles.inputInvalidText}>{errors.dni}</Text>
                 )}
               </View>
@@ -183,7 +189,11 @@ const PagoReserva = (visible, setVisible) => {
                     },
                     modalStyles.button,
                   ],
-                  { color: theme.colors.text, textAlign: "center",fontSize:18, },
+                  {
+                    color: theme.colors.text,
+                    textAlign: "center",
+                    fontSize: 18,
+                  },
                   "Cancelar",
                   hideModal
                 )}
@@ -195,7 +205,11 @@ const PagoReserva = (visible, setVisible) => {
                     },
                     modalStyles.button,
                   ],
-                  { color: theme.colors.secondaryText, textAlign: "center" ,fontSize:18,},
+                  {
+                    color: theme.colors.secondaryText,
+                    textAlign: "center",
+                    fontSize: 18,
+                  },
                   "Abonar",
                   handleSubmit,
                   isValid

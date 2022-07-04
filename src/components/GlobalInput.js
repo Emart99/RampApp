@@ -25,7 +25,7 @@ const GlobalInput = (
         }}
         underlineColor={theme.colors.secondary}
         activeUnderlineColor={theme.colors.secondary}
-        style={{backgroundColor:_background}}
+        style={{ backgroundColor: _background }}
         mode="flat"
         label={_label}
         value={_value}

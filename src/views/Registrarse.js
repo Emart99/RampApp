@@ -158,11 +158,12 @@ const Registrarse = ({ navigation }) => {
                   true,
                   "default"
                 )}
-                {errors.confirmarContrasenia && touched.confirmarContrasenia && (
-                  <Text style={styles.inputInvalidText}>
-                    {errors.confirmarContrasenia}
-                  </Text>
-                )}
+                {errors.confirmarContrasenia &&
+                  touched.confirmarContrasenia && (
+                    <Text style={styles.inputInvalidText}>
+                      {errors.confirmarContrasenia}
+                    </Text>
+                  )}
                 {GlobalInput(
                   "Email",
                   values.email,
@@ -213,13 +214,15 @@ const Registrarse = ({ navigation }) => {
                     mode="flat"
                     editable={false}
                     outlineColor="transparent"
-                    style={{backgroundColor:theme.colors.background}}
+                    style={{ backgroundColor: theme.colors.background }}
                     underlineColor={theme.colors.secondary}
                     activeUnderlineColor={theme.colors.secondary}
-                    theme={{colors:{text:theme.colors.secondary}}}
+                    theme={{ colors: { text: theme.colors.secondary } }}
                   >
                     {"Fecha de nacimiento: " +
-                      `${fechaNacimiento.getDate()}/${fechaNacimiento.getMonth()+1}/${fechaNacimiento.getFullYear()}`}
+                      `${fechaNacimiento.getDate()}/${
+                        fechaNacimiento.getMonth() + 1
+                      }/${fechaNacimiento.getFullYear()}`}
                   </TextInput>
                 </TouchableOpacity>
 
@@ -250,7 +253,11 @@ const Registrarse = ({ navigation }) => {
                     styles.loginButton,
                     { backgroundColor: theme.colors.secondary },
                   ],
-                  { color: theme.colors.secondaryText,fontSize:16,fontFamily:'Poppins_500Medium' },
+                  {
+                    color: theme.colors.secondaryText,
+                    fontSize: 16,
+                    fontFamily: "Poppins_500Medium",
+                  },
                   "REGISTRAR",
                   handleSubmit,
                   isValid

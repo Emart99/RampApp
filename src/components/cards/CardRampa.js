@@ -1,40 +1,18 @@
 import * as React from "react";
-import { Card, Paragraph, Avatar, Provider } from "react-native-paper";
+import { Card, Paragraph, Avatar } from "react-native-paper";
 import { Pressable, View } from "react-native";
 
 import newCardStyles from "../../styles/newCardStyles";
 import AdminRampa from "../modales/AdminRampa";
 
-const CardRampa = (
-  rampa,
-  theme,
-  visibleModalAdmin,
-  setVisibleModalAdmin,
-  onPressRefresh,
-  setOnPressRefresh,
-  isSwitchOn,
-  setIsSwitchOn,
-  visibleTimePicker,
-  setVisibleTimePicker,
-  horarios,
-  setHorarios,
-  showAlertDenuncia,
-  setShowAlertDenuncia,
-  visibleToast,
-  setVisibleToast,
-  dominioDenunciado,
-  setDominioDenunciado,
-  enviandoDenuncia,
-  setEnviandoDenuncia,
-  limitTime,
-) => {
+const CardRampa = ({ rampa, theme, state, setState, limitTime }) => {
   const touchHandler = () => {
-    setHorarios(rampa.horariosDisponibles);
-    setVisibleModalAdmin(true);
+    setState({ horarios: rampa.horariosDisponibles });
+    setState({ visibleModalAdmin: true });
   };
 
   return (
-    <Pressable key={rampa.id} onPress={touchHandler}>
+    <Pressable onPress={touchHandler}>
       <Card
         style={[
           newCardStyles.card,
@@ -72,29 +50,13 @@ const CardRampa = (
           </View>
         </Card.Content>
       </Card>
-      {AdminRampa(
-        rampa,
-        visibleModalAdmin,
-        setVisibleModalAdmin,
-        theme,
-        isSwitchOn,
-        setIsSwitchOn,
-        visibleTimePicker,
-        setVisibleTimePicker,
-        horarios,
-        setHorarios,
-        onPressRefresh,
-        setOnPressRefresh,
-        showAlertDenuncia,
-        setShowAlertDenuncia,
-        visibleToast,
-        setVisibleToast,
-        dominioDenunciado,
-        setDominioDenunciado,
-        enviandoDenuncia,
-        setEnviandoDenuncia,
-        limitTime,
-      )}
+      <AdminRampa
+        rampa={rampa}
+        theme={theme}
+        state={state}
+        setState={setState}
+        limitTime={limitTime}
+      />
     </Pressable>
   );
 };

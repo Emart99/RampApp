@@ -17,9 +17,13 @@ const OlvidoSuContrasenia = (props, setProps) => {
   const [text, setText] = React.useState("");
 
   return (
-    <Portal theme={{colors:{backdrop:'rgba(0, 0, 0, 0.35)'}}}>
+    <Portal theme={{ colors: { backdrop: "rgba(0, 0, 0, 0.35)" } }}>
       <Dialog
-        style={{ backgroundColor: theme.colors.modal,marginTop:15,marginBottom:10 }}
+        style={{
+          backgroundColor: theme.colors.modal,
+          marginTop: 15,
+          marginBottom: 10,
+        }}
         visible={props}
         onDismiss={hideDialog}
       >
@@ -30,7 +34,6 @@ const OlvidoSuContrasenia = (props, setProps) => {
           </Paragraph>
         </Dialog.Content>
         <View style={styles.olvidoSuContraseniaModalView}>
-      
           <TextInput
             mode="flat"
             theme={{
@@ -40,8 +43,8 @@ const OlvidoSuContrasenia = (props, setProps) => {
               },
             }}
             underlineColor={theme.colors.text}
-          activeUnderlineColor={theme.colors.text}
-          style={{backgroundColor:theme.colors.modal}}
+            activeUnderlineColor={theme.colors.text}
+            style={{ backgroundColor: theme.colors.modal }}
             label="Email"
             onChangeText={(text) => setText(text)}
           />

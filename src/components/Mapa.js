@@ -1,13 +1,13 @@
 import React, { useState, useRef, useCallback, useEffect } from "react";
 import MapView, { Marker } from "react-native-maps";
 import { Image, View } from "react-native";
-import { ProgressBar, useTheme } from "react-native-paper";
+import { useTheme } from "react-native-paper";
 import { SheetManager } from "react-native-actions-sheet";
 import RampasSheets from "./RampasSheets";
 import { styles } from "../styles/mapSyles";
-import { traerRampas } from "../api/http";
 import { useFocusEffect } from "@react-navigation/native";
 import * as Location from "expo-location";
+import { traerRampas } from "../api/http";
 
 const Mapa = () => {
   const theme = useTheme();
@@ -18,7 +18,7 @@ const Mapa = () => {
     latitude: undefined,
     longitude: undefined,
     latitudeDelta: 0.0922,
-    longitudeDelta: 0.0421
+    longitudeDelta: 0.0421,
   });
   const actionSheetRef = useRef(null);
   useFocusEffect(
@@ -27,6 +27,7 @@ const Mapa = () => {
         const ramp = await traerRampas();
         setRampas(ramp);
       };
+      loc();
 
       const interval = setInterval(() => {
         if (!isOpen) {
@@ -42,53 +43,59 @@ const Mapa = () => {
       const ramp = await traerRampas();
       setRampas(ramp);
     };
-
-    const loc = async () => {
-      const locate = await Location.getCurrentPositionAsync({});
-      setLocation({...location, latitude: locate.coords.latitude, longitude: locate.coords.longitude});
-    };
     loc();
     fetchRampas();
   }, []);
+
+  const loc = async () => {
+    const locate = await Location.getCurrentPositionAsync({});
+    setLocation({
+      ...location,
+      latitude: locate.coords.latitude,
+      longitude: locate.coords.longitude,
+    });
+  };
 
   return (
     <>
       <View>
         {location.latitude && (
-        <MapView
-          followsUserLocation={true}
-          customMapStyle={theme.mapStyles}
-          showsCompass={false}
-          toolbarEnabled={false}
-          moveOnMarkerPress={false}
-          minZoomLevel={14}
-          maxZoomLevel={20}
-          showsUserLocation={true}
-          showsMyLocationButton={false}
-          initialRegion={location}
-          style={styles.map}
-        >
-          {rampas.map((rampa) => {
-            return (
-              <Marker
-                key={rampa.id}
-                onPress={() => {
-                  SheetManager.show("rampas_bottom_sheet", { value: rampa.id });
-                  setRampaId(rampa.id);
-                }}
-                coordinate={{
-                  latitude: parseFloat(rampa.posx),
-                  longitude: parseFloat(rampa.posy),
-                }}
-              >
-                <Image source={theme.mapIcon} />
-              </Marker>
-            );
-          })}
-        </MapView>
+          <MapView
+            followsUserLocation={true}
+            customMapStyle={theme.mapStyles}
+            showsCompass={false}
+            toolbarEnabled={false}
+            moveOnMarkerPress={false}
+            minZoomLevel={14}
+            maxZoomLevel={20}
+            showsUserLocation={true}
+            showsMyLocationButton={false}
+            initialRegion={location}
+            style={styles.map}
+          >
+            {rampas.map((rampa) => {
+              return (
+                <Marker
+                  key={rampa.id}
+                  onPress={() => {
+                    SheetManager.show("rampas_bottom_sheet", {
+                      value: rampa.id,
+                    });
+                    setRampaId(rampa.id);
+                  }}
+                  coordinate={{
+                    latitude: parseFloat(rampa.posx),
+                    longitude: parseFloat(rampa.posy),
+                  }}
+                >
+                  <Image source={theme.mapIcon} />
+                </Marker>
+              );
+            })}
+          </MapView>
         )}
         {RampasSheets(theme, actionSheetRef, setIsOpen)}
-        </View>
+      </View>
     </>
   );
 };

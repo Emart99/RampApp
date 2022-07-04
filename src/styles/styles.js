@@ -14,34 +14,36 @@ export function themeHelper() {
 
 export const LightTheme = {
   ...DefaultTheme,
-  fontFamily: { ...(DarkTheme.fonts.regular.fontFamily = "Poppins_400Regular") ,
+  fontFamily: {
+    ...(DarkTheme.fonts.regular.fontFamily = "Poppins_400Regular"),
     ...(DarkTheme.fonts.medium.fontFamily = "Poppins_300Light"),
     ...(DarkTheme.fonts.light.fontFamily = "Poppins_200ExtraLight"),
-    ...(DarkTheme.fonts.thin.fontFamily = "Poppins_100Thin")
-   },
+    ...(DarkTheme.fonts.thin.fontFamily = "Poppins_100Thin"),
+  },
   colors: {
     modal: "#c2c2c2",
     headerPerfil: "#d9d9d9",
     input: "#d9d9d9",
     background: "#F0F2F5",
     secondary: "#202124",
-    text: 'black',
+    text: "black",
     onSurface: "#F0F2F5",
     secondaryText: "white",
     borderTextInput: "#CCD0D5",
     mapTheme: "light",
   },
-  mapIcon:require("../assets/icons/LIGHTMODEICON.png"),
+  mapIcon: require("../assets/icons/LIGHTMODEICON.png"),
   mapStyles: lightMapStyles,
 };
 
 export const _DarkTheme = {
   ...DarkTheme,
-  fontFamily: { ...(DarkTheme.fonts.regular.fontFamily = "Poppins_400Regular") ,
+  fontFamily: {
+    ...(DarkTheme.fonts.regular.fontFamily = "Poppins_400Regular"),
     ...(DarkTheme.fonts.medium.fontFamily = "Poppins_300Light"),
     ...(DarkTheme.fonts.light.fontFamily = "Poppins_200ExtraLight"),
-    ...(DarkTheme.fonts.thin.fontFamily = "Poppins_100Thin")
-   },
+    ...(DarkTheme.fonts.thin.fontFamily = "Poppins_100Thin"),
+  },
   colors: {
     modal: "#1B1F23",
     headerPerfil: "#262A2D",
@@ -49,12 +51,12 @@ export const _DarkTheme = {
     background: "#1B1F23",
     onSurface: "#F0F2F5",
     secondary: "#4527A0",
-    text: 'white',
+    text: "white",
     secondaryText: "white",
     borderTextInput: "#777",
     mapTheme: "light",
   },
-  mapIcon:require("../assets/icons/DARKMODEICON.png"),
+  mapIcon: require("../assets/icons/DARKMODEICON.png"),
   mapStyles: darkMapStyles,
 };
 

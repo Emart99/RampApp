@@ -72,7 +72,7 @@ const modalStyles = StyleSheet.create({
   switchContainer: {
     flexDirection: "row",
     alignSelf: "center",
-    marginVertical:'3%'
+    marginVertical: "3%",
   },
   switch: {
     marginLeft: 10,

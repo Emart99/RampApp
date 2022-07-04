@@ -1,17 +1,13 @@
 import React from "react";
-import { Text, IconButton, useTheme, Portal, Modal } from "react-native-paper";
+import { Text, Portal, Modal } from "react-native-paper";
 import { View } from "react-native";
+import { Formik } from "formik";
 
 import GlobalInput from "../GlobalInput";
 import GlobalButton from "../GlobalButton";
 import styles from "../../styles/styles";
 import modalStyles from "../../styles/modalStyles";
-import {
-  crearVehiculo,
-  modificarVehiculo,
-  traerVehiculo,
-} from "../../api/http";
-import { Formik } from "formik";
+import { modificarVehiculo } from "../../api/http";
 
 const EditarVehiculo = (
   visible,
@@ -109,7 +105,11 @@ const EditarVehiculo = (
               <View style={modalStyles.buttonContainer}>
                 {GlobalButton(
                   [{ borderColor: theme.colors.secondary }, modalStyles.button],
-                  { color: theme.colors.text, textAlign: "center",fontSize:18, },
+                  {
+                    color: theme.colors.text,
+                    textAlign: "center",
+                    fontSize: 18,
+                  },
                   "Cancelar",
                   hideModal
                 )}
@@ -121,7 +121,11 @@ const EditarVehiculo = (
                     },
                     modalStyles.button,
                   ],
-                  { color: theme.colors.secondaryText, textAlign: "center" ,fontSize:18,},
+                  {
+                    color: theme.colors.secondaryText,
+                    textAlign: "center",
+                    fontSize: 18,
+                  },
                   "Agregar",
                   handleSubmit
                 )}

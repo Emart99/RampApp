@@ -1,10 +1,5 @@
 import React from "react";
-import {
-  View,
-  Text,
-  Keyboard,
-  TouchableWithoutFeedback,
-} from "react-native";
+import { View, Text, Keyboard, TouchableWithoutFeedback } from "react-native";
 import { Snackbar } from "react-native-paper";
 import { useTheme } from "react-native-paper";
 import { Formik } from "formik";
@@ -60,12 +55,14 @@ const Login = ({ navigation }) => {
           style={{
             backgroundColor: "#F8615A",
             width: "100%",
-            borderRadius:0,
+            borderRadius: 0,
             height: "100%",
             alignSelf: "center",
           }}
         >
-          <Text style={{ color: theme.colors.text,fontSize:17}}>{mensajeError}</Text>
+          <Text style={{ color: theme.colors.text, fontSize: 17 }}>
+            {mensajeError}
+          </Text>
         </Snackbar>
         <Formik
           validationSchema={loginValidationSchema}
@@ -105,7 +102,7 @@ const Login = ({ navigation }) => {
                 true,
                 "default"
               )}
-              {errors.contrasenia && touched.contrasenia &&(
+              {errors.contrasenia && touched.contrasenia && (
                 <Text style={styles.inputInvalidText}>
                   {errors.contrasenia}
                 </Text>
@@ -113,7 +110,7 @@ const Login = ({ navigation }) => {
               <View style={{ marginTop: 10 }} />
               {GlobalButton(
                 "",
-                { color: theme.colors.text,fontSize:15 },
+                { color: theme.colors.text, fontSize: 15 },
                 "Olvido su contraseña?",
                 olvidoSuContraseniaHelper
               )}
@@ -124,16 +121,20 @@ const Login = ({ navigation }) => {
               {GlobalButton(
                 [
                   styles.loginButton,
-                  { backgroundColor: theme.colors.secondary, },
+                  { backgroundColor: theme.colors.secondary },
                 ],
-                { color: theme.colors.secondaryText,fontSize:16,fontFamily:'Poppins_500Medium'},
+                {
+                  color: theme.colors.secondaryText,
+                  fontSize: 16,
+                  fontFamily: "Poppins_500Medium",
+                },
                 "INGRESAR",
                 handleSubmit,
                 isValid
               )}
               {GlobalButton(
                 "",
-                { color: theme.colors.text,fontSize:15 },
+                { color: theme.colors.text, fontSize: 15 },
                 "Registrarse",
                 registerNavigation
               )}

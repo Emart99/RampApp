@@ -7,11 +7,12 @@ import {
   Switch,
   TextInput,
 } from "react-native-paper";
-import { Alert, Button, View } from "react-native";
+import { Alert, View } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import AwesomeAlert from "react-native-awesome-alerts";
 import { Chip } from "react-native-paper";
+import { Formik } from "formik";
 
 import modalStyles from "../../styles/modalStyles";
 import GlobalButton from "../GlobalButton";
@@ -21,72 +22,52 @@ import {
   habilitarRampa,
   subirImagen,
 } from "../../api/http";
-import { Formik } from "formik";
-import styles from "../../styles/styles";
 import { horarioValidationSchema } from "../../utils/horarioSchema";
 
-const AdminRampa = (
-  rampa,
-  visible,
-  setVisible,
-  theme,
-  isSwitchOn,
-  setIsSwitchOn,
-  visibleTimePicker,
-  setVisibleTimePicker,
-  horarios,
-  setHorarios,
-  onPressRefresh,
-  setOnPressRefresh,
-  showAlertDenuncia,
-  setShowAlertDenuncia,
-  visibleToast,
-  setVisibleToast,
-  dominioDenunciado,
-  setDominioDenunciado,
-  enviandoDenuncia,
-  setEnviandoDenuncia,
-  limitTime
-) => {
+const AdminRampa = ({ rampa, theme, state, setState, limitTime }) => {
   const hideModal = () => {
-    setVisible(false);
-    setHorarios([]);
-    setOnPressRefresh(!onPressRefresh);
+    setState({ visibleModalAdmin: false });
+    setState({ horarios: [] });
+    refresh();
   };
 
+  const refresh = () =>
+    setState((prev) => ({ onPressRefresh: !prev.onPressRefresh }));
+
   const editRampa = async () => {
-    if (isSwitchOn) {
-      if (horarios.length <= 0) {
+    if (state.isSwitchOn) {
+      if (state.horarios.length <= 0) {
         Alert.alert("", "Debe primero ingresar un horario");
         return;
       } else {
-        await habilitarRampa(rampa.id, horarios).then(() =>
-          setOnPressRefresh(!onPressRefresh)
+        await habilitarRampa(rampa.id, state.horarios).then(
+          () => refresh() //borrar?
         );
       }
     } else {
-      await deshabilitarRampa(rampa.id).then(() =>
-        setOnPressRefresh(!onPressRefresh)
+      await deshabilitarRampa(rampa.id).then(
+        () => refresh() //borrar?
       );
     }
     hideModal();
   };
 
   const onTogglePickerDesde = () =>
-    setVisibleTimePicker({
-      ...visibleTimePicker,
-      desde: !visibleTimePicker.desde,
-    });
+    setState((prev) => ({
+      visibleTimePickerDesde: !prev.visibleTimePickerDesde,
+    }));
 
   const onTogglePickerHasta = () =>
-    setVisibleTimePicker({
-      ...visibleTimePicker,
-      hasta: !visibleTimePicker.hasta,
-    });
+    setState((prev) => ({
+      visibleTimePickerHasta: !prev.visibleTimePickerHasta,
+    }));
 
-  const onToggleSwitch = () => setIsSwitchOn(!isSwitchOn);
+  const onToggleSwitch = () =>
+    setState((prev) => ({
+      isSwitchOn: !prev.isSwitchOn,
+    }));
 
-  const onToggleSnackBar = () => setVisibleToast(!visibleToast);
+  const onToggleSnackBar = () => setState({ visibleToast: true });
 
   const enviarDenuncia = async () => {
     // Ask the user for the permission to access the camera
@@ -98,19 +79,19 @@ const AdminRampa = (
     const result = await ImagePicker.launchCameraAsync({
       base64: true,
     });
-    setEnviandoDenuncia(true);
+    setState({ enviandoDenuncia: true });
     if (!result.cancelled) {
       const imagen = await subirImagen(result.base64).catch((err) => {});
       await denunciarInfractor(
         "Estacionamiento indebido",
         imagen.data.link,
-        dominioDenunciado,
+        state.dominioDenunciado,
         `${rampa.calle} ${rampa.altura}`
       ).then((data) => {
         onToggleSnackBar();
       });
     }
-    setDominioDenunciado("");
+    setState({ dominioDenunciado: "" });
   };
 
   const check24h = (time) => {
@@ -123,14 +104,16 @@ const AdminRampa = (
 
   const agregarHorario = (values) => {
     if (values.horarioDesde > 0 && values.horarioHasta > 0) {
-      setHorarios([...horarios, values]);
+      setState((prev) => ({
+        horarios: prev.horarios.concat(values),
+      }));
     }
   };
 
   const eliminarHorario = (index) => {
-    const newHorarios = [...horarios];
+    const newHorarios = [...state.horarios];
     newHorarios.splice(index, 1);
-    setHorarios(newHorarios);
+    setState({ horarios: newHorarios });
   };
 
   return (
@@ -146,7 +129,7 @@ const AdminRampa = (
           modalStyles.modal,
         ]}
         animationType="fade"
-        visible={visible}
+        visible={state.visibleModalAdmin}
       >
         <AwesomeAlert
           titleStyle={{
@@ -156,11 +139,11 @@ const AdminRampa = (
           }}
           contentContainerStyle={{ backgroundColor: theme.colors.modal }}
           confirmButtonTextStyle={{ color: theme.colors.secondaryText }}
-          show={showAlertDenuncia}
-          showProgress={enviandoDenuncia}
+          show={state.showAlertDenuncia}
+          showProgress={state.enviandoDenuncia}
           title="Denunciar infractor"
           message={
-            enviandoDenuncia
+            state.enviandoDenuncia
               ? "Por favor, espere..."
               : "Ingrese el dominio del infractor y luego saque una foto de la infracción"
           }
@@ -170,8 +153,8 @@ const AdminRampa = (
           confirmButtonColor={theme.colors.secondary}
           onConfirmPressed={() => {
             enviarDenuncia().then(() => {
-              setEnviandoDenuncia(false);
-              setShowAlertDenuncia(false);
+              setState({ showAlertDenuncia: false });
+              setState({ enviandoDenuncia: false });
               onToggleSnackBar();
             });
           }}
@@ -184,7 +167,7 @@ const AdminRampa = (
             borderStyle: "solid",
           }}
           onCancelPressed={() => {
-            setShowAlertDenuncia(false);
+            setState({ showAlertDenuncia: false });
           }}
           closeOnTouchOutside={false}
           customView={
@@ -209,9 +192,10 @@ const AdminRampa = (
                 style={{ backgroundColor: theme.colors.modal, fontSize: 12 }}
                 mode="flat"
                 label="Dominio a denunciar"
-                value={dominioDenunciado}
-                disabled={enviandoDenuncia}
-                onChangeText={(value) => setDominioDenunciado(value)}
+                value={state.dominioDenunciado}
+                disabled={state.enviandoDenuncia}
+                onChangeText={(value) => setState({ dominioDenunciado: value })}
+                // setDominioDenunciado(value)}
               />
             </View>
           }
@@ -223,7 +207,8 @@ const AdminRampa = (
             <IconButton
               icon="alert"
               color={theme.colors.text}
-              onPress={() => setShowAlertDenuncia(true)}
+              onPress={() => setState({ showAlertDenuncia: true })}
+              //  setShowAlertDenuncia(true)}
               size={30}
               style={{ marginTop: -10 }}
             />
@@ -231,16 +216,16 @@ const AdminRampa = (
 
           <View style={modalStyles.switchContainer}>
             <Text style={{ fontSize: 18, color: theme.colors.text }}>
-              {isSwitchOn ? "Habilitada" : "Deshabilitada"}
+              {state.isSwitchOn ? "Habilitada" : "Deshabilitada"}
             </Text>
             <Switch
-              value={isSwitchOn}
+              value={state.isSwitchOn}
               onValueChange={onToggleSwitch}
               style={modalStyles.switch}
             />
           </View>
 
-          {isSwitchOn ? (
+          {state.isSwitchOn ? (
             <>
               {limitTime && (
                 <Text
@@ -300,7 +285,7 @@ const AdminRampa = (
                             disabled={limitTime}
                           />
                           <DateTimePickerModal
-                            isVisible={visibleTimePicker.desde}
+                            isVisible={state.visibleTimePickerDesde}
                             mode="time"
                             onConfirm={(date) => {
                               onTogglePickerDesde();
@@ -334,7 +319,7 @@ const AdminRampa = (
                             disabled={limitTime}
                           />
                           <DateTimePickerModal
-                            isVisible={visibleTimePicker.hasta}
+                            isVisible={state.visibleTimePickerHasta}
                             mode="time"
                             onConfirm={(date) => {
                               onTogglePickerHasta();
@@ -386,7 +371,7 @@ const AdminRampa = (
                   width: "100%",
                 }}
               >
-                {horarios.length > 0 && (
+                {state.horarios.length > 0 && (
                   <Text
                     style={{
                       fontSize: 16,
@@ -407,7 +392,7 @@ const AdminRampa = (
                     width: "90%",
                   }}
                 >
-                  {horarios.map((item, index) => {
+                  {state.horarios.map((item, index) => {
                     return (
                       <Chip
                         mode="outlined"

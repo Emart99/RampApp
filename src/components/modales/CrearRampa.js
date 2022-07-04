@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Text,
   IconButton,
-  useTheme,
   Portal,
   Modal,
   ActivityIndicator,
@@ -17,28 +16,23 @@ import GlobalInput from "../GlobalInput";
 import GlobalButton from "../GlobalButton";
 import styles from "../../styles/styles";
 import modalStyles from "../../styles/modalStyles";
-import { creacionDeRampa, geocoder, subirImagen, verificarPropiedadRampa } from "../../api/http";
+import {
+  creacionDeRampa,
+  geocoder,
+  subirImagen,
+  verificarPropiedadRampa,
+} from "../../api/http";
 import { rampaValidationSchema } from "../../utils/rampaSchema";
 
 const CrearRampa = (
-  visible,
-  setVisible,
-  theme,
-  showAlertDatosCorrectos,
-  setShowAlertDatosCorrectos,
-  showAlertDatosInvalidos,
-  setShowAlertDatosInvalidos,
-  visibleLoading,
-  setVisibleLoading,
-  camaraDisabled,
-  setCamaraDisabled,
-  showAlertRampaRegistrada,
-  setShowAlertRampaRegistrada,
-  jsonRampaRegistrada,
-  setJsonRampaRegistrada
+  {
+    theme,
+    state,
+    setState
+  }
 ) => {
   const pickImage = async (setFieldValue, setFieldTouched, imgValue) => {
-    setCamaraDisabled(true);
+    setState({camaraDisabled:true});
     // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -49,7 +43,7 @@ const CrearRampa = (
   };
 
   const openCamera = async (setFieldValue, setFieldTouched, imgValue) => {
-    setCamaraDisabled(true);
+    setState({camaraDisabled:true});
     // Ask the user for the permission to access the camera
     const permissionResult = await ImagePicker.requestCameraPermissionsAsync();
     if (permissionResult.granted === false) {
@@ -68,12 +62,11 @@ const CrearRampa = (
       setFieldValue(imgValue, result.base64);
       setFieldTouched(imgValue, true);
     }
-    setCamaraDisabled(false);
+    setState({camaraDisabled:false});
   };
 
-  const hideModal = () => {
-    setVisible(false);
-  };
+  const hideModal = () => setState({visibleModalCrear:false})
+ 
 
   const agregarRampa = async (values) => {
     const imagenRampa = await subirImagen(values.imgRampa).catch((err) => {});
@@ -81,7 +74,7 @@ const CrearRampa = (
     const imagenEscritura = await subirImagen(values.imgEscritura).catch(
       (err) => {}
     );
-    
+
     const geoJson = await geocoder({
       altura: values.altura,
       calle: values.calle,
@@ -91,8 +84,9 @@ const CrearRampa = (
     });
 
     if (geoJson[0] == undefined) {
-      setVisibleLoading(false);
-      return setShowAlertDatosInvalidos(true);
+      setState({visibleLoading:false})
+      setState({showAlertDatosInvalidos:true})
+      return
     }
     const rampaJSON = {
       posy: geoJson[0].lon,
@@ -104,26 +98,25 @@ const CrearRampa = (
       imagenDni: imagenDNI.data.link,
       imagenEscritura: imagenEscritura.data.link,
     };
-    creacionDeRampa(rampaJSON).then(()=>setShowAlertDatosCorrectos(true)).catch((err) => {
-      setJsonRampaRegistrada(rampaJSON);
-      setShowAlertRampaRegistrada(true);
-    });
-
-    setVisibleLoading(false);
+    creacionDeRampa(rampaJSON)
+      .then(() => setState({showAlertDatosCorrectos:true}))
+      .catch((err) => {
+        setState({jsonRampaRegistrada:rampaJSON})
+        setState({showAlertRampaRegistrada:true})
+      });
+    setState({visibleLoading:false});
   };
 
   const verificarRampa = async () => {
-    await verificarPropiedadRampa(jsonRampaRegistrada).then((res) => {
-      
-    });
-  }
+    await verificarPropiedadRampa(state.jsonRampaRegistrada).then((res) => {});
+  };
 
   return (
     <Portal theme={{ colors: { backdrop: "rgba(0, 0, 0, 0.35)" } }}>
       <AwesomeAlert
         titleStyle={{ width: "100%", color: theme.colors.text }}
         contentContainerStyle={{ backgroundColor: theme.colors.background }}
-        show={showAlertDatosCorrectos}
+        show={state.showAlertDatosCorrectos}
         showProgress={false}
         title="Registrada correctamente!"
         closeOnHardwareBackPress={false}
@@ -132,7 +125,7 @@ const CrearRampa = (
         confirmButtonColor="#00DB6F"
         closeOnTouchOutside={false}
         onConfirmPressed={() => {
-          setShowAlertDatosCorrectos(false);
+          setState({showAlertDatosCorrectos:false});
           hideModal();
         }}
       />
@@ -140,7 +133,7 @@ const CrearRampa = (
       <AwesomeAlert
         titleStyle={{ width: "100%", color: theme.colors.text }}
         contentContainerStyle={{ backgroundColor: theme.colors.background }}
-        show={showAlertDatosInvalidos}
+        show={state.showAlertDatosInvalidos}
         showProgress={false}
         title="La direccion no fue encontrada!"
         message="Por favor, verifique que los datos ingresados sean correctos y vuelva a intentarlo"
@@ -150,14 +143,14 @@ const CrearRampa = (
         confirmButtonColor="#DD6B55"
         closeOnTouchOutside={false}
         onConfirmPressed={() => {
-          setShowAlertDatosInvalidos(false);
+          setState({showAlertDatosInvalidos:false});
         }}
       />
       {/* ALERT DE PARTIDA YA REGISTRADA */}
       <AwesomeAlert
         titleStyle={{ width: "100%", color: theme.colors.text }}
         contentContainerStyle={{ backgroundColor: theme.colors.background }}
-        show={showAlertRampaRegistrada}
+        show={state.showAlertRampaRegistrada}
         showProgress={false}
         title="La rampa ya se encuentra registrada"
         message="Desea que verifiquemos la propiedad de la rampa?"
@@ -170,9 +163,9 @@ const CrearRampa = (
         closeOnTouchOutside={false}
         onConfirmPressed={() => {
           verificarRampa();
-          setShowAlertRampaRegistrada(false);
-          setJsonRampaRegistrada({});
-          setShowAlertDatosCorrectos(true);
+          setState({showAlertRampaRegistrada:false});
+          setState({showAlertDatosCorrectos:true});
+          setState({jsonRampaRegistrada:{}});
         }}
         cancelButtonTextStyle={{ color: theme.colors.text }}
         cancelButtonStyle={{
@@ -182,7 +175,7 @@ const CrearRampa = (
         }}
         showCancelButton={true}
         onCancelPressed={() => {
-          setShowAlertRampaRegistrada(false);
+          setState({showAlertRampaRegistrada:false});
         }}
       />
 
@@ -193,7 +186,7 @@ const CrearRampa = (
           modalStyles.modal,
         ]}
         animationType="fade"
-        visible={visible}
+        visible={state.visibleModalCrear}
       >
         <KeyboardAwareScrollView>
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -202,7 +195,7 @@ const CrearRampa = (
               initialValues={{
                 calle: "",
                 altura: "",
-                localidad:"",
+                localidad: "",
                 partido: "",
                 cp: "",
                 nroPartida: "",
@@ -211,7 +204,7 @@ const CrearRampa = (
                 imgDNI: "",
               }}
               onSubmit={(values) => {
-                setVisibleLoading(true);
+                setState({visibleLoading:true});
                 agregarRampa(values);
               }}
             >
@@ -365,7 +358,7 @@ const CrearRampa = (
                     <View style={modalStyles.imgContainer}>
                       <View style={modalStyles.ctn}>
                         <IconButton
-                          disabled={camaraDisabled}
+                          disabled={state.camaraDisabled}
                           icon="image-plus"
                           color={theme.colors.text}
                           onPress={() =>
@@ -379,7 +372,7 @@ const CrearRampa = (
                           size={27}
                         />
                         <IconButton
-                          disabled={camaraDisabled}
+                          disabled={state.camaraDisabled}
                           icon="camera"
                           color={theme.colors.text}
                           onPress={() =>
@@ -395,7 +388,7 @@ const CrearRampa = (
                       </View>
                       <View style={modalStyles.ctn}>
                         <IconButton
-                          disabled={camaraDisabled}
+                          disabled={state.camaraDisabled}
                           icon="image-plus"
                           color={theme.colors.text}
                           onPress={() =>
@@ -405,7 +398,7 @@ const CrearRampa = (
                           size={27}
                         />
                         <IconButton
-                          disabled={camaraDisabled}
+                          disabled={state.camaraDisabled}
                           icon="camera"
                           color={theme.colors.text}
                           onPress={() =>
@@ -417,7 +410,7 @@ const CrearRampa = (
                       </View>
                       <View style={modalStyles.ctn}>
                         <IconButton
-                          disabled={camaraDisabled}
+                          disabled={state.camaraDisabled}
                           icon="image-plus"
                           color={theme.colors.text}
                           onPress={() =>
@@ -431,7 +424,7 @@ const CrearRampa = (
                           size={27}
                         />
                         <IconButton
-                          disabled={camaraDisabled}
+                          disabled={state.camaraDisabled}
                           icon="camera"
                           color={theme.colors.text}
                           onPress={() =>
@@ -463,7 +456,7 @@ const CrearRampa = (
                     )}
                     <ActivityIndicator
                       size="large"
-                      animating={visibleLoading}
+                      animating={state.visibleLoading}
                       hidesWhenStopped={true}
                       color={theme.colors.text}
                     />

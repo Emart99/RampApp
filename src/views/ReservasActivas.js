@@ -1,31 +1,33 @@
-import React,{useCallback} from "react";
-import {  ScrollView } from "react-native";
-import { Snackbar, useTheme,Text } from "react-native-paper";
+import React, { useCallback } from "react";
+import { ScrollView } from "react-native";
+import { Snackbar, useTheme, Text } from "react-native-paper";
+import { useFocusEffect } from "@react-navigation/native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import cardStyles from "./../styles/cardStyles";
 import reservaStyles from "../styles/reservaStyles";
 import CardReserva from "../components/cards/CardReserva";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import styles from "../styles/styles";
 import { traerReservasDelUsuario } from "../api/http";
-import { useFocusEffect } from '@react-navigation/native';
 
 const AdministrarReservas = ({ navigation }) => {
   const theme = useTheme();
   const insets = useSafeAreaInsets();
   const [showAlertDenuncia, setShowAlertDenuncia] = React.useState(false);
   const [visibleToast, setVisibleToast] = React.useState(false);
-  const [reservas,setReservas] = React.useState([])
+  const [reservas, setReservas] = React.useState([]);
   const [dominioDenunciado, setDominioDenunciado] = React.useState("");
   const [enviandoDenuncia, setEnviandoDenuncia] = React.useState(false);
 
-  useFocusEffect(useCallback(()=>{
-    const fetchReservas = async () =>{
-      const reser = await traerReservasDelUsuario()
-      setReservas(reser)
-    }
-    fetchReservas()
-  },[]))
+  useFocusEffect(
+    useCallback(() => {
+      const fetchReservas = async () => {
+        const reser = await traerReservasDelUsuario();
+        setReservas(reser);
+      };
+      fetchReservas();
+    }, [])
+  );
   const onDismissSnackBar = () => setVisibleToast(false);
 
   return (
@@ -49,7 +51,7 @@ const AdministrarReservas = ({ navigation }) => {
             setVisibleToast,
             dominioDenunciado,
             setDominioDenunciado,
-            enviandoDenuncia, 
+            enviandoDenuncia,
             setEnviandoDenuncia
           )
         )}
@@ -69,5 +71,3 @@ const AdministrarReservas = ({ navigation }) => {
   );
 };
 export default AdministrarReservas;
-
-

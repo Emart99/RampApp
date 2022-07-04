@@ -10,14 +10,19 @@ import modalStyles from "../../styles/modalStyles";
 import { crearVehiculo } from "../../api/http";
 import { vehiculoValidationSchema } from "../../utils/vehiculoSchema";
 
-const CrearVehiculo = (visible, setVisible,onPressRefresh,setOnPressRefresh) => {
+const CrearVehiculo = (
+  visible,
+  setVisible,
+  onPressRefresh,
+  setOnPressRefresh
+) => {
   const theme = useTheme();
   const hideModal = () => setVisible(false);
 
   const vehiculoCrear = async (values) => {
     await crearVehiculo(values).then(() => {
       hideModal();
-      setOnPressRefresh(!onPressRefresh)
+      setOnPressRefresh(!onPressRefresh);
     });
   };
 
@@ -93,7 +98,11 @@ const CrearVehiculo = (visible, setVisible,onPressRefresh,setOnPressRefresh) => 
               <View style={modalStyles.buttonContainer}>
                 {GlobalButton(
                   [{ borderColor: theme.colors.secondary }, modalStyles.button],
-                  { color: theme.colors.text, textAlign: "center",fontSize:18, },
+                  {
+                    color: theme.colors.text,
+                    textAlign: "center",
+                    fontSize: 18,
+                  },
                   "Cancelar",
                   hideModal
                 )}
@@ -105,7 +114,11 @@ const CrearVehiculo = (visible, setVisible,onPressRefresh,setOnPressRefresh) => 
                     },
                     modalStyles.button,
                   ],
-                  { color: theme.colors.secondaryText, textAlign: "center" ,fontSize:18,},
+                  {
+                    color: theme.colors.secondaryText,
+                    textAlign: "center",
+                    fontSize: 18,
+                  },
                   "Agregar",
                   handleSubmit,
                   isValid
