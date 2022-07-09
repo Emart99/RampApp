@@ -152,6 +152,9 @@ const PagoReserva = (visible, setVisible) => {
                 {errors.mes && touched.mes && (
                   <Text style={styles.inputInvalidText}>{errors.mes}</Text>
                 )}
+                {errors.anio && touched.anio && (
+                  <Text style={styles.inputInvalidText}>{errors.anio}</Text>
+                )}
                 {GlobalInput(
                   "Código de seguridad",
                   values.cvv,
