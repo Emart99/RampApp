@@ -11,6 +11,7 @@ export const rampaValidationSchema = yup.object().shape({
   cp: yup.string().required("Ingrese el código postal"),
   nroPartida: yup
     .string()
+    .max(7,"Ingrese un número de partida válido")    
     .required("Ingrese el número de partida del inmueble"),
   imgRampa: yup.string().required("Foto requerida"),
   imgEscritura: yup.string().required("Foto requerida"),
