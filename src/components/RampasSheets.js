@@ -14,11 +14,13 @@ import {
 
 const imgStyle = StyleSheet.create({
   imgRampa: {
-    margin: "auto",
-    width: "87%",
-    height: "22.5%",
-    borderRadius: 3,
-    resizeMode: "cover",
+    // margin: "auto",
+     width: "87%",
+     height: "22.5%",
+     borderRadius: 3,
+     resizeMode: "cover",
+     marginTop:"5%",
+     marginBottom: "10%",
   },
 });
 
@@ -44,7 +46,7 @@ function mapAutos(autos) {
 function mapHoras(horas) {
   let JSON = [];
   horas.map((hora) => {
-    const cosa = { label: hora.toString() + ":00", value: hora };
+    const cosa = { label: hora.toString() + ":00", value: hora};
     JSON.push(cosa);
   });
   return JSON;
@@ -70,8 +72,9 @@ const RampasSheets = (theme, actionSheetRef, setIsOpen) => {
     inputAndroid: {
       color: theme.colors.text,
     },
+    
   };
-
+  // Esto tendria que venir del backend...
   const calculoDePrecio = () => {
     let precio = 0;
     for (let i = 0; i < horariosIzquierda.length; i++) {
@@ -174,14 +177,14 @@ const RampasSheets = (theme, actionSheetRef, setIsOpen) => {
             color: theme.colors.text,
             alignSelf: "flex-start",
             marginTop: "0%",
-            //marginBottom: "10%",
+            marginBottom: "10%",
             marginLeft: "6.5%",
           }}
         >
           Horarios de reserva
         </Text>
 
-        <View style={{ height: "30%" }}>
+        <View style={{ height: "35%" }}>
           <View
             style={{ display: "flex", flexDirection: "row", width: "100%" }}
           >
