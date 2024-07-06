@@ -5,7 +5,6 @@ import _ from "lodash";
 import { useWindowDimensions, ToastAndroid } from "react-native";
 import styles from "../styles/styles";
 import RNPickerSelect from "react-native-picker-select";
-
 import GlobalButton from "./GlobalButton";
 import {
   rampaById,
@@ -174,15 +173,15 @@ const RampasSheets = (theme, actionSheetRef, setIsOpen) => {
             fontSize: 20,
             color: theme.colors.text,
             alignSelf: "flex-start",
-            marginTop: "6%",
-            marginBottom: "10%",
+            marginTop: "0%",
+            //marginBottom: "10%",
             marginLeft: "6.5%",
           }}
         >
           Horarios de reserva
         </Text>
 
-        <View style={{ height: "37%" }}>
+        <View style={{ height: "30%" }}>
           <View
             style={{ display: "flex", flexDirection: "row", width: "100%" }}
           >

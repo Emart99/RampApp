@@ -37,7 +37,7 @@ const CardReserva = (
     });
     setEnviandoDenuncia(true);
     if (!result.cancelled) {
-      const imagen = await subirImagen(result.base64).catch((err) => {});
+      const imagen = await subirImagen(result.assets[0].base64).catch((err) => {});
       await denunciarInfractor(
         "Estacionamiento ocupado",
         imagen.data.link,

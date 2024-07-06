@@ -62,6 +62,12 @@ const AdminRampa = ({ rampa, theme, state, setState, limitTime }) => {
       visibleTimePickerHasta: !prev.visibleTimePickerHasta,
     }));
 
+  const cancelHandlerLeft = () => {
+    setState({ visibleTimePickerDesde: false });
+  };
+  const cancelHandlerRight = () => {
+    setState({ visibleTimePickerHasta: false });
+  };
   const onToggleSwitch = () =>
     setState((prev) => ({
       isSwitchOn: !prev.isSwitchOn,
@@ -293,7 +299,7 @@ const AdminRampa = ({ rampa, theme, state, setState, limitTime }) => {
                               setFieldValue("horarioDesde", time);
                               setFieldTouched("horarioDesde", true);
                             }}
-                            onCancel={onTogglePickerDesde}
+                            onCancel={cancelHandlerLeft}
                             date={new Date()}
                             minuteInterval={30}
                           />
@@ -327,7 +333,7 @@ const AdminRampa = ({ rampa, theme, state, setState, limitTime }) => {
                               setFieldValue("horarioHasta", time);
                               setFieldTouched("horarioHasta", true);
                             }}
-                            onCancel={onTogglePickerHasta}
+                            onCancel={cancelHandlerRight}
                             date={new Date()}
                             minuteInterval={30}
                           />

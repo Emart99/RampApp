@@ -59,7 +59,7 @@ const CrearRampa = (
 
   const setImage = (setFieldValue, setFieldTouched, imgValue, result) => {
     if (!result.cancelled) {
-      setFieldValue(imgValue, result.base64);
+      setFieldValue(imgValue, result.assets[0].base64);
       setFieldTouched(imgValue, true);
     }
     setState({camaraDisabled:false});
@@ -69,10 +69,12 @@ const CrearRampa = (
  
 
   const agregarRampa = async (values) => {
-    const imagenRampa = await subirImagen(values.imgRampa).catch((err) => {});
-    const imagenDNI = await subirImagen(values.imgDNI).catch((err) => {});
+    const imagenRampa = await subirImagen(values.imgRampa).catch((err) => {
+      console.log(err)
+    });
+    const imagenDNI = await subirImagen(values.imgDNI).catch((err) => {console.log(err)});
     const imagenEscritura = await subirImagen(values.imgEscritura).catch(
-      (err) => {}
+      (err) => {console.log(err)}
     );
 
     const geoJson = await geocoder({
@@ -99,7 +101,9 @@ const CrearRampa = (
       imagenEscritura: imagenEscritura.data.link,
     };
     creacionDeRampa(rampaJSON)
-      .then(() => setState({showAlertDatosCorrectos:true}))
+      .then(() => {
+        setState({showAlertDatosCorrectos:true})
+    })
       .catch((err) => {
         setState({jsonRampaRegistrada:rampaJSON})
         setState({showAlertRampaRegistrada:true})
