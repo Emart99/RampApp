@@ -77,7 +77,6 @@ export async function subirImagen(base64img) {
 }
 
 export async function creacionDeRampa(rampaJSON) {
-  console.log(rampaJSON);
   const response = await axios.put(
     ENV_DEV_URL + "/agregarRampa/" + (await getUsuarioId()),
     rampaJSON

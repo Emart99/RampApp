@@ -190,7 +190,7 @@ const RampasSheets = (theme, actionSheetRef, setIsOpen) => {
           >
             <View
               style={{
-                width: "30%",
+                width: "35%",
                 alignItems: "center",
                 marginRight: 20,
               }}
@@ -227,7 +227,7 @@ const RampasSheets = (theme, actionSheetRef, setIsOpen) => {
             <View
               style={{
                 marginLeft: 20,
-                width: "30%",
+                width: "35%",
                 alignItems: "center",
               }}
             >

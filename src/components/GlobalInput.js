@@ -19,12 +19,12 @@ const GlobalInput = (
         secureTextEntry={_secure}
         theme={{
           colors: {
-            placeholder: theme.colors.secondary,
+            placeholder: theme.colors.globalInput,
             background: theme.colors.background,
           },
         }}
-        underlineColor={theme.colors.secondary}
-        activeUnderlineColor={theme.colors.secondary}
+        underlineColor={theme.colors.globalInput}
+        activeUnderlineColor={theme.colors.globalInput}
         style={{ backgroundColor: _background }}
         mode="flat"
         label={_label}

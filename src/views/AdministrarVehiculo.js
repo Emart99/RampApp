@@ -9,6 +9,7 @@ import cardStyles from "../styles/cardStyles";
 import vehiculoStyles from "../styles/vehiculoStyles";
 import { borrarVehiculo, traerVehiculosDelUsuario } from "../api/http";
 import EditarVehiculo from "./../components/modales/EditarVehiculo";
+import { RefreshControl } from "react-native";
 
 const AdministrarVehiculo = () => {
   const theme = useTheme();
@@ -16,6 +17,7 @@ const AdministrarVehiculo = () => {
   const [visibleCrear, setVisibleCrear] = React.useState(false);
   const [visibleEditar, setVisibleEditar] = React.useState(false);
   const [onPressRefresh, setOnPressRefresh] = React.useState(false);
+  const [refreshing, setRefreshing] = React.useState(false);
   const insets = useSafeAreaInsets();
   const showModal = () => setVisibleCrear(true);
 
@@ -24,20 +26,19 @@ const AdministrarVehiculo = () => {
       setOnPressRefresh(!onPressRefresh)
     ); // aca falta el id
   };
-
-  useEffect(() => {
-    async function fetchVehiculos() {
-      const vehiculos = await traerVehiculosDelUsuario();
-      if (vehiculos != undefined) {
-        setVehiculos(vehiculos);
-      }
+  async function fetchVehiculos() {
+    const vehiculos = await traerVehiculosDelUsuario();
+    if (vehiculos != undefined) {
+      setVehiculos(vehiculos);
     }
+  }
+  useEffect(() => {    
     fetchVehiculos();
   }, [onPressRefresh]);
 
   return (
     <>
-      <ScrollView style={cardStyles.scrolleableContainer}>
+      <ScrollView refreshControl={<RefreshControl refreshing={refreshing} onRefresh={fetchVehiculos} />} style={cardStyles.scrolleableContainer} >
         {vehiculos.map((vehiculo) => {
           return (
             <View

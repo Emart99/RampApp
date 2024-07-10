@@ -362,7 +362,7 @@ const CrearRampa = (
                     <View style={modalStyles.imgContainer}>
                       <View style={modalStyles.ctn}>
                         <IconButton
-                          disabled={state.camaraDisabled}
+                          //disabled={state.camaraDisabled}
                           icon="image-plus"
                           color={theme.colors.text}
                           onPress={() =>
@@ -376,7 +376,7 @@ const CrearRampa = (
                           size={27}
                         />
                         <IconButton
-                          disabled={state.camaraDisabled}
+                          //disabled={state.camaraDisabled}
                           icon="camera"
                           color={theme.colors.text}
                           onPress={() =>
@@ -392,7 +392,7 @@ const CrearRampa = (
                       </View>
                       <View style={modalStyles.ctn}>
                         <IconButton
-                          disabled={state.camaraDisabled}
+                          //disabled={state.camaraDisabled}
                           icon="image-plus"
                           color={theme.colors.text}
                           onPress={() =>
@@ -402,7 +402,7 @@ const CrearRampa = (
                           size={27}
                         />
                         <IconButton
-                          disabled={state.camaraDisabled}
+                          //disabled={state.camaraDisabled}
                           icon="camera"
                           color={theme.colors.text}
                           onPress={() =>
@@ -414,7 +414,7 @@ const CrearRampa = (
                       </View>
                       <View style={modalStyles.ctn}>
                         <IconButton
-                          disabled={state.camaraDisabled}
+                          //disabled={state.camaraDisabled}
                           icon="image-plus"
                           color={theme.colors.text}
                           onPress={() =>
@@ -428,7 +428,7 @@ const CrearRampa = (
                           size={27}
                         />
                         <IconButton
-                          disabled={state.camaraDisabled}
+                          //disabled={state.camaraDisabled}
                           icon="camera"
                           color={theme.colors.text}
                           onPress={() =>

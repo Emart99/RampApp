@@ -31,6 +31,7 @@ export const LightTheme = {
     secondaryText: "white",
     borderTextInput: "#CCD0D5",
     mapTheme: "light",
+    globalInput:"#202124"
   },
   mapIcon: require("../assets/icons/LIGHTMODEICON.png"),
   mapStyles: lightMapStyles,
@@ -55,6 +56,7 @@ export const _DarkTheme = {
     secondaryText: "white",
     borderTextInput: "#777",
     mapTheme: "light",
+    globalInput:"white"
   },
   mapIcon: require("../assets/icons/DARKMODEICON.png"),
   mapStyles: darkMapStyles,

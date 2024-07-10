@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo } from "react";
-import { ScrollView, TouchableOpacity } from "react-native";
-import { Snackbar, useTheme, Text } from "react-native-paper";
+import { RefreshControl, ScrollView, TouchableOpacity } from "react-native";
+import { Snackbar, useTheme, Text, ActivityIndicator } from "react-native-paper";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import useSetState from "../utils/useSetState";
@@ -14,6 +14,7 @@ const AdministrarRampa = () => {
   const [rampas, setRampas] = React.useState([]);
   const insets = useSafeAreaInsets();
   const theme = useTheme();
+  const [refreshing, setRefreshing] = React.useState(false);
   const [crearState, setCrearState] = useSetState({
     visibleModalCrear:false,
     showAlertDatosCorrectos:false,
@@ -42,13 +43,13 @@ const AdministrarRampa = () => {
     return adminState.horarios.length > 5;
   }, [adminState.horarios]);
 
-  useEffect(() => {
-    async function fetchRampas() {
-      const ramp = await traerRampasDelUsuario();
-      if (ramp != undefined) {
-        setRampas(ramp);
-      }
+  async function fetchRampas() {
+    const ramp = await traerRampasDelUsuario();
+    if (ramp != undefined) {
+      setRampas(ramp);
     }
+  }
+  useEffect(() => {
     fetchRampas();
   }, [adminState.onPressRefresh]);
 
@@ -56,7 +57,7 @@ const AdministrarRampa = () => {
 
   return (
     <>
-      <ScrollView style={cardStyles.scrolleableContainer}>
+      <ScrollView refreshControl={<RefreshControl refreshing={refreshing} onRefresh={fetchRampas} />} style={cardStyles.scrolleableContainer}>
         {rampas.map((rampa) => (
           <CardRampa
             key={rampa.id}

@@ -50,24 +50,8 @@ const AdminRampa = ({ rampa, theme, state, setState, limitTime }) => {
       );
     }
     hideModal();
-  };
+  }
 
-  const onTogglePickerDesde = () =>
-    setState((prev) => ({
-      visibleTimePickerDesde: !prev.visibleTimePickerDesde,
-    }));
-
-  const onTogglePickerHasta = () =>
-    setState((prev) => ({
-      visibleTimePickerHasta: !prev.visibleTimePickerHasta,
-    }));
-
-  const cancelHandlerLeft = () => {
-    setState({ visibleTimePickerDesde: false });
-  };
-  const cancelHandlerRight = () => {
-    setState({ visibleTimePickerHasta: false });
-  };
   const onToggleSwitch = () =>
     setState((prev) => ({
       isSwitchOn: !prev.isSwitchOn,
@@ -281,7 +265,7 @@ const AdminRampa = ({ rampa, theme, state, setState, limitTime }) => {
                           <IconButton
                             icon="clock-outline"
                             color={theme.colors.text}
-                            onPress={onTogglePickerDesde}
+                            onPress={()=>setState({ visibleTimePickerDesde: true })}
                             size={40}
                             style={{
                               padding: 0,
@@ -291,15 +275,16 @@ const AdminRampa = ({ rampa, theme, state, setState, limitTime }) => {
                             disabled={limitTime}
                           />
                           <DateTimePickerModal
+                      
                             isVisible={state.visibleTimePickerDesde}
                             mode="time"
                             onConfirm={(date) => {
-                              onTogglePickerDesde();
+                              setState({ visibleTimePickerDesde: false });
                               const time = check24h(date);
                               setFieldValue("horarioDesde", time);
                               setFieldTouched("horarioDesde", true);
                             }}
-                            onCancel={cancelHandlerLeft}
+                            onCancel={()=>setState({ visibleTimePickerDesde: false })}
                             date={new Date()}
                             minuteInterval={30}
                           />
@@ -315,7 +300,7 @@ const AdminRampa = ({ rampa, theme, state, setState, limitTime }) => {
                           <IconButton
                             icon="clock-outline"
                             color={theme.colors.text}
-                            onPress={onTogglePickerHasta}
+                            onPress={()=>setState({ visibleTimePickerHasta: true })}
                             size={40}
                             style={{
                               padding: 0,
@@ -328,12 +313,12 @@ const AdminRampa = ({ rampa, theme, state, setState, limitTime }) => {
                             isVisible={state.visibleTimePickerHasta}
                             mode="time"
                             onConfirm={(date) => {
-                              onTogglePickerHasta();
+                              setState({ visibleTimePickerHasta: false });
                               const time = check24h(date);
                               setFieldValue("horarioHasta", time);
                               setFieldTouched("horarioHasta", true);
                             }}
-                            onCancel={cancelHandlerRight}
+                            onCancel={()=>setState({ visibleTimePickerHasta: false })}
                             date={new Date()}
                             minuteInterval={30}
                           />
