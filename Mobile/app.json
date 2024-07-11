@@ -1,0 +1,21 @@
+{
+  "expo": {
+    "userInterfaceStyle": "automatic",
+    "name": "RampApp",
+    "slug": "RampApp",
+    "version": "1.0.0",
+    "assetBundlePatterns": ["**/*"],
+    "icon": "./src/assets/splashscreen/ICON.png",
+    "splash": {
+      "image": "./src/assets/splashscreen/LIGHTMODE.png",
+      "backgroundColor": "#F0F2F5",
+      "resizeMode": "cover"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./src/assets/splashscreen/ADAPTATIVEICON.png",
+        "backgroundColor": "#F0F2F5"
+      }
+    }
+  }
+}
