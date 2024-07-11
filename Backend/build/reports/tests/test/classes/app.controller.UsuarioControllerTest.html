@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=edge"/>
+<title>Test results - Dado un controller de usuarios</title>
+<link href="../css/base-style.css" rel="stylesheet" type="text/css"/>
+<link href="../css/style.css" rel="stylesheet" type="text/css"/>
+<script src="../js/report.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="content">
+<h1>Dado un controller de usuarios</h1>
+<div class="breadcrumbs">
+<a href="../index.html">all</a> &gt; 
+<a href="../packages/app.controller.html">app.controller</a> &gt; UsuarioControllerTest</div>
+<div id="summary">
+<table>
+<tr>
+<td>
+<div class="summaryGroup">
+<table>
+<tr>
+<td>
+<div class="infoBox" id="tests">
+<div class="counter">1</div>
+<p>tests</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="failures">
+<div class="counter">1</div>
+<p>failures</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="ignored">
+<div class="counter">0</div>
+<p>ignored</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="duration">
+<div class="counter">0.712s</div>
+<p>duration</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td>
+<div class="infoBox failures" id="successRate">
+<div class="percent">0%</div>
+<p>successful</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div id="tabs">
+<ul class="tabLinks">
+<li>
+<a href="#tab0">Failed tests</a>
+</li>
+<li>
+<a href="#tab1">Tests</a>
+</li>
+<li>
+<a href="#tab2">Standard output</a>
+</li>
+</ul>
+<div id="tab0" class="tab">
+<h2>Failed tests</h2>
+<div class="test">
+<a name="actualizar un usuario inexistente devuelve un codigo de http 404()"></a>
+<h3 class="failures">actualizar un usuario inexistente devuelve un codigo de http 404()</h3>
+<span class="code">
+<pre>java.lang.AssertionError: Status expected:&lt;404&gt; but was:&lt;405&gt;
+	at org.springframework.test.util.AssertionErrors.fail(AssertionErrors.java:59)
+	at org.springframework.test.util.AssertionErrors.assertEquals(AssertionErrors.java:122)
+	at org.springframework.test.web.servlet.result.StatusResultMatchers.lambda$matcher$9(StatusResultMatchers.java:627)
+	at org.springframework.test.web.servlet.MockMvc$1.andExpect(MockMvc.java:212)
+	at app.controller.UsuarioControllerTest.actualizar un usuario inexistente devuelve un codigo de http 404(UsuarioControllerTest.kt:68)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:564)
+	at org.junit.platform.commons.util.ReflectionUtils.invokeMethod(ReflectionUtils.java:725)
+	at org.junit.jupiter.engine.execution.MethodInvocation.proceed(MethodInvocation.java:60)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$ValidatingInvocation.proceed(InvocationInterceptorChain.java:131)
+	at org.junit.jupiter.engine.extension.TimeoutExtension.intercept(TimeoutExtension.java:149)
+	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestableMethod(TimeoutExtension.java:140)
+	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestMethod(TimeoutExtension.java:84)
+	at org.junit.jupiter.engine.execution.ExecutableInvoker$ReflectiveInterceptorCall.lambda$ofVoidMethod$0(ExecutableInvoker.java:115)
+	at org.junit.jupiter.engine.execution.ExecutableInvoker.lambda$invoke$0(ExecutableInvoker.java:105)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$InterceptedInvocation.proceed(InvocationInterceptorChain.java:106)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.proceed(InvocationInterceptorChain.java:64)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.chainAndInvoke(InvocationInterceptorChain.java:45)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.invoke(InvocationInterceptorChain.java:37)
+	at org.junit.jupiter.engine.execution.ExecutableInvoker.invoke(ExecutableInvoker.java:104)
+	at org.junit.jupiter.engine.execution.ExecutableInvoker.invoke(ExecutableInvoker.java:98)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$invokeTestMethod$7(TestMethodTestDescriptor.java:214)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.invokeTestMethod(TestMethodTestDescriptor.java:210)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:135)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:66)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:151)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1510)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:155)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1510)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:155)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:35)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:57)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:54)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:108)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:88)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:54)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:67)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:52)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:96)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:75)
+	at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor$CollectAllTestClassesExecutor.processAllTestClasses(JUnitPlatformTestClassProcessor.java:99)
+	at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor$CollectAllTestClassesExecutor.access$000(JUnitPlatformTestClassProcessor.java:79)
+	at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor.stop(JUnitPlatformTestClassProcessor.java:75)
+	at org.gradle.api.internal.tasks.testing.SuiteTestClassProcessor.stop(SuiteTestClassProcessor.java:61)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:564)
+	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:36)
+	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:24)
+	at org.gradle.internal.dispatch.ContextClassLoaderDispatch.dispatch(ContextClassLoaderDispatch.java:33)
+	at org.gradle.internal.dispatch.ProxyDispatchAdapter$DispatchingInvocationHandler.invoke(ProxyDispatchAdapter.java:94)
+	at com.sun.proxy.$Proxy5.stop(Unknown Source)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker.stop(TestWorker.java:135)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:564)
+	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:36)
+	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:24)
+	at org.gradle.internal.remote.internal.hub.MessageHubBackedObjectConnection$DispatchWrapper.dispatch(MessageHubBackedObjectConnection.java:182)
+	at org.gradle.internal.remote.internal.hub.MessageHubBackedObjectConnection$DispatchWrapper.dispatch(MessageHubBackedObjectConnection.java:164)
+	at org.gradle.internal.remote.internal.hub.MessageHub$Handler.run(MessageHub.java:414)
+	at org.gradle.internal.concurrent.ExecutorPolicy$CatchAndRecordFailures.onExecute(ExecutorPolicy.java:64)
+	at org.gradle.internal.concurrent.ManagedExecutorImpl$1.run(ManagedExecutorImpl.java:48)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:630)
+	at org.gradle.internal.concurrent.ThreadFactoryImpl$ManagedThreadRunnable.run(ThreadFactoryImpl.java:56)
+	at java.base/java.lang.Thread.run(Thread.java:832)
+</pre>
+</span>
+</div>
+</div>
+<div id="tab1" class="tab">
+<h2>Tests</h2>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Duration</th>
+<th>Result</th>
+</tr>
+</thead>
+<tr>
+<td class="failures">actualizar un usuario inexistente devuelve un codigo de http 404()</td>
+<td class="failures">0.712s</td>
+<td class="failures">failed</td>
+</tr>
+</table>
+</div>
+<div id="tab2" class="tab">
+<h2>Standard output</h2>
+<span class="code">
+<pre>20:24:19.591 [Test worker] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating CacheAwareContextLoaderDelegate from class [org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate]
+20:24:19.631 [Test worker] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating BootstrapContext using constructor [public org.springframework.test.context.support.DefaultBootstrapContext(java.lang.Class,org.springframework.test.context.CacheAwareContextLoaderDelegate)]
+20:24:19.743 [Test worker] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating TestContextBootstrapper for test class [app.controller.UsuarioControllerTest] from class [org.springframework.boot.test.context.SpringBootTestContextBootstrapper]
+20:24:19.790 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Neither @ContextConfiguration nor @ContextHierarchy found for test class [app.controller.UsuarioControllerTest], using SpringBootContextLoader
+20:24:19.804 [Test worker] DEBUG org.springframework.test.context.support.AbstractContextLoader - Did not detect default resource location for test class [app.controller.UsuarioControllerTest]: class path resource [app/controller/UsuarioControllerTest-context.xml] does not exist
+20:24:19.805 [Test worker] DEBUG org.springframework.test.context.support.AbstractContextLoader - Did not detect default resource location for test class [app.controller.UsuarioControllerTest]: class path resource [app/controller/UsuarioControllerTestContext.groovy] does not exist
+20:24:19.806 [Test worker] INFO org.springframework.test.context.support.AbstractContextLoader - Could not detect default resource locations for test class [app.controller.UsuarioControllerTest]: no resource found for suffixes {-context.xml, Context.groovy}.
+20:24:19.808 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [app.controller.UsuarioControllerTest]: UsuarioControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+20:24:20.163 [Test worker] DEBUG org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider - Identified candidate component class: file [C:\Users\User\Desktop\Unsam\PHM\DIFFICULT_Back_END\build\classes\kotlin\main\app\DifficultApplication.class]
+20:24:20.166 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration app.DifficultApplication for test class app.controller.UsuarioControllerTest
+20:24:20.436 [Test worker] DEBUG org.springframework.boot.test.context.SpringBootTestContextBootstrapper - @TestExecutionListeners is not present for class [app.controller.UsuarioControllerTest]: using defaults.
+20:24:20.439 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener, org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.event.ApplicationEventsTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener, org.springframework.test.context.event.EventPublishingTestExecutionListener]
+20:24:20.485 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@5a969d69, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@1e690222, org.springframework.test.context.event.ApplicationEventsTestExecutionListener@4705259d, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener@812475c, org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@6681fee2, org.springframework.test.context.support.DirtiesContextTestExecutionListener@30af9802, org.springframework.test.context.transaction.TransactionalTestExecutionListener@5ee87a47, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@44dafe61, org.springframework.test.context.event.EventPublishingTestExecutionListener@2dc56ef6, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener@61e68cc4, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener@7cc1f8fd, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener@6f7b28f2, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener@69cf5935, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener@3c1a6864, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener@4f6f690a]
+20:24:20.494 [Test worker] DEBUG org.springframework.test.context.support.AbstractDirtiesContextTestExecutionListener - Before test class: context [DefaultTestContext@faa04cd testClass = UsuarioControllerTest, testInstance = [null], testMethod = [null], testException = [null], mergedContextConfiguration = [WebMergedContextConfiguration@337092c0 testClass = UsuarioControllerTest, locations = '{}', classes = '{class app.DifficultApplication}', contextInitializerClasses = '[]', activeProfiles = '{test}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[org.springframework.boot.test.autoconfigure.actuate.metrics.MetricsExportContextCustomizerFactory$DisableMetricExportContextCustomizer@2af3c81b, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@4b3fa0b3, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@3e330cbc, [ImportsContextCustomizer@104d5192 key = [org.springframework.boot.test.autoconfigure.web.servlet.MockMvcAutoConfiguration, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcWebClientAutoConfiguration, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcWebDriverAutoConfiguration, org.springframework.boot.autoconfigure.security.oauth2.client.servlet.OAuth2ClientAutoConfiguration, org.springframework.boot.autoconfigure.security.oauth2.resource.servlet.OAuth2ResourceServerAutoConfiguration, org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration, org.springframework.boot.autoconfigure.security.servlet.SecurityFilterAutoConfiguration, org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcSecurityConfiguration, org.springframework.boot.test.autoconfigure.web.reactive.WebTestClientAutoConfiguration]], org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@6e053858, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@7fdf5291, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@674c8542, org.springframework.boot.test.context.SpringBootTestArgs@1, org.springframework.boot.test.context.SpringBootTestWebEnvironment@254049a3], resourceBasePath = 'src/main/webapp', contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]], attributes = map['org.springframework.test.context.web.ServletTestExecutionListener.activateListener' -&gt; true]], class annotated with @DirtiesContext [false] with mode [null].
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v2.6.4)
+
+2022-04-07 20:24:22.573  INFO 12284 --- [    Test worker] app.controller.UsuarioControllerTest     : Starting UsuarioControllerTest using Java 14 on MJ207121 with PID 12284 (started by User in C:\Users\User\Desktop\Unsam\PHM\DIFFICULT_Back_END)
+2022-04-07 20:24:22.575  INFO 12284 --- [    Test worker] app.controller.UsuarioControllerTest     : The following 1 profile is active: &quot;test&quot;
+2022-04-07 20:24:23.944  INFO 12284 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-04-07 20:24:24.015  INFO 12284 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 58 ms. Found 1 JPA repository interfaces.
+2022-04-07 20:24:24.725  INFO 12284 --- [    Test worker] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.ws.config.annotation.DelegatingWsConfiguration' of type [org.springframework.ws.config.annotation.DelegatingWsConfiguration$$EnhancerBySpringCGLIB$$27d22968] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-07 20:24:24.829  INFO 12284 --- [    Test worker] .w.s.a.s.AnnotationActionEndpointMapping : Supporting [WS-Addressing August 2004, WS-Addressing 1.0]
+2022-04-07 20:24:25.374  INFO 12284 --- [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-04-07 20:24:25.491  INFO 12284 --- [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.6.5.Final
+2022-04-07 20:24:25.769  INFO 12284 --- [    Test worker] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2022-04-07 20:24:25.949  INFO 12284 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2022-04-07 20:24:26.484  INFO 12284 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2022-04-07 20:24:26.568  INFO 12284 --- [    Test worker] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+2022-04-07 20:24:26.947  INFO 12284 --- [    Test worker] o.hibernate.id.enhanced.TableGenerator   : HHH000398: Explicit segment value for id generator [hibernate_sequences.sequence_name] suggested; using default [default]
+Hibernate: 
+    
+    drop table if exists hibernate_sequences CASCADE 
+Hibernate: 
+    
+    drop table if exists item CASCADE 
+Hibernate: 
+    
+    drop table if exists orden_compra CASCADE 
+Hibernate: 
+    
+    drop table if exists orden_compra_items CASCADE 
+Hibernate: 
+    
+    drop table if exists usuario CASCADE 
+Hibernate: 
+    
+    drop table if exists usuario_compras_realizadas CASCADE 
+Hibernate: 
+    
+    drop sequence if exists hibernate_sequence
+Hibernate: create sequence hibernate_sequence start with 1 increment by 1
+Hibernate: 
+    
+    create table hibernate_sequences (
+       sequence_name varchar(255) not null,
+        next_val bigint,
+        primary key (sequence_name)
+    )
+Hibernate: 
+    
+    insert into hibernate_sequences(sequence_name, next_val) values ('default',0)
+Hibernate: 
+    
+    create table item (
+       id bigint not null,
+        cantidad_articulo integer,
+        id_producto_comprado bigint,
+        importe_total double,
+        lote integer,
+        prodcuto_comprado varchar(150),
+        primary key (id)
+    )
+Hibernate: 
+    
+    create table orden_compra (
+       id bigint not null,
+        fecha_de_compra date,
+        primary key (id)
+    )
+Hibernate: 
+    
+    create table orden_compra_items (
+       orden_compra_id bigint not null,
+        items_id bigint not null,
+        items_order integer not null,
+        primary key (orden_compra_id, items_order)
+    )
+Hibernate: 
+    
+    create table usuario (
+       id bigint not null,
+        apellido varchar(150),
+        edad integer,
+        nombre varchar(150),
+        nombre_imagen varchar(150),
+        password varchar(150),
+        saldo double,
+        user_name varchar(150),
+        primary key (id)
+    )
+Hibernate: 
+    
+    create table usuario_compras_realizadas (
+       usuario_id bigint not null,
+        compras_realizadas_id bigint not null,
+        compras_realizadas_order integer not null,
+        primary key (usuario_id, compras_realizadas_order)
+    )
+Hibernate: 
+    
+    alter table orden_compra_items 
+       add constraint UK_te00452x7k1kcu5uyxn1yfxrh unique (items_id)
+Hibernate: 
+    
+    alter table usuario_compras_realizadas 
+       add constraint UK_fo17uohm6lktvypcw0y47f8xn unique (compras_realizadas_id)
+Hibernate: 
+    
+    alter table orden_compra_items 
+       add constraint FKm71k0i3eee30aerr56001niu3 
+       foreign key (items_id) 
+       references item
+Hibernate: 
+    
+    alter table orden_compra_items 
+       add constraint FKr7wq32rrag42cil0bgmba6gto 
+       foreign key (orden_compra_id) 
+       references orden_compra
+Hibernate: 
+    
+    alter table usuario_compras_realizadas 
+       add constraint FK2lsit94tpp7p3knoec5b6ef6r 
+       foreign key (compras_realizadas_id) 
+       references orden_compra
+Hibernate: 
+    
+    alter table usuario_compras_realizadas 
+       add constraint FKm6iu50xk7p5lqoxat3v4lqgrd 
+       foreign key (usuario_id) 
+       references usuario
+2022-04-07 20:24:27.473  INFO 12284 --- [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-04-07 20:24:27.485  INFO 12284 --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+Hibernate: 
+    select
+        tbl.next_val 
+    from
+        hibernate_sequences tbl 
+    where
+        tbl.sequence_name=? for update
+            
+Hibernate: 
+    update
+        hibernate_sequences 
+    set
+        next_val=?  
+    where
+        next_val=? 
+        and sequence_name=?
+Hibernate: 
+    call next value for hibernate_sequence
+Hibernate: 
+    call next value for hibernate_sequence
+Hibernate: 
+    call next value for hibernate_sequence
+Hibernate: 
+    call next value for hibernate_sequence
+Hibernate: 
+    call next value for hibernate_sequence
+Hibernate: 
+    call next value for hibernate_sequence
+Hibernate: 
+    insert 
+    into
+        usuario
+        (apellido, edad, nombre, nombre_imagen, password, saldo, user_name, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        orden_compra
+        (fecha_de_compra, id) 
+    values
+        (?, ?)
+Hibernate: 
+    insert 
+    into
+        item
+        (cantidad_articulo, id_producto_comprado, importe_total, lote, prodcuto_comprado, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        item
+        (cantidad_articulo, id_producto_comprado, importe_total, lote, prodcuto_comprado, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        orden_compra
+        (fecha_de_compra, id) 
+    values
+        (?, ?)
+Hibernate: 
+    insert 
+    into
+        item
+        (cantidad_articulo, id_producto_comprado, importe_total, lote, prodcuto_comprado, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        item
+        (cantidad_articulo, id_producto_comprado, importe_total, lote, prodcuto_comprado, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        usuario_compras_realizadas
+        (usuario_id, compras_realizadas_order, compras_realizadas_id) 
+    values
+        (?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        usuario_compras_realizadas
+        (usuario_id, compras_realizadas_order, compras_realizadas_id) 
+    values
+        (?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        orden_compra_items
+        (orden_compra_id, items_order, items_id) 
+    values
+        (?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        orden_compra_items
+        (orden_compra_id, items_order, items_id) 
+    values
+        (?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        orden_compra_items
+        (orden_compra_id, items_order, items_id) 
+    values
+        (?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        orden_compra_items
+        (orden_compra_id, items_order, items_id) 
+    values
+        (?, ?, ?)
+Hibernate: 
+    select
+        tbl.next_val 
+    from
+        hibernate_sequences tbl 
+    where
+        tbl.sequence_name=? for update
+            
+Hibernate: 
+    update
+        hibernate_sequences 
+    set
+        next_val=?  
+    where
+        next_val=? 
+        and sequence_name=?
+Hibernate: 
+    call next value for hibernate_sequence
+Hibernate: 
+    call next value for hibernate_sequence
+Hibernate: 
+    call next value for hibernate_sequence
+Hibernate: 
+    call next value for hibernate_sequence
+Hibernate: 
+    call next value for hibernate_sequence
+Hibernate: 
+    call next value for hibernate_sequence
+Hibernate: 
+    insert 
+    into
+        usuario
+        (apellido, edad, nombre, nombre_imagen, password, saldo, user_name, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        orden_compra
+        (fecha_de_compra, id) 
+    values
+        (?, ?)
+Hibernate: 
+    insert 
+    into
+        item
+        (cantidad_articulo, id_producto_comprado, importe_total, lote, prodcuto_comprado, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        item
+        (cantidad_articulo, id_producto_comprado, importe_total, lote, prodcuto_comprado, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        orden_compra
+        (fecha_de_compra, id) 
+    values
+        (?, ?)
+Hibernate: 
+    insert 
+    into
+        item
+        (cantidad_articulo, id_producto_comprado, importe_total, lote, prodcuto_comprado, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        item
+        (cantidad_articulo, id_producto_comprado, importe_total, lote, prodcuto_comprado, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        usuario_compras_realizadas
+        (usuario_id, compras_realizadas_order, compras_realizadas_id) 
+    values
+        (?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        usuario_compras_realizadas
+        (usuario_id, compras_realizadas_order, compras_realizadas_id) 
+    values
+        (?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        orden_compra_items
+        (orden_compra_id, items_order, items_id) 
+    values
+        (?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        orden_compra_items
+        (orden_compra_id, items_order, items_id) 
+    values
+        (?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        orden_compra_items
+        (orden_compra_id, items_order, items_id) 
+    values
+        (?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        orden_compra_items
+        (orden_compra_id, items_order, items_id) 
+    values
+        (?, ?, ?)
+Hibernate: 
+    select
+        tbl.next_val 
+    from
+        hibernate_sequences tbl 
+    where
+        tbl.sequence_name=? for update
+            
+Hibernate: 
+    update
+        hibernate_sequences 
+    set
+        next_val=?  
+    where
+        next_val=? 
+        and sequence_name=?
+Hibernate: 
+    call next value for hibernate_sequence
+Hibernate: 
+    call next value for hibernate_sequence
+Hibernate: 
+    call next value for hibernate_sequence
+Hibernate: 
+    call next value for hibernate_sequence
+Hibernate: 
+    insert 
+    into
+        usuario
+        (apellido, edad, nombre, nombre_imagen, password, saldo, user_name, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        orden_compra
+        (fecha_de_compra, id) 
+    values
+        (?, ?)
+Hibernate: 
+    insert 
+    into
+        item
+        (cantidad_articulo, id_producto_comprado, importe_total, lote, prodcuto_comprado, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        orden_compra
+        (fecha_de_compra, id) 
+    values
+        (?, ?)
+Hibernate: 
+    insert 
+    into
+        item
+        (cantidad_articulo, id_producto_comprado, importe_total, lote, prodcuto_comprado, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        usuario_compras_realizadas
+        (usuario_id, compras_realizadas_order, compras_realizadas_id) 
+    values
+        (?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        usuario_compras_realizadas
+        (usuario_id, compras_realizadas_order, compras_realizadas_id) 
+    values
+        (?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        orden_compra_items
+        (orden_compra_id, items_order, items_id) 
+    values
+        (?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        orden_compra_items
+        (orden_compra_id, items_order, items_id) 
+    values
+        (?, ?, ?)
+Hibernate: 
+    select
+        tbl.next_val 
+    from
+        hibernate_sequences tbl 
+    where
+        tbl.sequence_name=? for update
+            
+Hibernate: 
+    update
+        hibernate_sequences 
+    set
+        next_val=?  
+    where
+        next_val=? 
+        and sequence_name=?
+Hibernate: 
+    call next value for hibernate_sequence
+Hibernate: 
+    call next value for hibernate_sequence
+Hibernate: 
+    call next value for hibernate_sequence
+Hibernate: 
+    call next value for hibernate_sequence
+Hibernate: 
+    insert 
+    into
+        usuario
+        (apellido, edad, nombre, nombre_imagen, password, saldo, user_name, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        orden_compra
+        (fecha_de_compra, id) 
+    values
+        (?, ?)
+Hibernate: 
+    insert 
+    into
+        item
+        (cantidad_articulo, id_producto_comprado, importe_total, lote, prodcuto_comprado, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        orden_compra
+        (fecha_de_compra, id) 
+    values
+        (?, ?)
+Hibernate: 
+    insert 
+    into
+        item
+        (cantidad_articulo, id_producto_comprado, importe_total, lote, prodcuto_comprado, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        usuario_compras_realizadas
+        (usuario_id, compras_realizadas_order, compras_realizadas_id) 
+    values
+        (?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        usuario_compras_realizadas
+        (usuario_id, compras_realizadas_order, compras_realizadas_id) 
+    values
+        (?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        orden_compra_items
+        (orden_compra_id, items_order, items_id) 
+    values
+        (?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        orden_compra_items
+        (orden_compra_id, items_order, items_id) 
+    values
+        (?, ?, ?)
+2022-04-07 20:24:30.623  INFO 12284 --- [    Test worker] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2'. Database available at 'jdbc:h2:mem:test'
+2022-04-07 20:24:33.326  INFO 12284 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2022-04-07 20:24:33.327  INFO 12284 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2022-04-07 20:24:33.328  INFO 12284 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2022-04-07 20:24:33.356  INFO 12284 --- [    Test worker] app.controller.UsuarioControllerTest     : Started UsuarioControllerTest in 11.423 seconds (JVM running for 15.614)
+2022-04-07 20:24:33.424  INFO 12284 --- [    Test worker] o.s.t.c.transaction.TransactionContext   : Began transaction (1) for test context [DefaultTestContext@faa04cd testClass = UsuarioControllerTest, testInstance = app.controller.UsuarioControllerTest@2b836cff, testMethod = actualizar un usuario inexistente devuelve un codigo de http 404@UsuarioControllerTest, testException = [null], mergedContextConfiguration = [WebMergedContextConfiguration@337092c0 testClass = UsuarioControllerTest, locations = '{}', classes = '{class app.DifficultApplication}', contextInitializerClasses = '[]', activeProfiles = '{test}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[org.springframework.boot.test.autoconfigure.actuate.metrics.MetricsExportContextCustomizerFactory$DisableMetricExportContextCustomizer@2af3c81b, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@4b3fa0b3, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@3e330cbc, [ImportsContextCustomizer@104d5192 key = [org.springframework.boot.test.autoconfigure.web.servlet.MockMvcAutoConfiguration, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcWebClientAutoConfiguration, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcWebDriverAutoConfiguration, org.springframework.boot.autoconfigure.security.oauth2.client.servlet.OAuth2ClientAutoConfiguration, org.springframework.boot.autoconfigure.security.oauth2.resource.servlet.OAuth2ResourceServerAutoConfiguration, org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration, org.springframework.boot.autoconfigure.security.servlet.SecurityFilterAutoConfiguration, org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcSecurityConfiguration, org.springframework.boot.test.autoconfigure.web.reactive.WebTestClientAutoConfiguration]], org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@6e053858, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@7fdf5291, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@674c8542, org.springframework.boot.test.context.SpringBootTestArgs@1, org.springframework.boot.test.context.SpringBootTestWebEnvironment@254049a3], resourceBasePath = 'src/main/webapp', contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]], attributes = map['org.springframework.test.context.web.ServletTestExecutionListener.activateListener' -&gt; true, 'org.springframework.test.context.web.ServletTestExecutionListener.populatedRequestContextHolder' -&gt; true, 'org.springframework.test.context.web.ServletTestExecutionListener.resetRequestContextHolder' -&gt; true, 'org.springframework.test.context.event.ApplicationEventsTestExecutionListener.recordApplicationEvents' -&gt; false]]; transaction manager [org.springframework.orm.jpa.JpaTransactionManager@386a90ad]; rollback [true]
+2022-04-07 20:24:34.081  WARN 12284 --- [    Test worker] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'PUT' not supported]
+
+MockHttpServletRequest:
+      HTTP Method = PUT
+      Request URI = /usuarios/3253532
+       Parameters = {}
+          Headers = [Content-Type:&quot;application/json;charset=UTF-8&quot;, Content-Length:&quot;117&quot;]
+             Body = {&quot;id&quot;:0,&quot;nombre&quot;:&quot;Joaquin&quot;,&quot;apellido&quot;:&quot;&quot;,&quot;edad&quot;:0,&quot;saldo&quot;:0.0,&quot;userName&quot;:&quot;&quot;,&quot;nombreImagen&quot;:&quot;&quot;,&quot;comprasRealizadas&quot;:[]}
+    Session Attrs = {}
+
+Handler:
+             Type = null
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = org.springframework.web.HttpRequestMethodNotSupportedException
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 405
+    Error message = Request method 'PUT' not supported
+          Headers = [Allow:&quot;GET&quot;]
+     Content type = null
+             Body = 
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+2022-04-07 20:24:34.115  INFO 12284 --- [    Test worker] o.s.t.c.transaction.TransactionContext   : Rolled back transaction for test: [DefaultTestContext@faa04cd testClass = UsuarioControllerTest, testInstance = app.controller.UsuarioControllerTest@2b836cff, testMethod = actualizar un usuario inexistente devuelve un codigo de http 404@UsuarioControllerTest, testException = java.lang.AssertionError: Status expected:&lt;404&gt; but was:&lt;405&gt;, mergedContextConfiguration = [WebMergedContextConfiguration@337092c0 testClass = UsuarioControllerTest, locations = '{}', classes = '{class app.DifficultApplication}', contextInitializerClasses = '[]', activeProfiles = '{test}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[org.springframework.boot.test.autoconfigure.actuate.metrics.MetricsExportContextCustomizerFactory$DisableMetricExportContextCustomizer@2af3c81b, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@4b3fa0b3, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@3e330cbc, [ImportsContextCustomizer@104d5192 key = [org.springframework.boot.test.autoconfigure.web.servlet.MockMvcAutoConfiguration, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcWebClientAutoConfiguration, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcWebDriverAutoConfiguration, org.springframework.boot.autoconfigure.security.oauth2.client.servlet.OAuth2ClientAutoConfiguration, org.springframework.boot.autoconfigure.security.oauth2.resource.servlet.OAuth2ResourceServerAutoConfiguration, org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration, org.springframework.boot.autoconfigure.security.servlet.SecurityFilterAutoConfiguration, org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcSecurityConfiguration, org.springframework.boot.test.autoconfigure.web.reactive.WebTestClientAutoConfiguration]], org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@6e053858, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@7fdf5291, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@674c8542, org.springframework.boot.test.context.SpringBootTestArgs@1, org.springframework.boot.test.context.SpringBootTestWebEnvironment@254049a3], resourceBasePath = 'src/main/webapp', contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]], attributes = map['org.springframework.test.context.web.ServletTestExecutionListener.activateListener' -&gt; true, 'org.springframework.test.context.web.ServletTestExecutionListener.populatedRequestContextHolder' -&gt; true, 'org.springframework.test.context.web.ServletTestExecutionListener.resetRequestContextHolder' -&gt; true, 'org.springframework.test.context.event.ApplicationEventsTestExecutionListener.recordApplicationEvents' -&gt; false]]
+</pre>
+</span>
+</div>
+</div>
+<div id="footer">
+<p>
+<div>
+<label class="hidden" id="label-for-line-wrapping-toggle" for="line-wrapping-toggle">Wrap lines
+<input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
+</label>
+</div>Generated by 
+<a href="http://www.gradle.org">Gradle 7.1</a> at 7 abr. 2022 20:24:34</p>
+</div>
+</div>
+</body>
+</html>
