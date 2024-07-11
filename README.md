@@ -1,4 +1,4 @@
-#Rampapp
-Proyecto Final de TPI(UNSAM)
+# Rampapp
+Proyecto Final de TPI UNSAM 
 
-Cada carpeta tiene su respectivo MD con info.
+Cada carpeta tiene su respectivo README con info.
