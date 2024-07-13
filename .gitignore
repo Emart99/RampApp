@@ -1,1 +1,8 @@
 .DS_Store
+/AdminFrontend/node_modules
+/AdminFrontend/node_modules/
+/Mobile/node_modules
+/Mobile/node_modules/
+/Backend/.gradle/
+/Backend/.idea/
+/Backend/build/
