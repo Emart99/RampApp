@@ -1,7 +1,7 @@
 # RampApp Backend (Rest Api)
 
 ### Dependencias
-Jvm 11 \
+Jvm 14 \
 Mysql
 
 ## Endpoints disponibles
