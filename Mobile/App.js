@@ -136,6 +136,7 @@ export default function App() {
           <NavigationContainer theme={theme}>
             <Stack.Navigator initialRouteName="Login">
               <Stack.Screen
+                index={0}
                 name="Login"
                 component={Login}
                 options={{ headerShown: false }}

@@ -19,6 +19,7 @@ import { registrar } from "../api/http";
 import GlobalButton from "./../components/GlobalButton";
 import GlobalInput from "../components/GlobalInput";
 import { registerValidationSchema } from "../utils/registerSchema";
+import { CommonActions } from "@react-navigation/native";
 
 const Registrarse = ({ navigation }) => {
   const insets = useSafeAreaInsets();
@@ -58,7 +59,15 @@ const Registrarse = ({ navigation }) => {
             icon="login"
             inline={true}
             size={35}
-            onPress={() => navigation.navigate("Login")}
+            onPress={() => {navigation.dispatch(
+              CommonActions.reset({
+                index: 0,
+                routes: [
+                  { name: 'Login' },
+                ],
+              })
+            );
+            }}
           />
           {/* ALERT DE REGISTRADO CORRECTO */}
           <AwesomeAlert
@@ -74,7 +83,15 @@ const Registrarse = ({ navigation }) => {
             closeOnTouchOutside={false}
             onConfirmPressed={() => {
               setShowAlertDatosCorrectos(false);
-              navigation.navigate("Login");
+              navigation.dispatch(
+                CommonActions.reset({
+                  index: 0,
+                  routes: [
+                    { name: 'Login' },
+                  ],
+                })
+              );
+              
             }}
           />
           {/* ALERT DE REGISTRADO INCORRECTO */}

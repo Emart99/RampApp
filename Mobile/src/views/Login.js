@@ -65,9 +65,17 @@ const Login = ({ navigation }) => {
           </Text>
         </Snackbar>
         <Formik
+          enableReinitialize = {true}
           validationSchema={loginValidationSchema}
-          initialValues={{ userName: "", contrasenia: "" }}
-          onSubmit={(values) => loginHandler(values)}
+          initialValues={{ 
+            userName: "",
+            contrasenia: "" 
+          }}
+          onSubmit={(values,  actions ) => {
+            loginHandler(values);
+            // do your stuff 
+      }}
+      
         >
           {({
             handleChange,
@@ -93,20 +101,20 @@ const Login = ({ navigation }) => {
                 <Text style={styles.inputInvalidText}>{errors.userName}</Text>
               )}
               {GlobalInput(
-                "Contraseña",
-                values.contrasenia,
-                handleChange("contrasenia"),
-                handleBlur("contrasenia"),
-                styles.inputView,
-                theme.colors.background,
-                true,
-                "default"
-              )}
-              {errors.contrasenia && touched.contrasenia && (
-                <Text style={styles.inputInvalidText}>
-                  {errors.contrasenia}
-                </Text>
-              )}
+                  "Contraseña",
+                  values.contrasenia,
+                  handleChange("contrasenia"),
+                  handleBlur("contrasenia"),
+                  styles.inputView,
+                  theme.colors.background,
+                  true,
+                  "default"
+                )}
+                {errors.contrasenia && touched.contrasenia && (
+                  <Text style={styles.inputInvalidText}>
+                    {errors.contrasenia}
+                  </Text>
+                )}
               <View style={{ marginTop: 10 }} />
               {GlobalButton(
                 "",

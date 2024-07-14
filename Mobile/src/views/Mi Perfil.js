@@ -8,6 +8,7 @@ import { traerUsuario } from "../api/http";
 import { PreferencesContext } from "../themeContext";
 import GlobalButton from "./../components/GlobalButton";
 import { cerrarSesion } from "./../api/http";
+import { CommonActions } from "@react-navigation/native";
 
 const MiPerfil = ({ navigation }) => {
   const [isSwitchOn, setIsSwitchOn] = useState(false);
@@ -29,7 +30,15 @@ const MiPerfil = ({ navigation }) => {
 
   const loginNavigation = () => {
     cerrarSesion();
-    navigation.navigate("Login");
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 0,
+        routes: [
+          { name: 'Login' },
+        ],
+      })
+    );
+    
   };
   const administrarVehiculoNavigation = () => {
     navigation.navigate("Vehiculos");
