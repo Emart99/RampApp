@@ -100,7 +100,7 @@ const RampasSheets = (theme, actionSheetRef, setIsOpen) => {
     }
     reservarRampa(reservas, rampa.id, dominio)
       .then(() => {
-        setMessageFeedback("La reserva se ha realizado correctamente");
+        setMessageFeedback("La reserva se ha agregado al carrito");
         setVisibleToast(true);
       })
       .catch((error) => {
