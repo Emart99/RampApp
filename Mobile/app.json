@@ -19,6 +19,8 @@
           "backgroundColor": "#1B1F23"
         }
       }
-    }
+    },
+    "package":"com.rampapp"
+    
   }
 }
