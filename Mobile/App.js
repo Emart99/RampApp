@@ -11,7 +11,7 @@ import * as Location from "expo-location";
 import { NavigationContainer } from "@react-navigation/native";
 import * as SplashScreen from "expo-splash-screen";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { LogBox } from "react-native";
+import {  LogBox, useColorScheme } from "react-native";
 import { Provider as PaperProvider } from "react-native-paper";
 import { PreferencesContext } from "./src/themeContext";
 import { SafeAreaProvider } from "react-native-safe-area-context";
@@ -71,7 +71,8 @@ export default function App() {
   const [appIsReady, setAppIsReady] = React.useState(false);
   let { status } = Location.requestForegroundPermissionsAsync();
   const [isThemeDark, setIsThemeDark] = React.useState(false);
-  let theme = isThemeDark ? CombinedDarkTheme : CombinedDefaultTheme;
+  let colorScheme = useColorScheme();
+  let theme = colorScheme === "dark" ? CombinedDarkTheme : CombinedDefaultTheme;
   let [fontsLoaded] = useFonts({
     Poppins_100Thin,
     Poppins_100Thin_Italic,
