@@ -9,6 +9,7 @@
     ],
     "icon": "./src/assets/splashscreen/ICON.png",
     "android": {
+      "package":"com.rampapp",
       "splash": {
         "image": "./src/assets/splashscreen/LIGHTMODE.png",
         "resizeMode": "cover",
@@ -19,8 +20,8 @@
           "backgroundColor": "#1B1F23"
         }
       }
-    },
-    "package":"com.rampapp"
+    }
+    
     
   }
 }
