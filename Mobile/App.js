@@ -72,7 +72,7 @@ export default function App() {
   let { status } = Location.requestForegroundPermissionsAsync();
   const [isThemeDark, setIsThemeDark] = React.useState(false);
   let colorScheme = useColorScheme();
-  let theme = colorScheme === "dark" ? CombinedDarkTheme : CombinedDefaultTheme;
+  let theme = isThemeDark ? CombinedDarkTheme : CombinedDefaultTheme;
   let [fontsLoaded] = useFonts({
     Poppins_100Thin,
     Poppins_100Thin_Italic,
