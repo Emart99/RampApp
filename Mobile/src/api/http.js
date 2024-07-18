@@ -1,7 +1,7 @@
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 //axios.defaults.baseURL = "http://localhost:9000";
-const IP_DEV = "192.168.100.58";
+const IP_DEV = process.env.EXPO_PUBLIC_DEV_SECRET;
 const ENV_DEV_URL = "http://" + IP_DEV + ":9000";
 const ENV_IMGUR_CLIENT_ID = "bd34bd7d458c396";
 

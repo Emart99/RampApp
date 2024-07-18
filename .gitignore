@@ -3,6 +3,7 @@
 /AdminFrontend/node_modules/
 /Mobile/node_modules
 /Mobile/node_modules/
+/Mobile/.env
 /Backend/.gradle/
 /Backend/.idea/
 /Backend/build/

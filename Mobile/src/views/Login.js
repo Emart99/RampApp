@@ -11,6 +11,7 @@ import GlobalButton from "./../components/GlobalButton";
 import GlobalInput from "../components/GlobalInput";
 import { setUsuarioId } from "./../api/http";
 import { loginValidationSchema } from "../utils/loginSchema";
+console.log(process.env.EXPO_PUBLIC_DEV_SECRET);
 
 const Login = ({ navigation }) => {
   const [visibleOlvidoSuContrasenia, setVisibleOlvidoSuContrasenia] =
