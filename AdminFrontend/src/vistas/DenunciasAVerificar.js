@@ -14,6 +14,7 @@ export function DenunciasAVerificar() {
         setDenunciasAHabilitar(canti)}catch (error) {
             const message = obtenerMensaje(error)
             SetErrorMessage(message)
+            console.log(errorMessage)
           }
     }
  

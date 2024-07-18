@@ -1,7 +1,7 @@
 
 import { useState } from 'react';
 import { DatePicker, Space } from 'antd';
-import 'antd/dist/antd.css';
+//import 'antd/dist/antd.css';
 import { adminService } from '../services/AdminService';
 import { obtenerMensaje } from "../services/obtenerMensaje";
 
@@ -21,6 +21,7 @@ export function Balance(){
         setReservas(reservas)}catch (error) {
             const message = obtenerMensaje(error)
             SetErrorMessage(message)
+            console.log(errorMessage)
           }
     }
 

@@ -62,6 +62,7 @@ export const VerificarDenuncias= ({history}) => {
           catch (error) {
               const message = obtenerMensaje(error)
               SetErrorMessage(message)
+              console.log(errorMessage)
           }
       }
 

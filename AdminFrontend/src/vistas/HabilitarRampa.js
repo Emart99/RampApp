@@ -27,6 +27,7 @@ export const  HabilitarRampa = ({history}) =>{
         setRampa(canti)}catch (error) {
             const message = obtenerMensaje(error)
             SetErrorMessage(message)
+            console.log(errorMessage)
           }
     }
 
@@ -61,7 +62,7 @@ export const  HabilitarRampa = ({history}) =>{
     
     useEffect(() => {
         rampaAHabilitar();
-      },[]);
+      }, []);
     
     
     return(

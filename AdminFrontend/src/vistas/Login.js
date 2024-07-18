@@ -23,6 +23,7 @@ export function Login() {
           catch (error) {
               const message = obtenerMensaje(error)
               SetErrorMessage(message)
+              console.log(errorMessage)
           }
       }
       
