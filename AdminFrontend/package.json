@@ -53,5 +53,10 @@
   },
   "devDependencies": {
     "ajv": "^8.17.1"
+  },
+  "overrides": {
+    "nth-check": "^2.1.1",
+    "postcss":"^8.4.38",
+    "node-fetch": "3.3.2"
   }
 }
